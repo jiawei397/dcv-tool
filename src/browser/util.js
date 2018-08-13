@@ -14,62 +14,6 @@ uinv.ns = 'dcvWeb';//用个变量控制目前前端的名称空间
 
 uinv.baseT3dArr = [];//存储base中t3d加载的数组，只有使用node时才有用
 
-/**
- * 增加个document.ready方法，类似jquery的
- */
-(function () {
-  var ie = !!(window.attachEvent && !window.opera);
-  var wk = /webkit\/(\d+)/i.test(navigator.userAgent) && (RegExp.$1 < 525);
-  var fn = [];
-  var run = function () {
-    for (var i = 0; i < fn.length; i++) fn[i]();
-  };
-  var d = document;
-  d.ready = function (f) {
-    if (!ie && !wk && d.addEventListener) {
-      return d.addEventListener('DOMContentLoaded', f, false);
-    }
-    if (fn.push(f) > 1) return;
-    if (ie) {
-      (function () {
-        try {
-          d.documentElement.doScroll('left');
-          run();
-        } catch (err) {
-          setTimeout(arguments.callee, 0);
-        }
-      })();
-    } else if (wk) {
-      var t = setInterval(function () {
-        if (/^(loaded|complete)$/.test(d.readyState)) {
-          window.clearInterval(t);
-          run();
-        }
-      }, 0);
-    }
-  };
-})();
-
-if (!Object.values) {
-  Object.values = function (obj) {
-    if (obj !== Object(obj)) {
-      throw new TypeError('Object.values called on a non-object');
-    }
-    var val = [], key;
-    for (key in obj) {
-      if (Object.prototype.hasOwnProperty.call(obj, key)) {
-        val.push(obj[key]);
-      }
-    }
-    return val;
-  };
-}
-if (!String.prototype.startsWith) {
-  String.prototype.startsWith = function (k) {
-    return this.substring(0, k.length) == k;
-  };
-}
-
 uinv.importJs = function (path) {
   document.write("<script type='text/javascript' src='" + path + "'></script>");
 };
