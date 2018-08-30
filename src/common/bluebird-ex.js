@@ -3,6 +3,8 @@
  * @author jw
  * @date 2017-12-06
  */
+const P = require('bluebird');
+
 var Q = {};
 (function (Q, Promise) {
   //增加一个停止链式的方法
@@ -38,7 +40,10 @@ var Q = {};
   Q.all = Promise.all;
   Q.each = Promise.each;
   Q.join = Promise.join;
+  //只用来判断是否bluebird
   Q.isPromise = function (promise) {
     return promise instanceof Promise;
   };
 })(Q, P);
+
+export default Q;

@@ -143,7 +143,7 @@ Number.prototype.toFixed = function (d) {
 // 说明：JS时间Date格式化参数
 // 参数：格式化字符串如：'yyyy-MM-dd HH:mm:ss'
 // 结果：如2016-06-01 10:09:00
-if(!Date.prototype.format){
+if (!Date.prototype.format){
   Date.prototype.format = function (fmt) {
     var o = {
       'M+': this.getMonth() + 1,
@@ -184,3 +184,9 @@ if (!Object.values) {
     return val;
   };
 }
+
+Object.test = function () {
+  console.log('tst');
+};
+
+export default Object;
