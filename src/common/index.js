@@ -1,4 +1,4 @@
-import uinv from './uinv_util';
+import uinv from './config_tools';
 import Q from './bluebird-ex';
 import {u} from './uinv';
 import eventEmitter from './event';
