@@ -1,14 +1,9 @@
 /*
  * 支持.js .css 全路径非跨域(http)加载，相对项目根路径加载，文件可带版本
  */
-if (typeof window === 'undefined') {
-  if (typeof process === 'object' && typeof require === 'function' && typeof global === 'object') {
-    window = global;
-  } else {
-    window = this;
-  }
-}
-var uinv = window.uinv || {};
+import './polyfill';
+
+var uinv = {};
 uinv.ObjectEventType = uinv.ObjectEventType || {};
 // util对象
 uinv.util = uinv.util || {};
@@ -393,3 +388,6 @@ uinv.ajaxCacheCfg = {
   }
 };
 // uinv.ajaxCache = true;
+
+export default uinv;
+export {u};

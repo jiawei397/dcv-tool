@@ -1,3 +1,11 @@
+if (typeof window === 'undefined') {
+  if (typeof process === 'object' && typeof require === 'function' && typeof global === 'object') {
+    window = global;
+  } else {
+    window = this;
+  }
+}
+
 if (!Object.values) {
   Object.values = function (obj) {
     if (obj !== Object(obj)) {
@@ -184,9 +192,5 @@ if (!Object.values) {
     return val;
   };
 }
-
-Object.test = function () {
-  console.log('tst');
-};
 
 export default Object;

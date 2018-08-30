@@ -1,6 +1,8 @@
-import './common/polyfill';
-import Q from './common/bluebird-ex';
+import uinv, {Q, u} from './common';
 
 export {
-  Q
+  Q,
+  u
 };
+
+export default uinv;
