@@ -3,8 +3,6 @@
  */
 var http = require('http');
 var https = require('https');
-var util = require('util');
-var events = require('events');
 var httpsync = require('http-sync');
 var uinv = global.uinv || {};
 
@@ -287,31 +285,6 @@ uinv.language.remoteLoad = function () {
   });
 };
 u.le.load();
-
-/**
- * 事件处理器，现在统一用config_tools.js
- * @deprecated
- * @author jw
- * @date 2017-08-17
- */
-uinv.EventEmitter = function () {
-  events.EventEmitter.call(this);
-};
-util.inherits(uinv.EventEmitter, events.EventEmitter);
-uinv.EventEmitter.prototype.reg = function () {
-  if (Array.isArray(arguments[0])) {
-    arguments[0] = arguments[0][0];
-  }
-  // console.log(Array.prototype.slice.call(arguments));
-  this.on.apply(this, arguments);
-};
-uinv.EventEmitter.prototype.regOnce = function () {
-  if (Array.isArray(arguments[0])) {
-    arguments[0] = arguments[0][0];
-  }
-  this.once.apply(this, arguments);
-};
-uinv.eventEmitter = new uinv.EventEmitter();
 
 // uinv.ajaxCacheCfg = {};
 // uinv.isUseNode = true;//在node里，这个变量自然是true
