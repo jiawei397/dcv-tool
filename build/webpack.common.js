@@ -5,9 +5,17 @@ const webpack = require('webpack');
 var libraryName = 'utils';
 
 module.exports = {
-  entry:'./src/index.js',
+  // entry:'./src/index.js',
+  entry:{
+    'utils': './src/common/index.js',
+    'utils-brow': './src/browser/index.js',
+    'utils-node': './src/node/index.js'
+  },
   plugins: [
-    new CleanWebpackPlugin(['../dist']),
+    new CleanWebpackPlugin(path.resolve(__dirname, '../dist'), {
+        root: path.resolve(__dirname, '../'),    // 设置root
+        verbose: true
+      }),
     new webpack.ProvidePlugin({
       P: 'bluebird'
     })
@@ -15,7 +23,8 @@ module.exports = {
   output: {
     publicPath: '/',
     chunkFilename: '[name].js',
-    filename: 'utils.js',
+    // filename: 'utils.js',
+    filename: '[name].js',
     // chunkFilename: '[name].[hash].js',
     // filename: '[name].[hash].js',
     library: libraryName,   //不要设置libraryName就行了
