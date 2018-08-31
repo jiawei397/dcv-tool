@@ -15,11 +15,14 @@ module.exports = {
     new CleanWebpackPlugin(path.resolve(__dirname, '../dist'), {
         root: path.resolve(__dirname, '../'),    // 设置root
         verbose: true
-      }),
-    new webpack.ProvidePlugin({
-      P: 'bluebird'
-    })
+      })
+    // new webpack.ProvidePlugin({
+    //   bluebird: 'bluebird'
+    // })
   ],
+  externals: {
+    bluebird: "bluebird"
+  },
   output: {
     publicPath: '/',
     chunkFilename: '[name].js',
@@ -28,9 +31,11 @@ module.exports = {
     // chunkFilename: '[name].[hash].js',
     // filename: '[name].[hash].js',
     library: libraryName,   //不要设置libraryName就行了
-    libraryTarget: 'this',//umd
+    // libraryTarget: 'this',//umd
+    libraryTarget: 'umd',//umd
     // umdNamedDefine: true,
-    path: path.resolve(__dirname, '../dist')
+    globalObject: 'this',//必须得有它
+    path: path.resolve(__dirname, '../dist'),
   },
   // optimization: {
   //   splitChunks: {
