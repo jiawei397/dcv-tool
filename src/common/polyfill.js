@@ -1,10 +1,10 @@
-if (typeof window === 'undefined') {
-  if (typeof process === 'object' && typeof require === 'function' && typeof global === 'object') {
-    window = global;
-  } else {
-    window = this;
-  }
-}
+// if (typeof window === 'undefined') {
+//   if (typeof process === 'object' && typeof require === 'function' && typeof global === 'object') {
+//     window = global;
+//   } else {
+//     window = this;
+//   }
+// }
 
 if (!Object.values) {
   Object.values = function (obj) {
