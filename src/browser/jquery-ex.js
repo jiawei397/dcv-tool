@@ -1,6 +1,3 @@
-// error对象
-uinv.error = uinv.error || {};
-
 // 检测jQuery
 if (!window.jQuery) {
   uinv.error.show('[error]\r\n没有找到jQuery.');
@@ -30,7 +27,6 @@ jQuery.extend({
 $(document).ready(function () {
   uinv.error.show();
 });
-
 
 uinv.ajaxCacheCfg = {
   // isLog: false,//是否打印日志，默认打印
@@ -70,30 +66,6 @@ uinv.util.localize.htmlObjDetail = function (htmlObj) {
       $(this).replaceWith(u.le.get($(this).html()));
     }
   });
-};
-
-// error
-uinv.error.handle = function (e) {
-  if ($ && !$.browser.msie) {
-    alert('name: ' + e.name + '\r\nmessage: ' + e.message + '\r\nlineNumber: ' + e.lineNumber + '\r\nfileName: ' + e.fileName + '\r\nstack: ' + e.stack);
-  } else {
-    alert('name: ' + e.name + '\r\nerrorNumber: ' + (e.number & 0xFFFF) + '\r\nmessage: ' + e.message);
-  }
-};
-uinv.error.list = [];
-uinv.error.add = function (msg) {
-  uinv.error.list.push(msg);
-};
-uinv.error.show = function (error) {
-  if (error) {
-    alert(error);
-  } else if (uinv.error.list.length > 0) {
-    var show = '[error]\r\n';
-    for (var i in uinv.error.list) {
-      show += uinv.error.list[i] + '\r\n';
-    }
-    alert(show);
-  }
 };
 
 /**
@@ -267,7 +239,6 @@ uinv.util.ajax = function (config) {
   return uinv.util._ajax(config, $.ajax);
 };
 
-
 /**
  * 浏览器网页增加图标
  * 页面上最好先有id为favicon
@@ -289,5 +260,3 @@ uinv.util.addIcon = function (iconUrl) {
     $('head').append('<link rel="shortcut icon" href="' + iconUrl + '" type="image/x-icon"/>');
   }
 };
-
-

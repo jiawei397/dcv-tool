@@ -1,3 +1,4 @@
+/* eslint-disable no-caller */
 /**
  * 增加个document.ready方法，类似jquery的
  */
@@ -44,7 +45,9 @@
 
     window.console = {};
     for (var i = 0; i < names.length; ++i) {
-      window.console[names[i]] = uinv.noop;
+      window.console[names[i]] = function () {
+
+      };
     }
   }
 })();
@@ -77,3 +80,5 @@
     };
   }
 })();
+
+export default window;
