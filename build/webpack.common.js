@@ -12,7 +12,7 @@ module.exports = {
     'utils-node': './src/node/index.js'
   },
   plugins: [
-    new CleanWebpackPlugin(path.resolve(__dirname, '../dist'), {
+    new CleanWebpackPlugin(path.resolve(__dirname, '../release'), {
         root: path.resolve(__dirname, '../'),    // 设置root
         verbose: true
       })
@@ -35,7 +35,7 @@ module.exports = {
     libraryTarget: 'umd',//umd
     // umdNamedDefine: true,
     globalObject: 'this',//必须得有它
-    path: path.resolve(__dirname, '../dist'),
+    path: path.resolve(__dirname, '../release'),
   },
   // optimization: {
   //   splitChunks: {
