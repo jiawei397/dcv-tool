@@ -1,11 +1,7 @@
 const path = require('path');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const webpack = require('webpack');
+const func = require('webpack-jw');
 
-const plugins = [];
-const opts = process.argv.slice(2);
-
-let defaultConfig = {
+let config = {
   entry: {
     'util-common': './src/common/index.js',
     'util': './src/browser/index.js'
@@ -17,34 +13,7 @@ let defaultConfig = {
     path: path.resolve(__dirname, 'release'),
     // filename: 'Q.js'
     library: 'utils'
-  },
-  // externals: {
-  //   bluebird: 'bluebird'
-  // },
-  plugins: plugins
+  }
 };
 
-let config = {};
-if (!opts.includes('production')) { //开发环境
-  config = {
-    devtool: 'inline-source-map'
-    // devServer: {
-    //   port: 8089
-    // },
-  };
-  [].push.apply(plugins, [
-    new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new BundleAnalyzerPlugin()//分析bundle代码组成
-  ]);
-} else {
-
-}
-
-for (var key in defaultConfig) {
-  if (!config[key]) {
-    config[key] = defaultConfig[key];
-  }
-}
-
-module.exports = config;
+module.exports = func(config);

@@ -10,12 +10,7 @@
   "main": "src/browser/index.js",
   "dependencies": {},
   "devDependencies": {
-    "babel-core": "7.0.0-bridge.0",
-    "babel-eslint": "^10.0.1",
-    "eslint-config-jw397": "^0.1.0",
-    "webpack": "^4.17.1",
-    "webpack-bundle-analyzer": "^3.3.2",
-    "webpack-cli": "^3.3.1"
+    "webpack-jw": "^0.0.1"
   },
   "engines": {
     "node": ">= 4.0.0",
