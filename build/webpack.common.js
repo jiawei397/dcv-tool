@@ -2,14 +2,13 @@ const path = require('path');
 // const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
-var libraryName = 'utils';
+const libraryName = 'utils';
 
 module.exports = {
   // entry:'./src/index.js',
   entry:{
-    'utils': './src/common/index.js',
-    'utils-brow': './src/browser/index.js',
-    'utils-node': './src/node/index.js'
+    'util-common': './src/common/index.js',
+    'util': './src/browser/index.js'
   },
   plugins: [
     new CleanWebpackPlugin(path.resolve(__dirname, '../release'), {

@@ -1,4 +1,4 @@
-import 'polyfill';
+import './polyfill';
 import Q from './Q';
 import uinv from './uinv';
 import util from './util';
