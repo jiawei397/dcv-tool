@@ -1,6 +1,11 @@
-import uinv from './config_tools';
-import Q from './bluebird-ex';
-import {u} from './uinv';
+import 'polyfill';
+import Q from './Q';
+import uinv from './uinv';
+import util from './util';
+import hash from './hash';
+
+uinv.util = util;
+uinv.hash = hash;
 
 export default uinv;
-export {u, Q};
+export {Q};

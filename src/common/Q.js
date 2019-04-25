@@ -1,10 +1,6 @@
 /**
- * 用bluebird实现Q的接口
- * @author jw
- * @date 2017-12-06
+ * 实现Q的接口
  */
-const Promise = require('bluebird');
-
 Promise.defer = function () {
   var _resolve, _reject;
   var promise = new Promise(function (resolve, reject) {

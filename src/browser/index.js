@@ -1,11 +1,8 @@
-import './polyfill';
-import uinv, {Q, u} from '../common';
-import uinv2 from './uinv_browser';
-import eventEmitter from './event';
-const merge = require('merge');
+import {Q} from '../common';
+import uinv from './uinv';
+import util from './util';
 
-merge(uinv, uinv2);
+uinv.hash.combine(uinv.util, util);
 
-uinv.eventEmitter = eventEmitter;
-
-export {uinv, Q, u};
+export {Q};
+export default uinv;
