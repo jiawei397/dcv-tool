@@ -1,6 +1,6 @@
 {
   "name": "dcv-tool",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "工具类",
   "author": "jw",
   "scripts": {
@@ -8,9 +8,7 @@
     "build": "webpack --config build/webpack.prod.js"
   },
   "main": "src/browser/index.js",
-  "dependencies": {
-
-  },
+  "dependencies": {},
   "devDependencies": {
     "babel-polyfill": "^6.26.0",
     "babel-runtime": "^6.26.0",
