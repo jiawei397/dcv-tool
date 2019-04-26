@@ -110,6 +110,19 @@ hash.clear = function (opObject) {
 };
 
 /**
+ * 判断对象深度相等
+ * @param {Object} obj1
+ * @param {Object} obj2
+ */
+hash.deepEqual = function (obj1, obj2) {
+  if (!obj1 || !obj2) {
+    return false;
+  }
+  return uinv.stringify(obj1) === uinv.stringify(obj2);
+};
+
+
+/**
  * 合并对象 A中与B相同名称的元素会被替换成B中的值 返回长大了的A
  * @param {Object} opObjectA
  * @param {Object} opObjectB

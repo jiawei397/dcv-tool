@@ -22,6 +22,13 @@ uinv.isString = function (obj) {
 };
 
 /**
+ * 判断是否错误信息
+ */
+uinv.isError = function (obj) {
+  return Object.prototype.toString.call(obj) === '[object Error]';
+};
+
+/**
  * 判断是否数字
  */
 uinv.isNumber = function (obj) {

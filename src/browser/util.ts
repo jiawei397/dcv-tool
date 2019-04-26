@@ -1,4 +1,5 @@
 /* eslint-disable no-caller */
+import local from './location';
 /**
  * 这是一个为所有模块引用前的基类，提供几个基础方法
  * 只能在浏览器使用
@@ -32,7 +33,7 @@ util.isIE = function () {
  */
 util.urlArg = function (name) {
   var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
-  var r = window.location.search.substr(1).match(reg);
+  var r = local.getSearch().substr(1).match(reg);
   if (r != null) {
     return unescape(r[2]);
   }
@@ -45,7 +46,7 @@ util.urlArg = function (name) {
  * @date 2017-06-13
  */
 util.getProjectName = function () {
-  var project = window.location.pathname;
+  var project = local.getPathName();
   if (project.indexOf('/', 1) == -1) {
     return '';
   }
@@ -58,8 +59,9 @@ util.getProjectName = function () {
  * @returns {String}
  */
 util.getIp = function () {
-  if (window.location.host != '') {
-    return window.location.protocol + '//' + window.location.host;
+  var host = local.getHost();
+  if (host !== '') {
+    return local.getProtocol() + '//' + host;
   }
   return '';
 };
@@ -294,5 +296,51 @@ util.detectZoom = function () {
 //   x.send();
 //   return x.status == 200;
 // };
+
+/**
+ * 兼容多浏览器的剪切板
+ */
+util.setClipboardData = (function () {
+  var createElementForExecCommand = function (textToClipboard) {
+    var forExecElement = document.createElement('div');
+    forExecElement.style.position = 'absolute';
+    forExecElement.style.left = '-10000px';
+    forExecElement.style.top = '-10000px';
+    forExecElement.textContent = textToClipboard;
+    document.body.appendChild(forExecElement);
+    forExecElement.contentEditable = 'true';
+    return forExecElement;
+  };
+  var selectContent = function (element) {
+    var rangeToSelect = document.createRange();
+    rangeToSelect.selectNodeContents(element);
+    var selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(rangeToSelect);
+  };
+  return function (value, key) {
+    if (key === undefined) {
+      key = 'Text';
+    }
+    var success = true;
+    var win = (window as any);
+    if (win.clipboardData) { // Internet Explorer
+      win.clipboardData.setData(key, value);
+    } else {
+      var forExecElement = createElementForExecCommand(value);
+      selectContent(forExecElement);
+      try {
+        if (win.netscape && win.netscape.security) {
+          win.netscape.security.PrivilegeManager.enablePrivilege('UniversalXPConnect');
+        }
+        success = document.execCommand('copy', false, null);
+      } catch (e) {
+        success = false;
+      }
+      document.body.removeChild(forExecElement);
+    }
+    return success;
+  };
+})();
 
 export default util;

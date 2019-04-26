@@ -306,6 +306,15 @@ util.subtractArrays = function (opArrayA, opArrayB) {
   return result;
 };
 
+/**
+ * 合并后一数组到前一数组里
+ * @param {Array} arr 旧数组
+ * @param {Array} newArr 需要被合并的数组
+ */
+util.concatArr = function (arr, newArr) {
+  [].push.apply(arr, newArr);
+};
+
 //////////////////////////////////////////////////////////////////////////////////
 /**
  * 数组排序,升序

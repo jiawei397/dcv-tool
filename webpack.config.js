@@ -32,7 +32,7 @@ module.exports = {
     libraryTarget: 'umd', //umd
     // umdNamedDefine: true,
     globalObject: 'this', //必须得有它
-    path: path.resolve(__dirname, 'release'),
+    path: path.resolve(__dirname, 'dist/release'),
     // filename: 'Q.js'
     library: 'utils'
   },
