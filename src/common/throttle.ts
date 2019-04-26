@@ -29,7 +29,7 @@ function throttle(fn: Function, {
 }: Partial<Opts> = {}) {
   //获取第一个参数
   let _throttleID;
-  console.error(id);
+  // console.error(id);
   clear(true, id);//清除计时器
   _throttleID = setTimeout(function () {
     //执行函数
