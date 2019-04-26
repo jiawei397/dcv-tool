@@ -1,50 +1,50 @@
 import uinv from './uinv';
 import hash from './hash';
 
-const util = {};
+const util: any = {};
 
 /**
  * 节流器
  * @author jw
  * @date 2017-11-29
  */
-util.throttle = (function () {
-  var map = {};
-  var throttle = function () {
-    //获取第一个参数
-    var isClear = arguments[0], fn, _throttleID;
-    //如果第一个参数是boolean类型那么第一个参数则表示是否清除计时器
-    if (typeof isClear === 'boolean') {
-      //第二个参数为id
-      var id = arguments[1];
-      _throttleID = map[id];
-      if (_throttleID) {
-        clearTimeout(_throttleID);
-        delete map[id];
-      }
-      //通过计时器延迟函数的执行
-    } else {
-      //第一个参数为函数
-      fn = isClear;
-      //第二个参数为函数执行时的参数
-      var param = arguments[1];
-      //对执行时的参数适配默认值，这里我们用到以前学过的extend方法
-      var p = hash.combine({
-        id: 'throttle_id', //增加一个id，用来获取setTimeout的id
-        context: null, //作用域
-        args: [], //相关参数
-        time: 300//延迟执行的时间
-      }, param);
-      throttle(true, p.id);//清除计时器
-      _throttleID = setTimeout(function () {
-        //执行函数
-        fn.apply(p.context, p.args);
-      }, p.time);
-      map[p.id] = _throttleID;
-    }
-  };
-  return throttle;
-})();
+// util.throttle = (function () {
+//   var map = {};
+//   var throttle = function () {
+//     //获取第一个参数
+//     var isClear = arguments[0], fn, _throttleID;
+//     //如果第一个参数是boolean类型那么第一个参数则表示是否清除计时器
+//     if (typeof isClear === 'boolean') {
+//       //第二个参数为id
+//       var id = arguments[1];
+//       _throttleID = map[id];
+//       if (_throttleID) {
+//         clearTimeout(_throttleID);
+//         delete map[id];
+//       }
+//       //通过计时器延迟函数的执行
+//     } else {
+//       //第一个参数为函数
+//       fn = isClear;
+//       //第二个参数为函数执行时的参数
+//       var param = arguments[1];
+//       //对执行时的参数适配默认值，这里我们用到以前学过的extend方法
+//       var p = hash.combine({
+//         id: 'throttle_id', //增加一个id，用来获取setTimeout的id
+//         context: null, //作用域
+//         args: [], //相关参数
+//         time: 300//延迟执行的时间
+//       }, param);
+//       throttle(true, p.id);//清除计时器
+//       _throttleID = setTimeout(function () {
+//         //执行函数
+//         fn.apply(p.context, p.args);
+//       }, p.time);
+//       map[p.id] = _throttleID;
+//     }
+//   };
+//   return throttle;
+// })();
 
 /**
  * 为属性解析路径
@@ -665,8 +665,8 @@ util.parseWebColor = function (input, colorSystem) {
  */
 util.toHexString = function (input) {
   if (typeof input == 'string') {
-    var color = input.split('#');
-    color = color[1];
+    var colors = input.split('#');
+    var color: string = colors[1];
     var layerColor = [0, 0, 0];
     layerColor[0] = parseInt(color.substr(0, 2), 16) / 255;
     layerColor[1] = parseInt(color.substr(2, 2), 16) / 255;
@@ -779,7 +779,7 @@ util.base64Encode = function (str) {
  * @param {Array} arr 数组
  * @return {Array}
  */
-util.flatten = function flatten (arr) {
+util.flatten = function flatten(arr) {
   return arr.reduce(function (a, b) {
     return a.concat(Array.isArray(b) ? flatten(b) : b);
   }, []);

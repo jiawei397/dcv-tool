@@ -1,4 +1,4 @@
-import uinv from '../common';
+import uinv from '../common/index';
 
 /**
  * 封装的localStorage和sessionStorage方法
@@ -73,13 +73,10 @@ const delCookie = function (name) {
  * @author jw
  * @date 2017-09-27
  */
-const setCookie = function (name, value, days) {
-  if (days == null || days == '') {
-    days = 300;
-  }
+const setCookie = function (name, value, days = 300) {
   var exp = new Date();
   exp.setTime(exp.getTime() + days * 24 * 60 * 60 * 1000);
-  document.cookie = name + '=' + escape(value) + '; path=/;expires=' + exp.toGMTString();
+  document.cookie = name + '=' + escape(value) + '; path=/;expires=' + exp.toUTCString();
 };
 
 /**

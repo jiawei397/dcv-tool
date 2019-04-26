@@ -6,7 +6,7 @@
  * @author jw
  * @date 2018-07-05
  */
-const util = {};
+const util:any = {};
 
 /**
  * 判断是否谷歌浏览器
@@ -159,26 +159,26 @@ util.addUrlParam = function (url, key, value) {
  * @author jw
  * @date 2017-11-21
  */
-util.loadScript = function (url, callback) {
-  var script = document.createElement('script');
-  script.type = 'text/javascript';
-  if (util.isFunction(callback)) {
-    if (script.readyState) {
-      script.onreadystatechange = function () {
-        if (script.readyState == 'loaded' || script.readyState == 'complete') {
-          script.onreadystatechange = null;
-          callback();
-        }
-      };
-    } else {
-      script.onload = function () {
-        callback();
-      };
-    }
-  }
-  script.src = url;
-  document.body.appendChild(script);
-};
+// util.loadScript = function (url, callback) {
+//   var script = document.createElement('script');
+//   script.type = 'text/javascript';
+//   if (util.isFunction(callback)) {
+//     if (script.readyState) {
+//       script.onreadystatechange = function () {
+//         if (script.readyState == 'loaded' || script.readyState == 'complete') {
+//           script.onreadystatechange = null;
+//           callback();
+//         }
+//       };
+//     } else {
+//       script.onload = function () {
+//         callback();
+//       };
+//     }
+//   }
+//   script.src = url;
+//   document.body.appendChild(script);
+// };
 
 /**
  * 动态添加css
@@ -245,7 +245,6 @@ util.getHashMap = function () {
   var datas = window.location.hash.split('#')[1];
   var map = {};
   if (!datas) return map;
-  if (!(datas instanceof Array)) datas = [datas];
   for (var i = 0; i < datas.length; i++) {
     var t = datas[i].split('=');
     map[t[0]] = decodeURIComponent(t[1]);
@@ -269,7 +268,7 @@ util.getHashByKey = function (key) {
  */
 util.detectZoom = function () {
   var ratio = 0,
-    screen = window.screen,
+    screen = window.screen as any,
     ua = navigator.userAgent.toLowerCase();
 
   if (window.devicePixelRatio !== undefined) {
@@ -289,11 +288,11 @@ util.detectZoom = function () {
  * @author jw
  * @param {String} url 文件地址，类似：http://127.0.0.1:8080/mmdb-rsm-web/base/dcv/projects/snapshot/images/C741F748-91F0-0001-D524-68801CBF1107.jpg
  */
-util.isFileExist = function (url) {
-  var x = new ActiveXObject('Microsoft.XMLHTTP');
-  x.open('HEAD', url, false);
-  x.send();
-  return x.status == 200;
-};
+// util.isFileExist = function (url) {
+//   var x = new ActiveXObject('Microsoft.XMLHTTP');
+//   x.open('HEAD', url, false);
+//   x.send();
+//   return x.status == 200;
+// };
 
 export default util;

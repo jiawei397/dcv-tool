@@ -1,6 +1,6 @@
 import uinv from './uinv';
 
-const hash = {};
+const hash:any = {};
 /**
  * 获取对象中元素数目
  * @param {Object} opObject
@@ -118,9 +118,9 @@ hash.clear = function (opObject) {
  * @param {Boolean} isCloneObjDeep
  * @return {Object}
  */
-hash.combine = function fun (opObjectA, opObjectB, isDeep, isReturnNew, isCloneObjDeep) {
+hash.combine = function fun (opObjectA, opObjectB, isDeep, isReturnNew, isCloneObjDeep = false) {
   if (isReturnNew) {
-    var tempFun = uinv.util.cloneObj || uinv.cloneObj;
+    var tempFun = uinv.cloneObj;
     var result = tempFun(opObjectA, isCloneObjDeep);
     fun(result, opObjectB, isDeep, false);
     return result;
@@ -150,7 +150,7 @@ hash.combine = function fun (opObjectA, opObjectB, isDeep, isReturnNew, isCloneO
  * @param {Boolean} isCloneObjDeep
  * @return {Object}
  */
-hash.combineNew = function fun (opObjectA, opObjectB, isDeep, isReturnNew, isCloneObjDeep) {
+hash.combineNew = function fun (opObjectA, opObjectB, isDeep, isReturnNew, isCloneObjDeep = false) {
   if (isReturnNew) {
     var tempFun = uinv.util.cloneObj || uinv.cloneObj;
     var result = tempFun(opObjectA, isCloneObjDeep);

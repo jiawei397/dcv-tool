@@ -1,4 +1,4 @@
-const uinv = {};
+const uinv:any = {};
 
 /**
  * 判断是否函数
