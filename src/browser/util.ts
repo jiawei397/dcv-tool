@@ -290,12 +290,14 @@ util.detectZoom = function () {
  * @author jw
  * @param {String} url 文件地址，类似：http://127.0.0.1:8080/mmdb-rsm-web/base/dcv/projects/snapshot/images/C741F748-91F0-0001-D524-68801CBF1107.jpg
  */
-// util.isFileExist = function (url) {
-//   var x = new ActiveXObject('Microsoft.XMLHTTP');
-//   x.open('HEAD', url, false);
-//   x.send();
-//   return x.status == 200;
-// };
+util.isFileExist = function (url) {
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.open('GET', url, false);
+  xmlhttp.send();
+  if (xmlhttp.readyState === 4) {
+    return (xmlhttp.status >= 200 && xmlhttp.status < 300) || xmlhttp.status === 302;
+  }
+};
 
 /**
  * 兼容多浏览器的剪切板
