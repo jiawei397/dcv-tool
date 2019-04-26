@@ -87,7 +87,7 @@ if (!Array.prototype.includes) {
       //  b. If k < 0, let k be 0.
       var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
 
-      function sameValueZero (x, y) {
+      function sameValueZero(x, y) {
         return x === y || (typeof x === 'number' && typeof y === 'number' && isNaN(x) && isNaN(y));
       }
 
@@ -110,41 +110,59 @@ if (!Array.prototype.includes) {
 
 /**
  * 重写Number的toFixed方法
- * @param d
- * @returns {string}
- * @author liufeng
- * @date 1018-02-01
  */
-// Number.prototype.toFixed = function (d) {
-//   var s = this + '';
-//   if (!d) d = 0;
-//   if (s.indexOf('.') == -1) s += '.';
-//   s += new Array(d + 1).join('0');
-//   if (new RegExp('^(-|\\+)?(\\d+(\\.\\d{0,' + (d + 1) + '})?)\\d*$').test(s)) {
-//     var s = '0' + RegExp.$2, pm = RegExp.$1, a = RegExp.$3.length, b = true;
-//     if (a == d + 2) {
-//       a = s.match(/\d/g);
-//       if (parseInt(a[a.length - 1]) > 4) {
-//         for (var i = a.length - 2; i >= 0; i--) {
-//           a[i] = parseInt(a[i]) + 1;
-//           if (a[i] == 10) {
-//             a[i] = 0;
-//             b = i != 1;
-//           } else break;
-//         }
-//       }
-//       s = a.join('').replace(new RegExp('(\\d+)(\\d{' + d + '})\\d$'), '$1.$2');
-//     }
-//     if (b) s = s.substr(1);
-//     return (pm + s).replace(/\.$/, '');
-//   }
-//   return this + '';
-// };
+Number.prototype.toFixed = function (n: number) {
+  if (n > 20 || n < 0) {
+    throw new RangeError('toFixed() digits argument must be between 0 and 20');
+  }
+  const number = this;
+  if (isNaN(number) || number >= Math.pow(10, 21)) {
+    return number.toString();
+  }
+  if (typeof (n) == 'undefined' || n == 0) {
+    return (Math.round(number)).toString();
+  }
+
+  let result = number.toString();
+  const arr = result.split('.');
+
+  // 整数的情况
+  if (arr.length < 2) {
+    result += '.';
+    for (let i = 0; i < n; i += 1) {
+      result += '0';
+    }
+    return result;
+  }
+
+  const integer = arr[0];
+  const decimal = arr[1];
+  if (decimal.length == n) {
+    return result;
+  }
+  if (decimal.length < n) {
+    for (let i = 0; i < n - decimal.length; i += 1) {
+      result += '0';
+    }
+    return result;
+  }
+  result = integer + '.' + decimal.substr(0, n);
+  const last = decimal.substr(n, 1);
+
+  // 四舍五入，转换为整数再处理，避免浮点数精度的损失
+  if (parseInt(last, 10) >= 5) {
+    const x = Math.pow(10, n);
+    result = (Math.round((parseFloat(result) * x)) + 1) / x;
+    result = result.toFixed(n);
+  }
+
+  return result;
+};
 
 // 说明：JS时间Date格式化参数
 // 参数：格式化字符串如：'yyyy-MM-dd HH:mm:ss'
 // 结果：如2016-06-01 10:09:00
-if (!(Date.prototype as any).format){
+if (!(Date.prototype as any).format) {
   (Date.prototype as any).format = function (fmt) {
     var o = {
       'M+': this.getMonth() + 1,
@@ -188,6 +206,9 @@ if (!Object.values) {
 
 //jw 2017.11.06 兼容window.requestAnimationFrame
 (function () {
+  if(typeof window === 'undefined'){
+    window = this;
+  }
   var lastTime = 0;
   var vendors = ['webkit', 'moz'];
   for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
