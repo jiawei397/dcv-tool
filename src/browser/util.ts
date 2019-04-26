@@ -158,29 +158,28 @@ util.addUrlParam = function (url, key, value) {
 
 /**
  * 动态加载js
- * @author jw
- * @date 2017-11-21
  */
-// util.loadScript = function (url, callback) {
-//   var script = document.createElement('script');
-//   script.type = 'text/javascript';
-//   if (util.isFunction(callback)) {
-//     if (script.readyState) {
-//       script.onreadystatechange = function () {
-//         if (script.readyState == 'loaded' || script.readyState == 'complete') {
-//           script.onreadystatechange = null;
-//           callback();
-//         }
-//       };
-//     } else {
-//       script.onload = function () {
-//         callback();
-//       };
-//     }
-//   }
-//   script.src = url;
-//   document.body.appendChild(script);
-// };
+util.loadScript = function (url:string, callback:Function) {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  if (util.isFunction(callback)) {
+    let s = (script as any);
+    if (s.readyState) {
+      s.onreadystatechange = function () {
+        if (s.readyState == 'loaded' || s.readyState == 'complete') {
+          s.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else {
+      script.onload = function () {
+        callback();
+      };
+    }
+  }
+  script.src = url;
+  document.body.appendChild(script);
+};
 
 /**
  * 动态添加css
