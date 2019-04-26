@@ -3,11 +3,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
-    'util-common': './src/common/index.ts',
-    'util': './src/browser/index.ts'
+    'utils-common': './src/common/index.ts',
+    'utils': './src/browser/index.ts'
   },
-  devtool: 'inline-source-map',
-  mode: 'development',
+  devtool: 'source-map',
+  // mode: 'development',
   module: {
     rules: [
       {
@@ -38,7 +38,7 @@ module.exports = {
   },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
-    compress: true,
+    // compress: true,
     historyApiFallback: true,
     hot: true
   }
