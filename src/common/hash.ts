@@ -165,7 +165,7 @@ hash.combine = function fun (opObjectA, opObjectB, isDeep, isReturnNew, isCloneO
  */
 hash.combineNew = function fun (opObjectA, opObjectB, isDeep, isReturnNew, isCloneObjDeep = false) {
   if (isReturnNew) {
-    var tempFun = uinv.util.cloneObj || uinv.cloneObj;
+    var tempFun = uinv.cloneObj;
     var result = tempFun(opObjectA, isCloneObjDeep);
     fun(result, opObjectB, isDeep, false);
     return result;
