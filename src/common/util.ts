@@ -1,9 +1,11 @@
 import uinv from './uinv';
-import throttle from './throttle';
+import {throttle, debounce} from "./throttle";
+
 
 const util: any = {};
 
 util.throttle = throttle;
+util.debounce = debounce;
 util.cloneObj = uinv.cloneObj;
 
 /**
