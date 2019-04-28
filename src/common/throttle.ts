@@ -15,9 +15,9 @@ function clear(isClear: boolean, id: string | number) {
 }
 
 interface Opts {
-  id: string,
+  id: string | number,
   context: object,
-  args: [],
+  args: any [],
   time: number
 }
 
