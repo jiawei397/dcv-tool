@@ -244,13 +244,15 @@ util.removeFavicon = function () {
  * @date 2017-10-17
  */
 util.getHashMap = function () {
-  var datas = location.getHash().split('#')[1];
-  var map = {};
+  let hash = location.getHash();
+  let datas = hash.substr(1);
+  let map = {};
   if (!datas) return map;
-  for (var i = 0; i < datas.length; i++) {
-    var t = datas[i].split('=');
+  let arr = datas.split('&');
+  arr.forEach(function (str) {
+    let t = str.split('=');
     map[t[0]] = decodeURIComponent(t[1]);
-  }
+  });
   return map;
 };
 
