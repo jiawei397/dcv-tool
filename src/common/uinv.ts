@@ -1,4 +1,6 @@
-const uinv:any = {};
+import hash from './hash';
+
+const uinv: any = {};
 
 /**
  * 判断是否函数
@@ -41,36 +43,33 @@ uinv.isNumber = function (obj) {
  * @param {Function} endFun 停止克隆的条件语句
  * @return {Array}  克隆后的对象
  */
-uinv.cloneObj = (function () {
-  var clone = function (obj, isDeep, endFun) {
-    if (!obj || typeof obj !== 'object' || uinv.hash.isEmpty(obj) || (uinv.isFunction(endFun) && endFun(obj))) {
-      return obj;
-    }
-    var c = obj instanceof Array ? [] : {};
-    for (var i in obj) {
-      var prop = obj[i];
-      if (isDeep && typeof prop == 'object') {
-        if (prop instanceof Array) {
-          c[i] = [];
+uinv.cloneObj = function clone(obj, isDeep, endFun) {
+  if (!obj || typeof obj !== 'object' || hash.isEmpty(obj) || (uinv.isFunction(endFun) && endFun(obj))) {
+    return obj;
+  }
+  var c = obj instanceof Array ? [] : {};
+  for (var i in obj) {
+    var prop = obj[i];
+    if (isDeep && typeof prop == 'object') {
+      if (prop instanceof Array) {
+        c[i] = [];
 
-          for (var j = 0; j < prop.length; j++) {
-            if (typeof prop[j] != 'object') {
-              c[i].push(prop[j]);
-            } else {
-              c[i].push(clone(prop[j], isDeep, endFun));
-            }
+        for (var j = 0; j < prop.length; j++) {
+          if (typeof prop[j] != 'object') {
+            c[i].push(prop[j]);
+          } else {
+            c[i].push(clone(prop[j], isDeep, endFun));
           }
-        } else {
-          c[i] = clone(prop, isDeep, endFun);
         }
       } else {
-        c[i] = prop;
+        c[i] = clone(prop, isDeep, endFun);
       }
+    } else {
+      c[i] = prop;
     }
-    return c;
-  };
-  return clone;
-})();
+  }
+  return c;
+};
 
 /**
  * 继承

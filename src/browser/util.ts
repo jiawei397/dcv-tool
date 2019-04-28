@@ -1,5 +1,5 @@
 /* eslint-disable no-caller */
-import local from './location';
+import location from './location';
 
 /**
  * 这是一个为所有模块引用前的基类，提供几个基础方法
@@ -16,7 +16,8 @@ const util: any = {};
  * @date 2018-05-22
  */
 util.isChrome = function () {
-  return /chrome/.test(navigator.userAgent.toLowerCase());
+  let userAgent = location.getUserAgent();
+  return /chrome/.test(userAgent.toLowerCase());
 };
 
 /**
@@ -25,7 +26,8 @@ util.isChrome = function () {
  * @date 2018-05-22
  */
 util.isIE = function () {
-  return (/msie/i.test(navigator.userAgent.toLowerCase()) || /Trident/i.test(navigator.userAgent.toLowerCase())) && !/opera/.test(navigator.userAgent.toLowerCase());
+  let userAgent = location.getUserAgent();
+  return (/msie/i.test(userAgent.toLowerCase()) || /Trident/i.test(userAgent.toLowerCase())) && !/opera/.test(userAgent.toLowerCase());
 };
 
 /**
@@ -34,7 +36,7 @@ util.isIE = function () {
  */
 util.urlArg = function (name: string) {
   var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
-  var r = local.getSearch().substr(1).match(reg);
+  var r = location.getSearch().substr(1).match(reg);
   if (r != null) {
     return unescape(r[2]);
   }
@@ -47,7 +49,7 @@ util.urlArg = function (name: string) {
  * @date 2017-06-13
  */
 util.getProjectName = function () {
-  var project = local.getPathName();
+  var project = location.getPathName();
   if (project.indexOf('/', 1) == -1) {
     return '';
   }
@@ -60,9 +62,9 @@ util.getProjectName = function () {
  * @returns {String}
  */
 util.getIp = function () {
-  var host = local.getHost();
+  var host = location.getHost();
   if (host !== '') {
-    return local.getProtocol() + '//' + host;
+    return location.getProtocol() + '//' + host;
   }
   return '';
 };
@@ -73,7 +75,8 @@ util.getIp = function () {
  * @date 2016-11-19
  */
 util.is64 = function () {
-  return /win64/i.test(navigator.userAgent) && /x64/i.test(navigator.userAgent);
+  let userAgent = location.getUserAgent();
+  return /win64/i.test(userAgent) && /x64/i.test(userAgent);
 };
 
 /**
@@ -92,7 +95,7 @@ util.getURLParams = function (paramName: string, win: Window = window) {
  */
 util.getURLParamsMap = function (win: Window = window) {
   var name, value, num;
-  var str = win.location.search.substr(1);
+  var str = location.getSearch(win).substr(1);
   var arr = str.split('&'); // 各个参数放到数组里
   var params = {};
   for (var i = 0; i < arr.length; i++) {
@@ -241,7 +244,7 @@ util.removeFavicon = function () {
  * @date 2017-10-17
  */
 util.getHashMap = function () {
-  var datas = window.location.hash.split('#')[1];
+  var datas = location.getHash().split('#')[1];
   var map = {};
   if (!datas) return map;
   for (var i = 0; i < datas.length; i++) {
@@ -267,17 +270,17 @@ util.getHashByKey = function (key: string) {
  */
 util.detectZoom = function () {
   var ratio = 0,
-    screen = window.screen as any,
-    ua = navigator.userAgent.toLowerCase();
+    screen = location.getScreen(),
+    ua = location.getUserAgent().toLowerCase();
 
-  if (window.devicePixelRatio !== undefined) {
+  if (location.getDevicePixelRatio() !== undefined) {
     ratio = window.devicePixelRatio;
-  } else if (~ua.indexOf('msie')) {
+  } else if (~ua.indexOf('msie')) { //IE6-9
     if (screen.deviceXDPI && screen.logicalXDPI) {
       ratio = screen.deviceXDPI / screen.logicalXDPI;
     }
-  } else if (window.outerWidth !== undefined && window.innerWidth !== undefined) {
-    ratio = window.outerWidth / window.innerWidth;
+  } else if (location.getWindowWidth()) {
+    ratio = location.getWindowWidth().outerWidth / location.getWindowWidth().innerWidth;
   }
   return ratio;
 };

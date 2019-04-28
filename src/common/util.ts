@@ -4,6 +4,17 @@ import throttle from './throttle';
 const util: any = {};
 
 util.throttle = throttle;
+util.cloneObj = uinv.cloneObj;
+
+/**
+ * 获取2个数之间的随机整数
+ */
+util.ramdom = function (max: number, min: number) {
+  if (max < min) {
+    [min, max] = [max, min];
+  }
+  return Math.round(uinv.random() * (max - min) + min);
+};
 
 /**
  * 为属性解析路径
@@ -153,6 +164,41 @@ util.unique = function (results, keepFirst) {
 
   util.delItemsByIndexArray(results, delList);
   return results;
+};
+
+/**
+ * 清空数组
+ * @param {Array} opArray  对象数组
+ * @return {Array}  返回为空的数组
+ */
+util.clearArray = function (opArray: []) {
+  opArray.splice(0, opArray.length);
+  return opArray;
+};
+
+/**
+ * 在数组中找到指定元素的位置(以0开始)
+ * @param {Array} opArray  对象数组
+ * @param {String} opValue  要查找值
+ * @return {String}  返回位置，未找到返回-1
+ */
+util.findItemInArray = function (opArray, opValue) {
+  for (var i = 0; i < opArray.length; i++) {
+    if (opArray[i] == opValue) {
+      return i;
+    }
+  }
+  return -1;
+};
+
+/**
+ * 判断元素是否在数组中
+ * @param {String} opValue
+ * @param {Array} opArray
+ * @return {Boolean}
+ */
+util.isInArray = function (opValue, opArray) {
+  return this.findItemInArray(opArray, opValue) != -1;
 };
 
 /**
@@ -740,6 +786,26 @@ util.base64Encode = function (str) {
     out += base64EncodeChars.charAt(c3 & 0x3F);
   }
   return out;
+};
+
+/**
+ * 判断字符串的开头字符，如果以判断的值开头则返回true
+ * @param {} str    目标字符串
+ * @param {} startStr  开头字符
+ */
+util.stringStartWith = function (str: string, startStr: string) {
+  var reg = new RegExp('^' + startStr);
+  return reg.test(str);
+};
+
+/**
+ * 判断字符串的结束字符，如果以判断的值结尾则返回true
+ * @param {} str    目标字符串
+ * @param {} endStr  结束字符
+ */
+util.stringEndWith = function (str: string, endStr: string) {
+  var reg = new RegExp(endStr + '$');
+  return reg.test(str);
 };
 
 /**
