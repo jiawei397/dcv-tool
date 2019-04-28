@@ -1,5 +1,5 @@
 import { assert, expect} from 'chai';
-import hash from '../../src/common/hash';
+import hash from '../../../src/common/hash';
 
 describe('hash', () => {
   // var jsonObj = {"name": "god", "sex": "men", "love": "you", "life": undefined};

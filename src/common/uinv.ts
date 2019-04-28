@@ -180,11 +180,9 @@ uinv.stringify = function (v, replacer, space) {
 
 /**
  * 安全的随机数
- * @author jw
- * @date 2017-06-01
  */
 uinv.random = (function () {
-  var seed = new Date().getTime();
+  let seed = new Date().getTime();
   return function () {
     seed = (seed * 9301 + 49297) % 233280;
     return seed / (233280.0);
