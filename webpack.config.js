@@ -6,8 +6,8 @@ module.exports = {
     'utils-common': './src/common/index.ts',
     'utils': './src/browser/index.ts'
   },
-  devtool: 'source-map',
   // mode: 'development',
+  devtool: '',//'source-map',
   module: {
     rules: [
       {
@@ -32,7 +32,7 @@ module.exports = {
     libraryTarget: 'umd', //umd
     // umdNamedDefine: true,
     globalObject: 'this', //必须得有它
-    path: path.resolve(__dirname, 'dist/release'),
+    path: path.resolve(__dirname, 'release'),
     // filename: 'Q.js'
     library: 'utils'
   },

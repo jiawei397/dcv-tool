@@ -9,7 +9,7 @@
     "build": "webpack --mode production",
     "release-js": "tsc --target es2015"
   },
-  "main": "src/browser/index.ts",
+  "main": "dist/browser/index.js",
   "dependencies": {},
   "devDependencies": {
     "ts-loader": "^5.3.3",
