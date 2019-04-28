@@ -6,7 +6,7 @@ import uinv from '../common/index';
  * @author jw
  * @date 2017-08-02
  */
-let data = function (storage, key, value) {
+let data = function (storage: Storage, key: string, value: any) {
   if (key === undefined) {
     return null;
   }
@@ -23,7 +23,7 @@ let data = function (storage, key, value) {
 /**
  * 封装localStorage方法
  */
-uinv.data = function (key, value) {
+uinv.data = function (key: string, value: any) {
   return data(localStorage, key, value);
 };
 
@@ -48,7 +48,7 @@ uinv.getAllCookie = function () {
  * @author jw
  * @date 2017-09-27
  */
-const getCookie = function (name) {
+const getCookie = function (name: string) {
   var reg = new RegExp('(^| )' + name + '=([^;]*)(;|$)'), arr = document.cookie.match(reg);
   if (arr) {
     return unescape(arr[2]);
@@ -61,7 +61,7 @@ const getCookie = function (name) {
  * @author jw
  * @date 2017-09-27
  */
-const delCookie = function (name) {
+const delCookie = function (name: string) {
   var cval = getCookie(name);
   if (cval != null) {
     setCookie(name, '', -1);
@@ -73,7 +73,7 @@ const delCookie = function (name) {
  * @author jw
  * @date 2017-09-27
  */
-const setCookie = function (name, value, days = 300) {
+const setCookie = function (name: string, value: string, days: number = 300) {
   var exp = new Date();
   exp.setTime(exp.getTime() + days * 24 * 60 * 60 * 1000);
   document.cookie = name + '=' + escape(value) + '; path=/;expires=' + exp.toUTCString();
@@ -82,7 +82,7 @@ const setCookie = function (name, value, days = 300) {
 /**
  * 封装cookie方法
  */
-uinv.cookie = function (key, value) {
+uinv.cookie = function (key: string, value: any) {
   if (key === undefined) {
     return null;
   }
@@ -96,12 +96,12 @@ uinv.cookie = function (key, value) {
   return uinv;
 };
 
-uinv.importJs = function (path) {
-  document.write("<script type='text/javascript' src='" + path + "'></script>");
+uinv.importJs = function (path: string) {
+  document.write(`<script type='text/javascript' src='${path}'></script>`);
 };
 
-uinv.importCss = function (path) {
-  document.write("<link rel='STYLESHEET' type='text/css' href='" + path + "'>");
+uinv.importCss = function (path: string) {
+  document.write(`<link rel='STYLESHEET' type='text/css' href='${path}'>`);
 };
 
 export default uinv;
