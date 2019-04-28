@@ -16,3 +16,4 @@ tmp/
 /build/Debug/
 /dist/
 /release/
+/coverage/

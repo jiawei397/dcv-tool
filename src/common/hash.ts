@@ -1,6 +1,6 @@
 import uinv from './uinv';
 
-const hash:any = {};
+const hash: any = {};
 /**
  * 获取对象中元素数目
  * @param {Object} opObject
@@ -30,12 +30,11 @@ hash.isEmpty = function (opObject) {
  * @param {String} key
  * @return {Boolean}
  */
-hash.hasKey = function (opObject, key) {
-  // return typeof opObject[key] != 'undefined';
-  if (opObject != null) {
+hash.hasKey = function (opObject: object, key: string) {
+  if (opObject) {
     return opObject.hasOwnProperty(key);
   }
-  console.error('传入opObject参数有误');
+  // console.error('传入opObject参数有误');
   return false;
 };
 /**
@@ -131,7 +130,7 @@ hash.deepEqual = function (obj1, obj2) {
  * @param {Boolean} isCloneObjDeep
  * @return {Object}
  */
-hash.combine = function fun (opObjectA, opObjectB, isDeep, isReturnNew, isCloneObjDeep = false) {
+hash.combine = function fun(opObjectA, opObjectB, isDeep, isReturnNew, isCloneObjDeep = false) {
   if (isReturnNew) {
     var tempFun = uinv.cloneObj;
     var result = tempFun(opObjectA, isCloneObjDeep);
@@ -163,7 +162,7 @@ hash.combine = function fun (opObjectA, opObjectB, isDeep, isReturnNew, isCloneO
  * @param {Boolean} isCloneObjDeep
  * @return {Object}
  */
-hash.combineNew = function fun (opObjectA, opObjectB, isDeep, isReturnNew, isCloneObjDeep = false) {
+hash.combineNew = function fun(opObjectA, opObjectB, isDeep, isReturnNew, isCloneObjDeep = false) {
   if (isReturnNew) {
     var tempFun = uinv.cloneObj;
     var result = tempFun(opObjectA, isCloneObjDeep);
@@ -214,7 +213,7 @@ hash.subtract = function (opObjectA, opObjectB, isReturnNew) {
  * @param {Boolean} keepValueSame
  * @return {Object}
  */
-hash.getIntersection = function (opObjectA, opObjectB, keepValueSame) {
+hash.getIntersection = function (opObjectA: object, opObjectB: object, keepValueSame: boolean) {
   var result = {};
   for (var cur in opObjectA) {
     if (opObjectB[cur]) {
