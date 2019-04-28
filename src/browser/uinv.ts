@@ -82,7 +82,7 @@ const setCookie = function (name: string, value: string, days: number = 300) {
 /**
  * 封装cookie方法
  */
-uinv.cookie = function (key: string, value: any) {
+uinv.cookie = function (key: string, value: any, days: number) {
   if (key === undefined) {
     return null;
   }
@@ -91,7 +91,7 @@ uinv.cookie = function (key: string, value: any) {
   } else if (value == null) {
     delCookie(key);
   } else {
-    setCookie(key, uinv.stringify(value));
+    setCookie(key, uinv.stringify(value), days);
   }
   return uinv;
 };
