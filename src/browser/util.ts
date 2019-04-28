@@ -1,5 +1,6 @@
 /* eslint-disable no-caller */
 import local from './location';
+
 /**
  * 这是一个为所有模块引用前的基类，提供几个基础方法
  * 只能在浏览器使用
@@ -7,7 +8,7 @@ import local from './location';
  * @author jw
  * @date 2018-07-05
  */
-const util:any = {};
+const util: any = {};
 
 /**
  * 判断是否谷歌浏览器
@@ -31,7 +32,7 @@ util.isIE = function () {
  * 取url中某个参数
  * @param {String} name 参数名称
  */
-util.urlArg = function (name) {
+util.urlArg = function (name: string) {
   var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
   var r = local.getSearch().substr(1).match(reg);
   if (r != null) {
@@ -82,17 +83,14 @@ util.is64 = function () {
  * @return {Object} 参数的属性
  * @example util.getURLParams("ID");
  */
-util.getURLParams = function (paramName, win) {
+util.getURLParams = function (paramName: string, win: Window = window) {
   return this.getURLParamsMap(win)[paramName];
 };
 
 /**
  * 读取到url的参数，放到Map里
  */
-util.getURLParamsMap = function (win) {
-  if (!win) {
-    win = window;
-  }
+util.getURLParamsMap = function (win: Window = window) {
   var name, value, num;
   var str = win.location.search.substr(1);
   var arr = str.split('&'); // 各个参数放到数组里
@@ -113,7 +111,7 @@ util.getURLParamsMap = function (win) {
  * @author jw
  * @date 2017-05-25
  */
-util.addParam2Url = function (url, key, value) {
+util.addParam2Url = function (url: string, key: string, value: string) {
   var andStr = '?';
   var beforeparam = url.indexOf('?');
   if (beforeparam != -1) {
@@ -127,7 +125,7 @@ util.addParam2Url = function (url, key, value) {
  * @author jw
  * @date 2017-05-25
  */
-util.removeParamFromUrl = function (url, key) {
+util.removeParamFromUrl = function (url: string, key: string) {
   if (url.indexOf(key) == -1) {
     return url;
   }
@@ -159,7 +157,7 @@ util.addUrlParam = function (url, key, value) {
 /**
  * 动态加载js
  */
-util.loadScript = function (url:string, callback:Function) {
+util.loadScript = function (url: string, callback: Function) {
   var script = document.createElement('script');
   script.type = 'text/javascript';
   if (util.isFunction(callback)) {
@@ -187,7 +185,7 @@ util.loadScript = function (url:string, callback:Function) {
  * @param {string} id
  * @param {string} className 类标签
  */
-util.requireCss = function (cssPath, id, className) {
+util.requireCss = function (cssPath: string, id: string, className: string) {
   var link = document.createElement('link');
   link.rel = 'stylesheet';
   link.type = 'text/css';
@@ -214,7 +212,7 @@ util.requireCss = function (cssPath, id, className) {
 /**
  * 设置地址栏图标
  */
-util.setFavicon = function (url) {
+util.setFavicon = function (url: string) {
   this.removeFavicon();
   var link = document.createElement('link');
   link.type = 'image/x-icon';
@@ -258,7 +256,7 @@ util.getHashMap = function () {
  * @author jw
  * @date 2017-10-17
  */
-util.getHashByKey = function (key) {
+util.getHashByKey = function (key: string) {
   return this.getHashMap()[key];
 };
 
@@ -289,7 +287,7 @@ util.detectZoom = function () {
  * @author jw
  * @param {String} url 文件地址，类似：http://127.0.0.1:8080/mmdb-rsm-web/base/dcv/projects/snapshot/images/C741F748-91F0-0001-D524-68801CBF1107.jpg
  */
-util.isFileExist = function (url) {
+util.isFileExist = function (url: string) {
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.open('GET', url, false);
   xmlhttp.send();
@@ -302,7 +300,7 @@ util.isFileExist = function (url) {
  * 兼容多浏览器的剪切板
  */
 util.setClipboardData = (function () {
-  var createElementForExecCommand = function (textToClipboard) {
+  var createElementForExecCommand = function (textToClipboard: string) {
     var forExecElement = document.createElement('div');
     forExecElement.style.position = 'absolute';
     forExecElement.style.left = '-10000px';
@@ -312,17 +310,14 @@ util.setClipboardData = (function () {
     forExecElement.contentEditable = 'true';
     return forExecElement;
   };
-  var selectContent = function (element) {
+  var selectContent = function (element: HTMLElement) {
     var rangeToSelect = document.createRange();
     rangeToSelect.selectNodeContents(element);
     var selection = window.getSelection();
     selection.removeAllRanges();
     selection.addRange(rangeToSelect);
   };
-  return function (value, key) {
-    if (key === undefined) {
-      key = 'Text';
-    }
+  return function (value: string, key: string = 'Text') {
     var success = true;
     var win = (window as any);
     if (win.clipboardData) { // Internet Explorer
