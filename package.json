@@ -11,7 +11,7 @@
     "js": "tsc --target es2015",
     "version": "npm version patch",
     "build": "npm run merge && npm run js",
-    "publish": "npm publish"
+    "publish": "npm run build && npm run version && npm publish"
   },
   "main": "dist/browser/index.js",
   "dependencies": {},
