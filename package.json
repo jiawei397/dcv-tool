@@ -9,9 +9,7 @@
     "merge": "webpack --mode production",
     "unit": "./node_modules/.bin/jest --coverage",
     "js": "tsc --target es2015",
-    "version": "npm version patch",
-    "build": "npm run merge && npm run js",
-    "publish": "npm run build && npm run version && npm publish"
+    "build": "npm run merge && npm run js"
   },
   "main": "dist/browser/index.js",
   "dependencies": {},
