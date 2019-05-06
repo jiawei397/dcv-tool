@@ -8,10 +8,11 @@
     "develop": "webpack --mode development",
     "merge": "webpack --mode production",
     "unit": "./node_modules/.bin/jest --coverage",
-    "js": "tsc --target es2015",
-    "build": "npm run merge && npm run js"
+    "compile": "tsc --target es2015",
+    "build": "npm run merge && npm run compile"
   },
   "main": "dist/browser/index.js",
+  "typings": "ts/browser/index.d.ts",
   "dependencies": {},
   "devDependencies": {
     "@types/jest": "^24.0.12",
