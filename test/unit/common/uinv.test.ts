@@ -2,7 +2,7 @@ import { assert, expect} from 'chai';
 import uinv from '../../../src/common/uinv';
 
 describe('cloneObj() 验证', function () {
-  var obj = {
+  let obj = {
     'a': 'b',
     'c': ['jfjfjfjs'],
     'd': function () {
@@ -21,7 +21,7 @@ describe('cloneObj() 验证', function () {
     }
   };
   it('深度复制，改变属性为引用类型的值不会影响原对象', function () {
-    var newObj = uinv.cloneObj(obj, true);
+    let newObj = uinv.cloneObj(obj, true);
     assert.notEqual(newObj, obj);
     assert.deepEqual(newObj, obj);
     assert.notEqual(obj.e, newObj.e, '非引用类型的值不应该相等');
@@ -32,7 +32,7 @@ describe('cloneObj() 验证', function () {
   });
 
   it('非深度复制，其非引用类型其实是引用指针', function () {
-    var newObj = uinv.cloneObj(obj, false);
+    let newObj = uinv.cloneObj(obj, false);
     assert.deepEqual(newObj, obj);
     assert.equal(newObj.e, obj.e, '非引用类型的值其实是引用值');
 
@@ -42,7 +42,7 @@ describe('cloneObj() 验证', function () {
 });
 
 describe('继承 extend() 验证', function () {
-  var SuperClass = function (a) {
+  let SuperClass = function (a) {
     this.a = a;
   };
   SuperClass.prototype.test = function () {
@@ -58,7 +58,7 @@ describe('继承 extend() 验证', function () {
   };
   uinv.extend(SubClass, SuperClass);
 
-  var subClass = new SubClass('b');
+  let subClass = new SubClass('b');
 
   it('判断继承', function () {
     assert.equal(subClass.a, 'b');//只有SubClass.superclass.constructor.call(this, b);这句，才会成功
@@ -75,14 +75,14 @@ describe('继承 extend() 验证', function () {
 });
 
 describe('混合继承 multiExtend() 验证', function () {
-  var SuperClass1 = function (a) {
+  let SuperClass1 = function (a) {
     this.a = a;
   };
   SuperClass1.prototype.test = function () {
 
   };
 
-  var SuperClass2 = function (a, c) {
+  let SuperClass2 = function (a, c) {
     this.a = a;
     this.c = c;
   };
@@ -90,7 +90,7 @@ describe('混合继承 multiExtend() 验证', function () {
 
   };
 
-  var SubClass:any = function (b) {
+  let SubClass:any = function (b) {
     SubClass.superclass.constructor.call(this, b);
     this.b = b;
   };
@@ -99,7 +99,7 @@ describe('混合继承 multiExtend() 验证', function () {
   };
   uinv.multiExtend(SubClass, [SuperClass1, SuperClass2]);
 
-  var subClass = new SubClass('b');
+  let subClass = new SubClass('b');
 
   it('判断继承', function () {
     assert.equal(SubClass.superclass, SuperClass1.prototype, '全面继承的是第1个父类');
@@ -121,8 +121,8 @@ describe('uinv中基本方法校验', function () {
   it('random() 验证', function () {
     assert.isNumber(uinv.random(), '随机数是个数字');
 
-    var a = uinv.random();
-    var b = uinv.random();
+    let a = uinv.random();
+    let b = uinv.random();
     assert.notEqual(a, b, '随机生成的2个数字不一样');
   });
 
@@ -151,15 +151,15 @@ describe('uinv中基本方法校验', function () {
   });
 
   it('isError() 验证', function () {
-    var str = 'fff';
+    let str = 'fff';
     assert.isFalse(uinv.isError(str), '字符串不是错误');
 
-    var err = new Error(str);
+    let err = new Error(str);
     assert.isTrue(uinv.isError(err));
   });
 
   it('isNumber() 验证', function () {
-    var str = '1';
+    let str = '1';
     assert.isFalse(uinv.isNumber(str), '字符串不是数字');
 
     assert.isTrue(uinv.isNumber(1));
@@ -183,5 +183,34 @@ describe('uinv中基本方法校验', function () {
   it('空函数 noop() 验证', function () {
     assert.isFunction(uinv.noop);
     assert.isUndefined(uinv.noop());
+  });
+
+  it('eval 验证', function () {
+    assert.equal(uinv.eval('2+2'), 4);
+  });
+
+  it('jsonParse() 验证, 将字符串转换为json对象', function () {
+    assert.isNull(uinv.jsonParse(null), 'null转换后还是null');
+    assert.isUndefined(uinv.jsonParse(undefined), 'undefined转换后还是undefined');
+    assert.equal(uinv.jsonParse('a'), 'a');
+    assert.equal(uinv.jsonParse(1), 1);
+    assert.deepEqual(uinv.jsonParse([1]), [1], '数组转换后还是原来的');
+    assert.deepEqual(uinv.jsonParse({'a': 'b'}), {'a': 'b'}, 'object转换后还是原来的');
+    let jsonStr = '{"a":"b"}';
+    let json = uinv.jsonParse(jsonStr);
+    assert.isObject(json);
+    assert.equal(json.a, 'b');
+  });
+
+  it('stringify() 验证, 转换json对象为字符串', function () {
+    assert.isNull(uinv.stringify(null), 'null转换后还是null');
+    assert.equal(uinv.stringify('a'), 'a');
+    assert.equal(uinv.stringify(1), 1);
+    assert.equal(uinv.stringify([1]), '[1]');
+
+    let json = {'a': 'b'};
+    let jsonStr = uinv.stringify(json);
+    assert.isString(jsonStr);
+    assert.equal(jsonStr, '{"a":"b"}');
   });
 });
