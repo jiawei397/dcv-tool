@@ -7,8 +7,8 @@ const hash: any = {};
  * @return {Number}
  */
 hash.getSize = function (opObject) {
-  var result = 0;
-  for (var cur in opObject) {
+  let result = 0;
+  for (let cur in opObject) {
     result += 1;
   }
   return result;
@@ -19,7 +19,7 @@ hash.getSize = function (opObject) {
  * @return {Boolean}
  */
 hash.isEmpty = function (opObject) {
-  for (var cur in opObject) {
+  for (let cur in opObject) {
     return false;
   }
   return true;
@@ -45,7 +45,7 @@ hash.hasKey = function (opObject: object, key: string) {
  */
 hash.renameKey = function (opObject, oldKey, newKey) {
   if (opObject[oldKey]) {
-    var tmp = opObject[oldKey];
+    let tmp = opObject[oldKey];
     delete opObject[oldKey];
     opObject[newKey] = tmp;
   }
@@ -56,7 +56,7 @@ hash.renameKey = function (opObject, oldKey, newKey) {
  * @return {String}
  */
 hash.getFirstKey = function (opObject) {
-  for (var i in opObject) {
+  for (let i in opObject) {
     return i;
   }
   return null;
@@ -67,8 +67,8 @@ hash.getFirstKey = function (opObject) {
  * @return {Array}
  */
 hash.keys = function (opObject) {
-  var keys = [];
-  for (var i in opObject) {
+  let keys = [];
+  for (let i in opObject) {
     keys.push(i);
   }
   return keys;
@@ -79,7 +79,7 @@ hash.keys = function (opObject) {
  * @return {String}
  */
 hash.getFirstValue = function (opObject) {
-  for (var i in opObject) {
+  for (let i in opObject) {
     return opObject[i];
   }
   return undefined;
@@ -91,8 +91,8 @@ hash.getFirstValue = function (opObject) {
  */
 hash.values = function (opObject) {
   if (opObject instanceof Array) return opObject;//数组无需转换,ie8里遍历数组会把数组原型链扩展方法当做一个属性输出
-  var values = [];
-  for (var i in opObject) {
+  let values = [];
+  for (let i in opObject) {
     values.push(opObject[i]);
   }
   return values;
@@ -103,7 +103,7 @@ hash.values = function (opObject) {
  * @param {Object} opObject
  */
 hash.clear = function (opObject) {
-  for (var key in opObject) {
+  for (let key in opObject) {
     delete opObject[key];
   }
 };
@@ -130,14 +130,13 @@ hash.deepEqual = function (obj1, obj2) {
  * @param {Boolean} isCloneObjDeep
  * @return {Object}
  */
-hash.combine = function fun(opObjectA, opObjectB, isDeep, isReturnNew, isCloneObjDeep = false) {
+hash.combine = function fun(opObjectA: object, opObjectB: object, isDeep: boolean = false, isReturnNew: boolean = false, isCloneObjDeep = false) {
   if (isReturnNew) {
-    var tempFun = uinv.cloneObj;
-    var result = tempFun(opObjectA, isCloneObjDeep);
+    let result = uinv.cloneObj(opObjectA, isCloneObjDeep);
     fun(result, opObjectB, isDeep, false);
     return result;
   }
-  for (var cur in opObjectB) {
+  for (let cur in opObjectB) {
     if (isDeep) {
       if (opObjectA[cur] !== undefined && opObjectA[cur] !== null
         && !(opObjectA[cur] instanceof Array) && typeof opObjectA[cur] == 'object'
@@ -164,12 +163,11 @@ hash.combine = function fun(opObjectA, opObjectB, isDeep, isReturnNew, isCloneOb
  */
 hash.combineNew = function fun(opObjectA, opObjectB, isDeep, isReturnNew, isCloneObjDeep = false) {
   if (isReturnNew) {
-    var tempFun = uinv.cloneObj;
-    var result = tempFun(opObjectA, isCloneObjDeep);
+    let result = uinv.cloneObj(opObjectA, isCloneObjDeep);
     fun(result, opObjectB, isDeep, false);
     return result;
   }
-  for (var cur in opObjectB) {
+  for (let cur in opObjectB) {
     if (isDeep) {
       if (opObjectA[cur] !== undefined && opObjectA[cur] !== null
         && !(opObjectA[cur] instanceof Array) && typeof opObjectA[cur] == 'object'
@@ -195,13 +193,13 @@ hash.combineNew = function fun(opObjectA, opObjectB, isDeep, isReturnNew, isClon
 hash.subtract = function (opObjectA, opObjectB, isReturnNew) {
   if (isReturnNew === undefined) isReturnNew = true;
   if (isReturnNew) {
-    var result = {};
-    for (var cur in opObjectA) {
+    let result = {};
+    for (let cur in opObjectA) {
       if (!opObjectB || !opObjectB[cur]) result[cur] = opObjectA[cur];
     }
     return result;
   }
-  for (var cur2 in opObjectB) {
+  for (let cur2 in opObjectB) {
     delete opObjectA[cur2];
   }
   return opObjectA;
@@ -214,8 +212,8 @@ hash.subtract = function (opObjectA, opObjectB, isReturnNew) {
  * @return {Object}
  */
 hash.getIntersection = function (opObjectA: object, opObjectB: object, keepValueSame: boolean) {
-  var result = {};
-  for (var cur in opObjectA) {
+  let result = {};
+  for (let cur in opObjectA) {
     if (opObjectB[cur]) {
       if (keepValueSame) {
         if (opObjectA[cur] == opObjectB[cur]) result[cur] = opObjectA[cur];
