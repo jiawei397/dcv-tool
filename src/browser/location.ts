@@ -49,7 +49,7 @@ local.getUserAgent = function (win: Window = window) {
 
 /**
  * 用户屏幕的信息
- **/
+ */
 local.getScreen = function (win: Window = window) {
   return win.screen;
 };

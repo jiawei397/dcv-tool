@@ -160,7 +160,7 @@ util.addUrlParam = function (url, key, value) {
 /**
  * 动态加载js
  */
-util.loadScript = function (url: string, callback: Function) {
+util.loadScript = function (url: string, callback: () => void) {
   let script = document.createElement('script');
   script.type = 'text/javascript';
   if (util.isFunction(callback)) {
