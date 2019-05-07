@@ -47,7 +47,7 @@ util._parsePathForAttribute = function (name) {
  */
 util.getAttribute = function (obj, path) {
   path = util._parsePathForAttribute(path);
-  for (var i = 0; i < path.length; i++) {
+  for (let i = 0; i < path.length; i++) {
     if (!obj) return undefined;
     obj = obj[path[i]];
   }
@@ -62,8 +62,8 @@ util.getAttribute = function (obj, path) {
  */
 util.setAttribute = function (obj, path, value) {
   path = util._parsePathForAttribute(path);
-  for (var i = 0; i < path.length - 1; i++) {
-    var cur = path[i];
+  for (let i = 0; i < path.length - 1; i++) {
+    let cur = path[i];
     if (!obj[cur]) obj[cur] = {};
     obj = obj[cur];
   }
@@ -77,8 +77,8 @@ util.setAttribute = function (obj, path, value) {
  */
 util.delAttribute = function (obj, path) {
   path = util._parsePathForAttribute(path);
-  for (var i = 0; i < path.length - 1; i++) {
-    var cur = path[i];
+  for (let i = 0; i < path.length - 1; i++) {
+    let cur = path[i];
     if (!obj[cur]) obj[cur] = {};
     obj = obj[cur];
   }
@@ -90,9 +90,9 @@ util.delAttribute = function (obj, path) {
  * @param {string} opFilename
  * @return {string}
  */
-util.filenameFromPath = function (opFilename) {
+util.filenameFromPath = function (opFilename: any) {
   opFilename = opFilename.replaceAll('/', '\\');
-  var pos = opFilename.lastIndexOf('\\');
+  let pos = opFilename.lastIndexOf('\\');
   if (pos == -1) {
     return opFilename;
   }
@@ -103,8 +103,8 @@ util.filenameFromPath = function (opFilename) {
  * @param {string} opFilename
  * @return {string}
  */
-util.getFilenamePath = function (opFilename) {
-  var pos = opFilename.lastIndexOf('\\');
+util.getFilenamePath = function (opFilename: string) {
+  let pos = opFilename.lastIndexOf('\\');
   if (pos == -1) {
     pos = opFilename.lastIndexOf('/');
   }
@@ -118,9 +118,9 @@ util.getFilenamePath = function (opFilename) {
  * @param {string} opFilename
  * @return {string}
  */
-util.getFilenameFile = function (opFilename) {
-  var filename = util.filenameFromPath(opFilename);
-  var pos = filename.lastIndexOf('.');
+util.getFilenameFile = function (opFilename: string) {
+  let filename = util.filenameFromPath(opFilename);
+  let pos = filename.lastIndexOf('.');
   if (pos == -1) {
     return filename;
   }
@@ -131,8 +131,8 @@ util.getFilenameFile = function (opFilename) {
  * @param {string} opFilename
  * @return {string}
  */
-util.getFilenameType = function (opFilename) {
-  var pos = opFilename.lastIndexOf('.');
+util.getFilenameType = function (opFilename: string) {
+  let pos = opFilename.lastIndexOf('.');
   if (pos == -1) {
     return '';
   }
@@ -152,11 +152,11 @@ util.getFilenameType = function (opFilename) {
  * @return {Array} 删除了重复项的数组
  * @example util.unique(result);
  */
-util.unique = function (results, keepFirst) {
-  var delList = [];
+util.unique = function (results: [], keepFirst: boolean) {
+  let delList = [];
 
-  for (var i = 0; i < results.length; i++) {
-    for (var ii = i + 1; ii < results.length; ii++) {
+  for (let i = 0; i < results.length; i++) {
+    for (let ii = i + 1; ii < results.length; ii++) {
       if (results[i] == results[ii]) {
         if (keepFirst) util.addNewItemToArray(ii, delList);
         else util.addNewItemToArray(i, delList);
@@ -184,8 +184,8 @@ util.clearArray = function (opArray: []) {
  * @param {String} opValue  要查找值
  * @return {String}  返回位置，未找到返回-1
  */
-util.findItemInArray = function (opArray, opValue) {
-  for (var i = 0; i < opArray.length; i++) {
+util.findItemInArray = function (opArray: [any], opValue: any) {
+  for (let i = 0; i < opArray.length; i++) {
     if (opArray[i] == opValue) {
       return i;
     }
@@ -199,7 +199,7 @@ util.findItemInArray = function (opArray, opValue) {
  * @param {Array} opArray
  * @return {Boolean}
  */
-util.isInArray = function (opValue, opArray) {
+util.isInArray = function (opValue: any, opArray: [any]) {
   return this.findItemInArray(opArray, opValue) != -1;
 };
 
@@ -208,8 +208,8 @@ util.isInArray = function (opValue, opArray) {
  * @param {Array} opArray
  * @return {Array}
  */
-util.clearEmptyItemInArray = function (opArray) {
-  for (var i = 0; i < opArray.length; i++) {
+util.clearEmptyItemInArray = function (opArray: []) {
+  for (let i = 0; i < opArray.length; i++) {
     if (typeof opArray[i] === 'undefined' || opArray[i] == '') {
       opArray.splice(i, 1);
       i -= 1;
@@ -224,8 +224,8 @@ util.clearEmptyItemInArray = function (opArray) {
  * @param {Array} opArray 对象数组
  * @return {String}  数组中有该元素则返回该元素的位置，否则返回新数组长度
  */
-util.addNewItemToArray = function (opValue, opArray) {
-  for (var i = 0; i < opArray.length; i++) {
+util.addNewItemToArray = function (opValue: any, opArray: [any]) {
+  for (let i = 0; i < opArray.length; i++) {
     if (opArray[i] == opValue) {
       return i;
     }
@@ -238,10 +238,10 @@ util.addNewItemToArray = function (opValue, opArray) {
  * 向数组中插入元素
  * @param {String} opValue  插入的元素
  * @param {Array} opArray  插入的对象数组
- * @param {String} index    插入的位置
+ * @param {Number} index    插入的位置
  * @return {Array} 新数组
  */
-util.insertItemToArray = function (opValue, opArray, index) {
+util.insertItemToArray = function (opValue: any, opArray: [any], index: number) {
   opArray.splice(index, 0, opValue);
   return opArray;
 };
@@ -252,10 +252,10 @@ util.insertItemToArray = function (opValue, opArray, index) {
  * @param {Array} opArrayB 数组2
  * @return {String}  数组中相同的元素
  */
-util.getConcomitanceBetweenArrays = function (opArrayA, opArrayB) {
-  var result = [];
-  for (var i = 0; i < opArrayA.length; i++) {
-    var itemA = opArrayA[i];
+util.getConcomitanceBetweenArrays = function (opArrayA: [], opArrayB: []) {
+  let result = [];
+  for (let i = 0; i < opArrayA.length; i++) {
+    let itemA = opArrayA[i];
     if (util.findItemInArray(opArrayB, itemA) != -1) {
       util.addNewItemToArray(itemA, result);
     }
@@ -271,12 +271,12 @@ util.getConcomitanceBetweenArrays = function (opArrayA, opArrayB) {
  * @param {Boolean} returnNew  是否返回新数组
  * @return {Array} 新数组
  */
-util.mergeArrays = function (opArrayA, opArrayB, returnNew) {
+util.mergeArrays = function (opArrayA: [], opArrayB: [], returnNew: boolean) {
   if (returnNew) {
     return opArrayA.concat(opArrayB);
   }
 
-  for (var i = 0; i < opArrayB.length; i++) {
+  for (let i = 0; i < opArrayB.length; i++) {
     opArrayA.push(opArrayB[i]);
   }
   return opArrayA;
@@ -287,8 +287,8 @@ util.mergeArrays = function (opArrayA, opArrayB, returnNew) {
  * @author jw
  * @date 2017-07-19
  */
-util.concatArrays = function (opArrayA, opArrayB) {
-  for (var i = 0; i < opArrayB.length; i++) {
+util.concatArrays = function (opArrayA: [], opArrayB: []) {
+  for (let i = 0; i < opArrayB.length; i++) {
     if (opArrayA.indexOf(opArrayB[i]) == -1) {
       opArrayA.push(opArrayB[i]);
     }
@@ -302,10 +302,10 @@ util.concatArrays = function (opArrayA, opArrayB) {
  * @param {Array} opArrayB  校样数组
  * @return {Boolean} 返回新数组
  */
-util.subtractArrays = function (opArrayA, opArrayB) {
-  var result = [];
-  for (var i = 0; i < opArrayA.length; i++) {
-    var itemA = opArrayA[i];
+util.subtractArrays = function (opArrayA: [], opArrayB: []) {
+  let result = [];
+  for (let i = 0; i < opArrayA.length; i++) {
+    let itemA = opArrayA[i];
     if (util.findItemInArray(opArrayB, itemA) == -1) {
       util.addNewItemToArray(itemA, result);
     }
@@ -346,9 +346,9 @@ util._ArraySort_Down = function (a, b) {
  * @param {Array} opA 数组
  * @param {Array} opIA 序列数组
  */
-util.delItemsByIndexArray = function (opA, opIA) {
+util.delItemsByIndexArray = function (opA: [], opIA: []) {
   opIA.sort(util._ArraySort_Down);
-  for (var i = 0; i < opIA.length; i++) {
+  for (let i = 0; i < opIA.length; i++) {
     opA.splice(opIA[i], 1);
   }
 };
@@ -358,8 +358,8 @@ util.delItemsByIndexArray = function (opA, opIA) {
  * @param {Array} opA  对象数组
  * @param {String} opItem  要删除的元素
  */
-util.delFirstItemFromArray = function (opA, opItem) {
-  var pos = util.findItemInArray(opA, opItem);
+util.delFirstItemFromArray = function (opA: [], opItem: string) {
+  let pos = util.findItemInArray(opA, opItem);
   if (pos != -1) {
     opA.splice(pos, 1);
   }
@@ -373,10 +373,10 @@ util.delFirstItemFromArray = function (opA, opItem) {
  * @author jw
  * @date 2017-07-07
  */
-util.getItemsFromArrayByKey = function (opA, key) {
+util.getItemsFromArrayByKey = function (opA: [any], key: string) {
   if (!(opA instanceof Array)) opA = [opA];
-  var values = [];
-  opA.map(function (obj) {
+  let values = [];
+  opA.forEach(function (obj) {
     if (obj && obj[key]) {
       values.push(obj[key]);
     }
@@ -393,13 +393,13 @@ util.getItemsFromArrayByKey = function (opA, key) {
  * @author jw
  * @date 2017-07-07
  */
-util.getItemsFromArrayByKeys = function (opA, keys, isAllowNull) {
+util.getItemsFromArrayByKeys = function (opA: [any], keys: [any], isAllowNull: boolean = false) {
   if (!(opA instanceof Array)) opA = [opA];
   if (!(keys instanceof Array)) keys = [keys];
-  var values = [];
-  opA.map(function (obj) {
-    var value = {};
-    keys.map(function (key) {
+  let values = [];
+  opA.forEach(function (obj) {
+    let value = {};
+    keys.forEach(function (key) {
       if (obj && key) {
         if (isAllowNull) {
           value[key] = obj[key];
@@ -424,15 +424,15 @@ util.getItemsFromArrayByKeys = function (opA, keys, isAllowNull) {
  * @author jw
  * @date 2017-07-07
  */
-util.getAttrsFromObjectByKeys = function (obj, keys, isFilterNull) {
+util.getAttrsFromObjectByKeys = function (obj: object, keys: [any], isFilterNull: boolean = false) {
   if (!(keys instanceof Array)) {
     if (obj && keys) {
       return obj[keys];
     }
   } else {
-    var values = [];
-    var value = {};
-    keys.map(function (key) {
+    let values = [];
+    let value = {};
+    keys.forEach(function (key) {
       if (obj && key) {
         if (!isFilterNull) {
           value[key] = obj[key];
@@ -459,8 +459,8 @@ let _chineseChars = '123456789ABCDE';
  */
 util.sortArrayByChar = function (opA, param) {
   return opA.sort(function (c1, c2) {
-    var a;
-    var b;
+    let a;
+    let b;
     if (param && param['useAttribute']) {
       a = ('' + util.getAttribute(c1, param['useAttribute'])).split('');
       b = ('' + util.getAttribute(c2, param['useAttribute'])).split('');
@@ -469,12 +469,12 @@ util.sortArrayByChar = function (opA, param) {
       b = ('' + c2).split('');
     }
 
-    for (var i = 0; i < a.length; i++) {
+    for (let i = 0; i < a.length; i++) {
       if (b[i] === undefined) return 1;
       if (a[i] == b[i]) continue;
 
-      var indexa = _chineseChars.indexOf(a[i]);
-      var indexb = _chineseChars.indexOf(b[i]);
+      let indexa = _chineseChars.indexOf(a[i]);
+      let indexb = _chineseChars.indexOf(b[i]);
       if (indexa == -1 && indexb == -1) {
         if (a[i] > b[i]) return 1;
         return -1;
@@ -487,13 +487,19 @@ util.sortArrayByChar = function (opA, param) {
     return -1;
   });
 };
+
+declare interface sortArrayByNumber {
+  useAttribute: any,
+  dir: string
+}
+
 /**
  * 数组排序,根据数字
  * @param {Array} opA  要排序的数组
  * @param {Object} param 排序的条件
  * @return {Array}    排序后的数组
  */
-util.sortArrayByNumber = function (opA, param) {
+util.sortArrayByNumber = function (opA: [], param: sortArrayByNumber) {
   return opA.sort(function (c1, c2) {
     if (param && param['useAttribute']) {
       c1 = c1[param['useAttribute']];
@@ -513,7 +519,7 @@ util.sortArrayByNumber = function (opA, param) {
  * 不管格式，字符串也可以
  */
 util.isNum = function (num) {
-  var reNum = /^\d*$/;
+  let reNum = /^\d*$/;
   return num !== '' && reNum.test(num);
 };
 
@@ -528,16 +534,16 @@ util.isNum = function (num) {
  * @return {String}
  */
 util.createUUID = function () {
-  var dg = new Date(1582, 10, 15, 0, 0, 0, 0);
-  var dc = new Date();
-  var t = dc.getTime() - dg.getTime();
-  var tl = util._UUID_getIntegerBits(t, 0, 31);
-  var tm = util._UUID_getIntegerBits(t, 32, 47);
-  var thv = util._UUID_getIntegerBits(t, 48, 59) + '1'; // version 1, security version is 2
-  var csar = util._UUID_getIntegerBits(util._UUID_rand(4095), 0, 7);
-  var csl = util._UUID_getIntegerBits(util._UUID_rand(4095), 0, 7);
+  let dg = new Date(1582, 10, 15, 0, 0, 0, 0);
+  let dc = new Date();
+  let t = dc.getTime() - dg.getTime();
+  let tl = util._UUID_getIntegerBits(t, 0, 31);
+  let tm = util._UUID_getIntegerBits(t, 32, 47);
+  let thv = util._UUID_getIntegerBits(t, 48, 59) + '1'; // version 1, security version is 2
+  let csar = util._UUID_getIntegerBits(util._UUID_rand(4095), 0, 7);
+  let csl = util._UUID_getIntegerBits(util._UUID_rand(4095), 0, 7);
 
-  var n = util._UUID_getIntegerBits(util._UUID_rand(8191), 0, 7)
+  let n = util._UUID_getIntegerBits(util._UUID_rand(8191), 0, 7)
     + util._UUID_getIntegerBits(util._UUID_rand(8191), 8, 15)
     + util._UUID_getIntegerBits(util._UUID_rand(8191), 0, 7)
     + util._UUID_getIntegerBits(util._UUID_rand(8191), 8, 15)
@@ -551,11 +557,11 @@ util.createUUID = function () {
  * @param {Number} end   终点
  * @return {String}    截取后的字符串
  */
-util._UUID_getIntegerBits = function (val, start, end) {
-  var base16 = util._UUID_returnBase(val, 16);
-  var quadArray = [];
-  var quadString = '';
-  var i = 0;
+util._UUID_getIntegerBits = function (val: string, start: number, end: number) {
+  let base16 = util._UUID_returnBase(val, 16);
+  let quadArray = [];
+  let quadString = '';
+  let i = 0;
   for (i = 0; i < base16.length; i++) {
     quadArray.push(base16.substring(i, i + 1));
   }
@@ -567,19 +573,19 @@ util._UUID_getIntegerBits = function (val, start, end) {
 };
 /**
  * 把十进制数字转成16进制的数字
- * @param {Number} number 十进制数字
+ * @param {Number} num 十进制数字
  * @param {} base
  * @return {String}
  */
-util._UUID_returnBase = function (number, base) {
-  return (number).toString(base).toUpperCase();
+util._UUID_returnBase = function (num: number, base) {
+  return num.toString(base).toUpperCase();
 };
 /**
  * 返回随机近似整数值
  * @param {Number} max
  * @return {Number}
  */
-util._UUID_rand = function (max) {
+util._UUID_rand = function (max: number) {
   return Math.floor(uinv.random() * (max + 1));
 };
 
@@ -591,12 +597,12 @@ util._UUID_rand = function (max) {
  * @param {Boolean} force 是否所有数都保留位数，即整数3转换后为3.00之类
  * @return {Number}  四舍五入后的数字
  */
-util.toFixed = function (num, toFixed, force) {
+util.toFixed = function (num: number, toFixed: number, force: boolean = false) {
   if (force) {
     return num.toFixed(toFixed);
   }
-  var str = num.toString();
-  var pos = str.indexOf('.');
+  let str = num.toString();
+  let pos = str.indexOf('.');
   if (pos == -1) return str;
   if (str.length > pos + toFixed + 1) {
     return num.toFixed(toFixed);
@@ -617,7 +623,7 @@ util.normalizeColor = function (input, colorSystem) {
     else if (input.indexOf(',') != -1) input = input.split(',');
   }
 
-  var result = [input[0], input[1], input[2], input[3]];
+  let result = [input[0], input[1], input[2], input[3]];
 
   if (colorSystem === undefined) {
     if (input[0] <= 1 && input[1] <= 1 && input[2] <= 1) colorSystem = 1;
@@ -650,16 +656,16 @@ util.parseWebColor = function (input, colorSystem) {
     if (input[0] <= 1 && input[1] <= 1 && input[2] <= 1) colorSystem = 1;
   }
 
-  var tmp = [input[0], input[1], input[2]];
+  let tmp = [input[0], input[1], input[2]];
   if (colorSystem == 1) {
     tmp[0] = Math.round(tmp[0] * 255);
     tmp[1] = Math.round(tmp[1] * 255);
     tmp[2] = Math.round(tmp[2] * 255);
   }
-  var result = '#';
-  for (var i = 0; i < tmp.length; i++) {
-    var n = Number(tmp[i]).toString(16);
-    var Numbern = Number(n);
+  let result = '#';
+  for (let i = 0; i < tmp.length; i++) {
+    let n = Number(tmp[i]).toString(16);
+    let Numbern = Number(n);
     if (isNaN(Numbern)) {
       if (n.length == 1) { //有可能是a,b,c,d,e,f需要补0
         n = '0' + n;
@@ -679,11 +685,11 @@ util.parseWebColor = function (input, colorSystem) {
  *
  * @return {Array}
  */
-util.toHexString = function (input) {
+util.toHexString = function (input: string) {
   if (typeof input == 'string') {
-    var colors = input.split('#');
-    var color: string = colors[1];
-    var layerColor = [0, 0, 0];
+    let colors = input.split('#');
+    let color: string = colors[1];
+    let layerColor = [0, 0, 0];
     layerColor[0] = parseInt(color.substr(0, 2), 16) / 255;
     layerColor[1] = parseInt(color.substr(2, 2), 16) / 255;
     layerColor[2] = parseInt(color.substr(4, 2), 16) / 255;
@@ -696,10 +702,10 @@ util.toHexString = function (input) {
  * 过滤特殊字符串并清除空格
  * @param {} characters
  */
-util.delSpaceCharacter = function (characters) {
-  var pattern = new RegExp('[`~!@#$^&*()=|{}\':;\',\\[\\].<>/?~！@#￥……&*（）%％|【】‘；：”“\'。，、？-]');
-  var rs = '';
-  for (var i = 0; i < characters.length; i++) {
+util.delSpaceCharacter = function (characters: string) {
+  let pattern = new RegExp('[`~!@#$^&*()=|{}\':;\',\\[\\].<>/?~！@#￥……&*（）%％|【】‘；：”“\'。，、？-]');
+  let rs = '';
+  for (let i = 0; i < characters.length; i++) {
     rs = rs + characters.substr(i, 1).replace(pattern, '');
   }
   rs = rs.replace('\\', '');
@@ -713,11 +719,11 @@ util.delSpaceCharacter = function (characters) {
  * @param {boolean} isOutSpace 是否忽略空格
  * @return {}
  */
-util.replaceMark = function (s, isOutSpace) {
-  // var pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）%％|【】‘；：”“'。，、？]");
-  var pattern = new RegExp('[`~^*=|{}<>￥……*|‘”“\']');
-  var rs = '';
-  for (var i = 0; i < s.length; i++) {
+util.replaceMark = function (s: string, isOutSpace: boolean = false) {
+  // let pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）%％|【】‘；：”“'。，、？]");
+  let pattern = new RegExp('[`~^*=|{}<>￥……*|‘”“\']');
+  let rs = '';
+  for (let i = 0; i < s.length; i++) {
     rs = rs + s.substr(i, 1).replace(pattern, '');
     rs = rs.replace('-', '');
     // rs = rs.replace('\\', '');
@@ -734,9 +740,9 @@ util.replaceMark = function (s, isOutSpace) {
  * @date 2016-11-29
  * @return {boolean} 是，返回true
  */
-util.testMark = function (s) {
-  var pattern = new RegExp('[`~^*|{}<>￥……*|‘”“]');
-  // var pattern = new RegExp("[`~!@#$^&*()=|{}:;,\\[\\].<>/?~！@#￥……&*（）%％|【】‘；：”“。，、？]");
+util.testMark = function (s: string) {
+  let pattern = new RegExp('[`~^*|{}<>￥……*|‘”“]');
+  // let pattern = new RegExp("[`~!@#$^&*()=|{}:;,\\[\\].<>/?~！@#￥……&*（）%％|【】‘；：”“。，、？]");
   return pattern.test(s);
 };
 
@@ -745,7 +751,7 @@ util.testMark = function (s) {
  * @author jw
  * @date 2016-11-24
  */
-util.delSpace = function (s) {
+util.delSpace = function (s: string) {
   s = s.replace(/\s/gi, '');
   s = s.replace(/'/gi, '');
   s = s.replace(/"/gi, '');
@@ -757,10 +763,10 @@ util.delSpace = function (s) {
  * @param {String} str 字符串
  *
  */
-util.base64Encode = function (str) {
-  var base64EncodeChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
-  var out, i, len;
-  var c1, c2, c3;
+util.base64Encode = function (str: string) {
+  let base64EncodeChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+  let out, i, len;
+  let c1, c2, c3;
 
   len = str.length;
   i = 0;
@@ -796,7 +802,7 @@ util.base64Encode = function (str) {
  * @param {} startStr  开头字符
  */
 util.stringStartWith = function (str: string, startStr: string) {
-  var reg = new RegExp('^' + startStr);
+  let reg = new RegExp('^' + startStr);
   return reg.test(str);
 };
 
@@ -806,7 +812,7 @@ util.stringStartWith = function (str: string, startStr: string) {
  * @param {} endStr  结束字符
  */
 util.stringEndWith = function (str: string, endStr: string) {
-  var reg = new RegExp(endStr + '$');
+  let reg = new RegExp(endStr + '$');
   return reg.test(str);
 };
 
@@ -815,7 +821,7 @@ util.stringEndWith = function (str: string, endStr: string) {
  * @param {Array} arr 数组
  * @return {Array}
  */
-util.flatten = function flatten(arr) {
+util.flatten = function flatten(arr: []) {
   return arr.reduce(function (a, b) {
     return a.concat(Array.isArray(b) ? flatten(b) : b);
   }, []);
@@ -826,15 +832,15 @@ util.flatten = function flatten(arr) {
  * @param {String} dataUrl base64字符串
  * @return {Blob}
  */
-util.dataURLtoBlob = function (dataUrl) {
-  var arr = dataUrl.split(',');
-  var mime = arr[0].match(/:(.*?);/)[1];// 结果：   image/png
+util.dataURLtoBlob = function (dataUrl: string) {
+  let arr = dataUrl.split(',');
+  let mime = arr[0].match(/:(.*?);/)[1];// 结果：   image/png
   // console.log("arr[0]====" + JSON.stringify(arr[0]));//   "data:image/png;base64"
   // console.log("arr[0].match(/:(.*?);/)====" + arr[0].match(/:(.*?);/));// :image/png;,image/png
   // console.log("arr[0].match(/:(.*?);/)[1]====" + arr[0].match(/:(.*?);/)[1]);//   image/png
-  var bstr = atob(arr[1].replace(/\s/g, ''));
-  var n = bstr.length;
-  var u8arr = new Uint8Array(n);
+  let bstr = atob(arr[1].replace(/\s/g, ''));
+  let n = bstr.length;
+  let u8arr = new Uint8Array(n);
   while (n--) {
     u8arr[n] = bstr.charCodeAt(n);
   }
