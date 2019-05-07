@@ -7,6 +7,7 @@
     "dev": "webpack-dev-server",
     "develop": "webpack --mode development",
     "merge": "webpack --mode production",
+    "lint": "tslint src/**/*.ts",
     "unit": "./node_modules/.bin/jest --coverage",
     "compile": "tsc --target es2015",
     "build": "npm run merge && npm run compile"

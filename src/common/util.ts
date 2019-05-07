@@ -1,5 +1,5 @@
 import uinv from './uinv';
-import {throttle, debounce} from "./throttle";
+import {throttle, debounce} from './throttle';
 
 
 const util: any = {};
@@ -449,7 +449,7 @@ util.getAttrsFromObjectByKeys = function (obj: object, keys: [any], isFilterNull
 };
 
 //////////////////////////////////////////////////////////////////////////////////
-let _chineseChars = '123456789ABCDE';
+let CHINESE_CHARS = '123456789ABCDE';
 /**
  * 根据汉字字符进行排序
  * @param {Array} opA  要排序的数组
@@ -457,7 +457,7 @@ let _chineseChars = '123456789ABCDE';
  * @return {Array}  排序后的数组
  * @example util.sortArrayByChar(keys);
  */
-util.sortArrayByChar = function (opA, param) {
+util.sortArrayByChar = function (opA:[], param) {
   return opA.sort(function (c1, c2) {
     let a;
     let b;
@@ -473,8 +473,8 @@ util.sortArrayByChar = function (opA, param) {
       if (b[i] === undefined) return 1;
       if (a[i] == b[i]) continue;
 
-      let indexa = _chineseChars.indexOf(a[i]);
-      let indexb = _chineseChars.indexOf(b[i]);
+      let indexa = CHINESE_CHARS.indexOf(a[i]);
+      let indexb = CHINESE_CHARS.indexOf(b[i]);
       if (indexa == -1 && indexb == -1) {
         if (a[i] > b[i]) return 1;
         return -1;
@@ -488,7 +488,7 @@ util.sortArrayByChar = function (opA, param) {
   });
 };
 
-declare interface sortArrayByNumber {
+interface ISortArray {
   useAttribute: any,
   dir: string
 }
@@ -499,7 +499,7 @@ declare interface sortArrayByNumber {
  * @param {Object} param 排序的条件
  * @return {Array}    排序后的数组
  */
-util.sortArrayByNumber = function (opA: [], param: sortArrayByNumber) {
+util.sortArrayByNumber = function (opA: [], param: ISortArray) {
   return opA.sort(function (c1, c2) {
     if (param && param['useAttribute']) {
       c1 = c1[param['useAttribute']];
