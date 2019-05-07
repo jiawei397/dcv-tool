@@ -47,14 +47,14 @@ uinv.cloneObj = function clone(obj, isDeep, endFun) {
   if (!obj || typeof obj !== 'object' || hash.isEmpty(obj) || (uinv.isFunction(endFun) && endFun(obj))) {
     return obj;
   }
-  var c = obj instanceof Array ? [] : {};
-  for (var i in obj) {
-    var prop = obj[i];
+  let c = obj instanceof Array ? [] : {};
+  for (let i in obj) {
+    let prop = obj[i];
     if (isDeep && typeof prop == 'object') {
       if (prop instanceof Array) {
         c[i] = [];
 
-        for (var j = 0; j < prop.length; j++) {
+        for (let j = 0; j < prop.length; j++) {
           if (typeof prop[j] != 'object') {
             c[i].push(prop[j]);
           } else {
@@ -75,7 +75,7 @@ uinv.cloneObj = function clone(obj, isDeep, endFun) {
  * 继承
  */
 uinv.extend = function (subClass, superClass) {
-  var F = function () {
+  let F = function () {
   }, cloneFun = uinv.cloneObj;
   F.prototype = superClass.prototype;
   subClass.prototype = new F();
@@ -102,9 +102,9 @@ uinv.multiExtend = function (subClass, superClasses, repleceExistedMember) {
   if (repleceExistedMember === undefined) repleceExistedMember = true;
   uinv.extend(subClass, superClasses[0]);
 
-  for (var i = 1; i < superClasses.length; i++) {
-    var curSuperClass = superClasses[i];
-    for (var cur in curSuperClass.prototype) {
+  for (let i = 1; i < superClasses.length; i++) {
+    let curSuperClass = superClasses[i];
+    for (let cur in curSuperClass.prototype) {
       if (cur == 'constructor') continue;
       if (repleceExistedMember) {
         subClass.prototype[cur] = curSuperClass.prototype[cur];
@@ -142,7 +142,7 @@ uinv.noop = function () {
  * @date 2017-05-22
  */
 uinv.eval = function (data) {
-  var Fn = Function; // 一个变量指向Function，防止有些前端编译工具报错
+  let Fn = Function; // 一个变量指向Function，防止有些前端编译工具报错
   return new Fn('return ' + data)();
 };
 
@@ -153,12 +153,12 @@ uinv.jsonParse = function (s, reviver) {
   if (!s || !(typeof s === 'string')) {
     return s;
   }
-  var json;
+  let json;
   try {
     json = JSON.parse(s, reviver);
   } catch (e) {
     try {
-      json = uinv.eval('(' + s + ')');// 主要用来处理带function的字符串
+      json = uinv.eval('(' + s + ')'); // 主要用来处理带function的字符串
     } catch (e2) {
       json = s;
     }

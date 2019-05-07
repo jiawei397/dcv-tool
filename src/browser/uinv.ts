@@ -49,7 +49,7 @@ uinv.getAllCookie = function () {
  * @date 2017-09-27
  */
 const getCookie = function (name: string) {
-  var reg = new RegExp('(^| )' + name + '=([^;]*)(;|$)'), arr = document.cookie.match(reg);
+  let reg = new RegExp('(^| )' + name + '=([^;]*)(;|$)'), arr = document.cookie.match(reg);
   if (arr) {
     return unescape(arr[2]);
   }
@@ -62,7 +62,7 @@ const getCookie = function (name: string) {
  * @date 2017-09-27
  */
 const delCookie = function (name: string) {
-  var cval = getCookie(name);
+  let cval = getCookie(name);
   if (cval != null) {
     setCookie(name, '', -1);
   }
@@ -74,7 +74,7 @@ const delCookie = function (name: string) {
  * @date 2017-09-27
  */
 const setCookie = function (name: string, value: string, days: number = 300) {
-  var exp = new Date();
+  let exp = new Date();
   exp.setTime(exp.getTime() + days * 24 * 60 * 60 * 1000);
   document.cookie = name + '=' + escape(value) + '; path=/;expires=' + exp.toUTCString();
 };

@@ -1,7 +1,6 @@
 import uinv from './uinv';
 import {throttle, debounce} from './throttle';
 
-
 const util: any = {};
 
 util.throttle = throttle;
@@ -263,7 +262,7 @@ util.getConcomitanceBetweenArrays = function (opArrayA: [], opArrayB: []) {
   return result;
 };
 
-//array 有 concat 的方法,但不能直接将源数据改变
+// array 有 concat 的方法,但不能直接将源数据改变
 /**
  * 链接两个数组 把两个数组合成一个数组,相同元素会分别保留,两个必须是数组,不能一个数组一个字符串
  * @param {Array} opArrayA  数组1
@@ -457,7 +456,7 @@ let CHINESE_CHARS = '123456789ABCDE';
  * @return {Array}  排序后的数组
  * @example util.sortArrayByChar(keys);
  */
-util.sortArrayByChar = function (opA:[], param) {
+util.sortArrayByChar = function (opA: [], param) {
   return opA.sort(function (c1, c2) {
     let a;
     let b;
@@ -489,8 +488,8 @@ util.sortArrayByChar = function (opA:[], param) {
 };
 
 interface ISortArray {
-  useAttribute: any,
-  dir: string
+  useAttribute: any;
+  dir: string;
 }
 
 /**
@@ -640,7 +639,7 @@ util.normalizeColor = function (input, colorSystem) {
   return result;
 };
 
-//colorSystem 为 1 :"0.1 0.1 0.1" ; colorSystem 为255 :"232 32 34"
+// colorSystem 为 1 :"0.1 0.1 0.1" ; colorSystem 为255 :"232 32 34"
 /**
  * 解析网页颜色
  * @param {Array} input
@@ -667,11 +666,11 @@ util.parseWebColor = function (input, colorSystem) {
     let n = Number(tmp[i]).toString(16);
     let Numbern = Number(n);
     if (isNaN(Numbern)) {
-      if (n.length == 1) { //有可能是a,b,c,d,e,f需要补0
+      if (n.length == 1) { // 有可能是a,b,c,d,e,f需要补0
         n = '0' + n;
       }
     } else {
-      if (Numbern < 10) { //小于10时补0
+      if (Numbern < 10) { // 小于10时补0
         n = '0' + n;
       }
     }
@@ -834,7 +833,7 @@ util.flatten = function flatten(arr: []) {
  */
 util.dataURLtoBlob = function (dataUrl: string) {
   let arr = dataUrl.split(',');
-  let mime = arr[0].match(/:(.*?);/)[1];// 结果：   image/png
+  let mime = arr[0].match(/:(.*?);/)[1]; // 结果：   image/png
   // console.log("arr[0]====" + JSON.stringify(arr[0]));//   "data:image/png;base64"
   // console.log("arr[0].match(/:(.*?);/)====" + arr[0].match(/:(.*?);/));// :image/png;,image/png
   // console.log("arr[0].match(/:(.*?);/)[1]====" + arr[0].match(/:(.*?);/)[1]);//   image/png
@@ -844,7 +843,7 @@ util.dataURLtoBlob = function (dataUrl: string) {
   while (n--) {
     u8arr[n] = bstr.charCodeAt(n);
   }
-  return new Blob([u8arr], {type: mime});//值，类型
+  return new Blob([u8arr], {type: mime}); // 值，类型
 };
 
 export default util;

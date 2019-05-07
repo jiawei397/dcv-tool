@@ -35,8 +35,8 @@ util.isIE = function () {
  * @param {String} name 参数名称
  */
 util.urlArg = function (name: string) {
-  var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
-  var r = location.getSearch().substr(1).match(reg);
+  let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
+  let r = location.getSearch().substr(1).match(reg);
   if (r != null) {
     return unescape(r[2]);
   }
@@ -49,7 +49,7 @@ util.urlArg = function (name: string) {
  * @date 2017-06-13
  */
 util.getProjectName = function () {
-  var project = location.getPathName();
+  let project = location.getPathName();
   if (project.indexOf('/', 1) == -1) {
     return '';
   }
@@ -62,7 +62,7 @@ util.getProjectName = function () {
  * @returns {String}
  */
 util.getIp = function () {
-  var host = location.getHost();
+  let host = location.getHost();
   if (host !== '') {
     return location.getProtocol() + '//' + host;
   }
@@ -94,11 +94,11 @@ util.getURLParams = function (paramName: string, win: Window = window) {
  * 读取到url的参数，放到Map里
  */
 util.getURLParamsMap = function (win: Window = window) {
-  var name, value, num;
-  var str = location.getSearch(win).substr(1);
-  var arr = str.split('&'); // 各个参数放到数组里
-  var params = {};
-  for (var i = 0; i < arr.length; i++) {
+  let name, value, num;
+  let str = location.getSearch(win).substr(1);
+  let arr = str.split('&'); // 各个参数放到数组里
+  let params = {};
+  for (let i = 0; i < arr.length; i++) {
     num = arr[i].indexOf('=');
     if (num > 0) {
       name = arr[i].substring(0, num);
@@ -115,8 +115,8 @@ util.getURLParamsMap = function (win: Window = window) {
  * @date 2017-05-25
  */
 util.addParam2Url = function (url: string, key: string, value: string) {
-  var andStr = '?';
-  var beforeparam = url.indexOf('?');
+  let andStr = '?';
+  let beforeparam = url.indexOf('?');
   if (beforeparam != -1) {
     andStr = '&';
   }
@@ -132,15 +132,15 @@ util.removeParamFromUrl = function (url: string, key: string) {
   if (url.indexOf(key) == -1) {
     return url;
   }
-  var urlParam = url.substr(url.indexOf('?') + 1);
-  var beforeUrl = url.substr(0, url.indexOf('?'));
-  var nextUrl = '';
+  let urlParam = url.substr(url.indexOf('?') + 1);
+  let beforeUrl = url.substr(0, url.indexOf('?'));
+  let nextUrl = '';
 
-  var arr = [];
+  let arr = [];
   if (urlParam != '') {
-    var urlParamArr = urlParam.split('&');
-    for (var i = 0; i < urlParamArr.length; i++) {
-      var paramArr = urlParamArr[i].split('=');
+    let urlParamArr = urlParam.split('&');
+    for (let i = 0; i < urlParamArr.length; i++) {
+      let paramArr = urlParamArr[i].split('=');
       if (paramArr[0] != key) {
         arr.push(urlParamArr[i]);
       }
@@ -161,7 +161,7 @@ util.addUrlParam = function (url, key, value) {
  * 动态加载js
  */
 util.loadScript = function (url: string, callback: Function) {
-  var script = document.createElement('script');
+  let script = document.createElement('script');
   script.type = 'text/javascript';
   if (util.isFunction(callback)) {
     let s = (script as any);
@@ -189,7 +189,7 @@ util.loadScript = function (url: string, callback: Function) {
  * @param {string} className 类标签
  */
 util.requireCss = function (cssPath: string, id: string, className: string) {
-  var link = document.createElement('link');
+  let link = document.createElement('link');
   link.rel = 'stylesheet';
   link.type = 'text/css';
   if (id) {
@@ -217,21 +217,21 @@ util.requireCss = function (cssPath: string, id: string, className: string) {
  */
 util.setFavicon = function (url: string) {
   this.removeFavicon();
-  var link = document.createElement('link');
+  let link = document.createElement('link');
   link.type = 'image/x-icon';
   link.rel = 'icon';
   link.href = url;
   document.getElementsByTagName('head')[0].appendChild(link);
-  //if (window.console) console.log("Set FavIcon URL to " + getFavicon().href);
+  // if (window.console) console.log("Set FavIcon URL to " + getFavicon().href);
 };
 
 /**
  * 移除地址栏图标
  */
 util.removeFavicon = function () {
-  var links = document.getElementsByTagName('link');
-  var head = document.getElementsByTagName('head')[0];
-  for (var i = 0; i < links.length; i++) {
+  let links = document.getElementsByTagName('link');
+  let head = document.getElementsByTagName('head')[0];
+  for (let i = 0; i < links.length; i++) {
     if (links[i].getAttribute('rel') === 'icon') {
       head.removeChild(links[i]);
     }
@@ -271,13 +271,13 @@ util.getHashByKey = function (key: string) {
  * @date 2018-01-17
  */
 util.detectZoom = function () {
-  var ratio = 0,
+  let ratio = 0,
     screen = location.getScreen(),
     ua = location.getUserAgent().toLowerCase();
 
   if (location.getDevicePixelRatio() !== undefined) {
     ratio = window.devicePixelRatio;
-  } else if (~ua.indexOf('msie')) { //IE6-9
+  } else if (~ua.indexOf('msie')) { // IE6-9
     if (screen.deviceXDPI && screen.logicalXDPI) {
       ratio = screen.deviceXDPI / screen.logicalXDPI;
     }
@@ -293,7 +293,7 @@ util.detectZoom = function () {
  * @param {String} url 文件地址，类似：http://127.0.0.1:8080/mmdb-rsm-web/base/dcv/projects/snapshot/images/C741F748-91F0-0001-D524-68801CBF1107.jpg
  */
 util.isFileExist = function (url: string) {
-  var xmlhttp = new XMLHttpRequest();
+  let xmlhttp = new XMLHttpRequest();
   xmlhttp.open('GET', url, false);
   xmlhttp.send();
   if (xmlhttp.readyState === 4) {
@@ -305,8 +305,8 @@ util.isFileExist = function (url: string) {
  * 兼容多浏览器的剪切板
  */
 util.setClipboardData = (function () {
-  var createElementForExecCommand = function (textToClipboard: string) {
-    var forExecElement = document.createElement('div');
+  let createElementForExecCommand = function (textToClipboard: string) {
+    let forExecElement = document.createElement('div');
     forExecElement.style.position = 'absolute';
     forExecElement.style.left = '-10000px';
     forExecElement.style.top = '-10000px';
@@ -315,20 +315,20 @@ util.setClipboardData = (function () {
     forExecElement.contentEditable = 'true';
     return forExecElement;
   };
-  var selectContent = function (element: HTMLElement) {
-    var rangeToSelect = document.createRange();
+  let selectContent = function (element: HTMLElement) {
+    let rangeToSelect = document.createRange();
     rangeToSelect.selectNodeContents(element);
-    var selection = window.getSelection();
+    let selection = window.getSelection();
     selection.removeAllRanges();
     selection.addRange(rangeToSelect);
   };
   return function (value: string, key: string = 'Text') {
-    var success = true;
-    var win = (window as any);
+    let success = true;
+    let win = (window as any);
     if (win.clipboardData) { // Internet Explorer
       win.clipboardData.setData(key, value);
     } else {
-      var forExecElement = createElementForExecCommand(value);
+      let forExecElement = createElementForExecCommand(value);
       selectContent(forExecElement);
       try {
         if (win.netscape && win.netscape.security) {

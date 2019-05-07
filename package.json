@@ -8,6 +8,7 @@
     "develop": "webpack --mode development",
     "merge": "webpack --mode production",
     "lint": "tslint src/**/*.ts",
+    "fix": "tslint --fix src/**/*.ts",
     "unit": "./node_modules/.bin/jest --coverage",
     "compile": "tsc --target es2015",
     "build": "npm run merge && npm run compile"

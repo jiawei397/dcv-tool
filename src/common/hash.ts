@@ -90,7 +90,7 @@ hash.getFirstValue = function (opObject) {
  * @return {Array}
  */
 hash.values = function (opObject) {
-  if (opObject instanceof Array) return opObject;//数组无需转换,ie8里遍历数组会把数组原型链扩展方法当做一个属性输出
+  if (opObject instanceof Array) return opObject; // 数组无需转换,ie8里遍历数组会把数组原型链扩展方法当做一个属性输出
   let values = [];
   for (let i in opObject) {
     values.push(opObject[i]);
@@ -119,7 +119,6 @@ hash.deepEqual = function (obj1, obj2) {
   }
   return uinv.stringify(obj1) === uinv.stringify(obj2);
 };
-
 
 /**
  * 合并对象 A中与B相同名称的元素会被替换成B中的值 返回长大了的A

@@ -11,7 +11,7 @@ if (!Object.values) {
     if (obj !== Object(obj)) {
       throw new TypeError('Object.values called on a non-object');
     }
-    var val = [], key;
+    let val = [], key;
     for (key in obj) {
       if (Object.prototype.hasOwnProperty.call(obj, key)) {
         val.push(obj[key]);
@@ -39,7 +39,7 @@ if (!String.prototype.trim) {
 }
 if (!String.prototype.hasOwnProperty('replaceAll')) {
   (String.prototype as any).replaceAll = function (s1, s2) {
-    var r = new RegExp(s1.replace(/([\(\)\[\]\{\}\^\$\+\-\*\?\.\"\'\|\/\\])/g,
+    let r = new RegExp(s1.replace(/([\(\)\[\]\{\}\^\$\+\-\*\?\.\"\'\|\/\\])/g,
       '\\$1'), 'ig');
     return this.replace(r, s2);
   };
@@ -66,10 +66,10 @@ if (!Array.prototype.includes) {
       }
 
       // 1. Let O be ? ToObject(this value).
-      var o = Object(this);
+      let o = Object(this);
 
       // 2. Let len be ? ToLength(? Get(O, "length")).
-      var len = o.length >>> 0;
+      let len = o.length >>> 0;
 
       // 3. If len is 0, return false.
       if (len === 0) {
@@ -78,14 +78,14 @@ if (!Array.prototype.includes) {
 
       // 4. Let n be ? ToInteger(fromIndex).
       //    (If fromIndex is undefined, this step produces the value 0.)
-      var n = fromIndex | 0;
+      let n = fromIndex | 0;
 
       // 5. If n ≥ 0, then
       //  a. Let k be n.
       // 6. Else n < 0,
       //  a. Let k be len + n.
       //  b. If k < 0, let k be 0.
-      var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
+      let k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
 
       function sameValueZero(x, y) {
         return x === y || (typeof x === 'number' && typeof y === 'number' && isNaN(x) && isNaN(y));
@@ -115,15 +115,15 @@ Number.prototype.toFixed = function (n: number) {
   if (n > 20 || n < 0) {
     throw new RangeError('toFixed() digits argument must be between 0 and 20');
   }
-  const number = this;
-  if (isNaN(number) || number >= Math.pow(10, 21)) {
-    return number.toString();
+  const num = this;
+  if (isNaN(num) || num >= Math.pow(10, 21)) {
+    return num.toString();
   }
   if (typeof (n) == 'undefined' || n == 0) {
-    return (Math.round(number)).toString();
+    return (Math.round(num)).toString();
   }
 
-  let result = number.toString();
+  let result = num.toString();
   const arr = result.split('.');
 
   // 整数的情况
@@ -164,7 +164,7 @@ Number.prototype.toFixed = function (n: number) {
 // 结果：如2016-06-01 10:09:00
 if (!(Date.prototype as any).format) {
   (Date.prototype as any).format = function (fmt) {
-    var o = {
+    let o = {
       'M+': this.getMonth() + 1,
       'd+': this.getDate(),
       'H+': this.getHours(),
@@ -173,14 +173,14 @@ if (!(Date.prototype as any).format) {
       'q+': Math.floor((this.getMonth() + 3) / 3),
       'S': this.getMilliseconds()
     };
-    var year = this.getFullYear();
-    var yearstr = year + '';
+    let year = this.getFullYear();
+    let yearstr = year + '';
     yearstr = yearstr.length >= 4 ? yearstr : '0000'.substr(0, 4 - yearstr.length) + yearstr;
 
     if (/(y+)/.test(fmt)) {
       fmt = fmt.replace(RegExp.$1, (yearstr + '').substr(4 - RegExp.$1.length));
     }
-    for (var k in o) {
+    for (let k in o) {
       if (new RegExp('(' + k + ')').test(fmt)) {
         fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)));
       }
@@ -194,7 +194,7 @@ if (!Object.values) {
     if (obj !== Object(obj)) {
       throw new TypeError('Object.values called on a non-object');
     }
-    var val = [], key;
+    let val = [], key;
     for (key in obj) {
       if (Object.prototype.hasOwnProperty.call(obj, key)) {
         val.push(obj[key]);
@@ -204,23 +204,23 @@ if (!Object.values) {
   };
 }
 
-//jw 2017.11.06 兼容window.requestAnimationFrame
+// jw 2017.11.06 兼容window.requestAnimationFrame
 (function () {
-  if(typeof window === 'undefined'){
+  if (typeof window === 'undefined') {
     window = this;
   }
-  var lastTime = 0;
-  var vendors = ['webkit', 'moz'];
-  for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+  let lastTime = 0;
+  let vendors = ['webkit', 'moz'];
+  for (let x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
     window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
     window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
   }
 
   if (!window.requestAnimationFrame) {
     window.requestAnimationFrame = function (callback) {
-      var currTime = new Date().getTime();
-      var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-      var id = window.setTimeout(function () {
+      let currTime = new Date().getTime();
+      let timeToCall = Math.max(0, 16 - (currTime - lastTime));
+      let id = window.setTimeout(function () {
           callback(currTime + timeToCall);
         },
         timeToCall);
