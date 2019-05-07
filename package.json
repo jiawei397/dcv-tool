@@ -7,8 +7,8 @@
     "dev": "webpack-dev-server",
     "develop": "webpack --mode development",
     "merge": "webpack --mode production",
-    "lint": "tslint src/**/*.ts",
-    "fix": "tslint --fix src/**/*.ts",
+    "lint": "./node_modules/.bin/tslint src/**/*.ts",
+    "fix": "./node_modules/.bin/tslint --fix src/**/*.ts",
     "unit": "./node_modules/.bin/jest --coverage",
     "compile": "tsc --target es2015",
     "build": "npm run merge && npm run compile"
@@ -23,6 +23,7 @@
     "jest": "^24.7.1",
     "ts-jest": "^24.0.2",
     "ts-loader": "^5.3.3",
+    "tslint": "^5.16.0",
     "typescript": "^3.3.3333",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3",
