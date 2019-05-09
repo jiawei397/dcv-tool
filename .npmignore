@@ -72,6 +72,5 @@ Thumbs.db
 /package-lock.json
 /tsconfig.json
 /.babelrc
-/coverage/
 /webpack.config.js
-/ts/
+/commitlint.config.js
