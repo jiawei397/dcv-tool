@@ -2,8 +2,8 @@
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./dist/",
-    "declaration": false, // 生成 `.d.ts` 文件
-    //"declarationDir": "ts",
+    "declaration": true, // 生成 `.d.ts` 文件
+    "declarationDir": "ts",
     "sourceMap": false,
     "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true,
