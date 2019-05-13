@@ -1,6 +1,7 @@
 import uinv from './uinv';
 import {throttle, debounce} from './throttle';
 import createUUID from './uuid';
+import any = jasmine.any;
 
 const util: any = {};
 
@@ -46,7 +47,7 @@ util._parsePathForAttribute = function (name) {
  * @param {String} path 路径
  * @return {Object} 属性值
  */
-util.getAttribute = function (obj, path) {
+util.getAttribute = function (obj: object, path: string) {
   path = util._parsePathForAttribute(path);
   for (let i = 0; i < path.length; i++) {
     if (!obj) return undefined;
@@ -61,7 +62,7 @@ util.getAttribute = function (obj, path) {
  * @param {String} path 路径
  * @param {String} value 设置的属性值
  */
-util.setAttribute = function (obj, path, value) {
+util.setAttribute = function (obj: object, path: string, value: string) {
   path = util._parsePathForAttribute(path);
   for (let i = 0; i < path.length - 1; i++) {
     let cur = path[i];
@@ -74,9 +75,9 @@ util.setAttribute = function (obj, path, value) {
 /**
  * 删除属性
  * @param {Object} obj
- * @param {Object} path
+ * @param {String} path
  */
-util.delAttribute = function (obj, path) {
+util.delAttribute = function (obj: object, path: string) {
   path = util._parsePathForAttribute(path);
   for (let i = 0; i < path.length - 1; i++) {
     let cur = path[i];
@@ -91,8 +92,8 @@ util.delAttribute = function (obj, path) {
  * @param {string} opFilename
  * @return {string}
  */
-util.filenameFromPath = function (opFilename: any) {
-  opFilename = opFilename.replaceAll('/', '\\');
+util.filenameFromPath = function (opFilename: string) {
+  opFilename = (opFilename as any).replaceAll('/', '\\');
   let pos = opFilename.lastIndexOf('\\');
   if (pos == -1) {
     return opFilename;
@@ -153,7 +154,7 @@ util.getFilenameType = function (opFilename: string) {
  * @return {Array} 删除了重复项的数组
  * @example util.unique(result);
  */
-util.unique = function (results: [], keepFirst: boolean) {
+util.unique = function (results: [], keepFirst?: boolean) {
   let delList = [];
 
   for (let i = 0; i < results.length; i++) {
@@ -272,7 +273,7 @@ util.getConcomitanceBetweenArrays = function (opArrayA: [], opArrayB: []) {
  * @param {Boolean} returnNew  是否返回新数组
  * @return {Array} 新数组
  */
-util.mergeArrays = function (opArrayA: [], opArrayB: [], returnNew: boolean) {
+util.mergeArrays = function (opArrayA: [], opArrayB: [], returnNew?: boolean) {
   if (returnNew) {
     return opArrayA.concat(opArrayB);
   }
@@ -394,7 +395,7 @@ util.getItemsFromArrayByKey = function (opA: any, key: string) {
  * @author jw
  * @date 2017-07-07
  */
-util.getItemsFromArrayByKeys = function (opA: [any], keys: [any], isAllowNull: boolean = false) {
+util.getItemsFromArrayByKeys = function (opA: [any], keys: [any], isAllowNull?: boolean) {
   if (!(opA instanceof Array)) opA = [opA];
   if (!(keys instanceof Array)) keys = [keys];
   let values = [];
@@ -425,7 +426,7 @@ util.getItemsFromArrayByKeys = function (opA: [any], keys: [any], isAllowNull: b
  * @author jw
  * @date 2017-07-07
  */
-util.getAttrsFromObjectByKeys = function (obj: object, keys: [any], isFilterNull: boolean = false) {
+util.getAttrsFromObjectByKeys = function (obj: object, keys: [any], isFilterNull?: boolean) {
   if (!(keys instanceof Array)) {
     if (obj && keys) {
       return obj[keys];

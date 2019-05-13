@@ -123,17 +123,10 @@ describe('util函数 验证', function () {
     assert.deepEqual(arr1, [0, 2, 6, 4, 5, 6]);
   });
 
-  /*  it("数组辅助方法 getItemsFromArrayByKey() 验证", function () {
-      let arr1 = [{"hello": "kitty"}, {"hello": "tom"}, {"你好": "大叔"}];
-      let newArr = util.getItemsFromArrayByKey(arr1, "hello");
-      assert.deepEqual(arr1, [{"hello": "kitty"}, {"hello": "tom"}, {"你好": "大叔"}]);
-      assert.deepEqual(newArr, ["kitty", "tom"]);
-    });*/
-
-  it('数组辅助方法 getAttrsFromObjectByKeys() 验证', function () {
-    let arr1 = {'001': {'hello': 'kitty'}, '002': {'hello': 'tom'}, '003': {'你好': '大叔'}};
-    let newArr1 = util.getAttrsFromObjectByKeys(arr1, '003');
-    let newArr2 = util.getAttrsFromObjectByKeys(arr1, ['001', '003']);
+  it('getAttrsFromObjectByKeys() 验证', function () {
+    let map = {'001': {'hello': 'kitty'}, '002': {'hello': 'tom'}, '003': {'你好': '大叔'}};
+    let newArr1 = util.getAttrsFromObjectByKeys(map, '003');
+    let newArr2 = util.getAttrsFromObjectByKeys(map, ['001', '003']);
     assert.deepEqual(newArr1, {'你好': '大叔'});
     assert.deepEqual(newArr2, [{'001': {'hello': 'kitty'}, '003': {'你好': '大叔'}}]);
   });
@@ -142,6 +135,10 @@ describe('util函数 验证', function () {
     let arr1 = [{'name': 'nico', 'age': 12}, {'name': 'leo', 'age': 14}, {'name': 'may', 'age': 10}];
     let newArr1 = util.sortArrayByChar(arr1, {'useAttribute': 'name'});
     assert.deepEqual(newArr1, [{'name': 'leo', 'age': 14}, {'name': 'may', 'age': 10}, {'name': 'nico', 'age': 12}]);
+
+    let arr2 = ['e11', 'eF2', 'eA1', 'ea1', 'a22', 'aB3'];
+    let result = util.sortArrayByChar(arr2);
+    assert.deepEqual(result, ['a22', 'aB3', 'eF2', 'ea1', 'e11', 'eA1']);
   });
 
   it('数组辅助方法 sortArrayByNumber() 验证', function () {
