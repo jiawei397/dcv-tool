@@ -1,11 +1,13 @@
 import uinv from './uinv';
 import {throttle, debounce} from './throttle';
+import createUUID from './uuid';
 
 const util: any = {};
 
 util.throttle = throttle;
 util.debounce = debounce;
 util.cloneObj = uinv.cloneObj;
+util.createUUID = createUUID;
 
 /**
  * 获取2个数之间的随机整数
@@ -522,73 +524,6 @@ util.isNum = function (num) {
   return num !== '' && reNum.test(num);
 };
 
-/* *****************************************************************************
- *
- * UUID
- *
- */
-
-/**
- * 创建唯一识别码 (Universally Unique Identifier)
- * @return {String}
- */
-util.createUUID = function () {
-  let dg = new Date(1582, 10, 15, 0, 0, 0, 0);
-  let dc = new Date();
-  let t = dc.getTime() - dg.getTime();
-  let tl = util._UUID_getIntegerBits(t, 0, 31);
-  let tm = util._UUID_getIntegerBits(t, 32, 47);
-  let thv = util._UUID_getIntegerBits(t, 48, 59) + '1'; // version 1, security version is 2
-  let csar = util._UUID_getIntegerBits(util._UUID_rand(4095), 0, 7);
-  let csl = util._UUID_getIntegerBits(util._UUID_rand(4095), 0, 7);
-
-  let n = util._UUID_getIntegerBits(util._UUID_rand(8191), 0, 7)
-    + util._UUID_getIntegerBits(util._UUID_rand(8191), 8, 15)
-    + util._UUID_getIntegerBits(util._UUID_rand(8191), 0, 7)
-    + util._UUID_getIntegerBits(util._UUID_rand(8191), 8, 15)
-    + util._UUID_getIntegerBits(util._UUID_rand(8191), 0, 15); // this last number is two octets long
-  return tl + tm + thv + csar + csl + n;
-};
-/**
- * UUID整数节点
- * @param {String} val  源
- * @param {Number} start 起点
- * @param {Number} end   终点
- * @return {String}    截取后的字符串
- */
-util._UUID_getIntegerBits = function (val: string, start: number, end: number) {
-  let base16 = util._UUID_returnBase(val, 16);
-  let quadArray = [];
-  let quadString = '';
-  let i = 0;
-  for (i = 0; i < base16.length; i++) {
-    quadArray.push(base16.substring(i, i + 1));
-  }
-  for (i = Math.floor(start / 4); i <= Math.floor(end / 4); i++) {
-    if (!quadArray[i] || quadArray[i] == '') quadString += '0';
-    else quadString += quadArray[i];
-  }
-  return quadString;
-};
-/**
- * 把十进制数字转成16进制的数字
- * @param {Number} num 十进制数字
- * @param {} base
- * @return {String}
- */
-util._UUID_returnBase = function (num: number, base) {
-  return num.toString(base).toUpperCase();
-};
-/**
- * 返回随机近似整数值
- * @param {Number} max
- * @return {Number}
- */
-util._UUID_rand = function (max: number) {
-  return Math.floor(uinv.random() * (max + 1));
-};
-
-//////////////////////////////////////////////
 /**
  * 把 Number 四舍五入为指定小数位数的数字
  * @param {Number} num    数字

@@ -201,11 +201,10 @@ describe('util函数 验证', function () {
 
   it('删除所有空格和单引号 delSpace() 验证', function () {
     let str = '刚刚加上 ';
-    let str1 = " ' ";
+    let str1 = ' " ';
     let str2 = '""';
     assert.equal(util.delSpace(str + str1 + str2), '刚刚加上');
   });
-
 
   it('判断字符串的开始字符 stringStartWith() 验证', function () {
     assert.equal(util.stringStartWith('hello', 'hel'), true);
