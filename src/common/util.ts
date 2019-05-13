@@ -319,8 +319,9 @@ util.subtractArrays = function (opArrayA: [], opArrayB: []) {
  * @param {Array} arr 旧数组
  * @param {Array} newArr 需要被合并的数组
  */
-util.concatArr = function (arr, newArr) {
+util.concatArr = function (arr: [], newArr: []) {
   [].push.apply(arr, newArr);
+  return arr;
 };
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -374,15 +375,14 @@ util.delFirstItemFromArray = function (opA: [], opItem: string) {
  * @author jw
  * @date 2017-07-07
  */
-util.getItemsFromArrayByKey = function (opA: [any], key: string) {
+util.getItemsFromArrayByKey = function (opA: any, key: string) {
   if (!(opA instanceof Array)) opA = [opA];
-  let values = [];
-  opA.forEach(function (obj) {
-    if (obj && obj[key]) {
-      values.push(obj[key]);
+  return opA.reduce(function (arr: [any], obj: object) {
+    if (obj && obj[key] !== undefined) {
+      arr.push(obj[key]);
     }
-  });
-  return values;
+    return arr;
+  }, []);
 };
 
 /**
@@ -402,7 +402,7 @@ util.getItemsFromArrayByKeys = function (opA: [any], keys: [any], isAllowNull: b
     let value = {};
     keys.forEach(function (key) {
       if (obj && key) {
-        if (isAllowNull) {
+        if (isAllowNull && obj[key] !== undefined) {
           value[key] = obj[key];
         } else {
           if (obj[key]) {

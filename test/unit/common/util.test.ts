@@ -223,4 +223,118 @@ describe('util函数 验证', function () {
     assert.deepEqual(result, [1, 2, 3, 4, 5]);
     assert.equal(result.length, 5);
   });
+
+  it('合并数组 concatArr() 验证', function () {
+    let arr = [1, 2];
+    let arr2 = [3, 4];
+    let result = util.concatArr(arr, arr2);
+    assert.equal(arr.length, 4);
+    assert.deepEqual(arr, [1, 2, 3, 4]);
+    assert.equal(result, arr);
+  });
+
+  it('数组升序降序 验证', function () {
+    let arr = [2, 1, 4, 3];
+    arr.sort(util._ArraySort_Up);
+    assert.equal(arr[0], 1);
+
+    arr.sort(util._ArraySort_Down);
+    assert.equal(arr[0], 4);
+  });
+
+  it('getItemsFromArrayByKey 验证', function () {
+    let arr = [{
+      'a': 1,
+      'b': 2
+    }, {
+      'a': 3,
+      'b': 4
+    }];
+    let result = util.getItemsFromArrayByKey(arr, 'a');
+    assert.deepEqual(result, [1, 3]);
+
+    let result2 = util.getItemsFromArrayByKey(arr, 'b');
+    assert.deepEqual(result2, [2, 4]);
+
+    let map = {
+      'a': 1,
+      'b': 2
+    };
+    let result3 = util.getItemsFromArrayByKey(map, 'a');
+    assert.deepEqual(result3, [1]);
+  });
+
+  it('getItemsFromArrayByKeys 验证', function () {
+    let arr = [{
+      'a': 1,
+      'b': 2,
+      'c': 1
+    }, {
+      'a': 3,
+      'b': 4
+    }];
+    let result = util.getItemsFromArrayByKeys(arr, 'a');
+    assert.deepEqual(result, [{
+      'a': 1
+    }, {
+      'a': 3
+    }]);
+
+    let result2 = util.getItemsFromArrayByKeys(arr, 'b');
+    assert.deepEqual(result2, [{
+      'b': 2
+    }, {
+      'b': 4
+    }]);
+
+    let result3 = util.getItemsFromArrayByKeys(arr, ['b', 'c']);
+    assert.deepEqual(result3, [{
+      'b': 2,
+      'c': 1
+    }, {
+      'b': 4
+    }]);
+
+    let map = {
+      'a': 1,
+      'b': 2
+    };
+    let result4 = util.getItemsFromArrayByKeys(map, 'a');
+    assert.deepEqual(result4, [{
+      'a': 1
+    }]);
+
+    let result5 = util.getItemsFromArrayByKeys(map, ['a', 'c']);
+    assert.deepEqual(result5, [{
+      'a': 1
+    }]);
+
+    let arr2 = [{
+      'a': 1,
+      'b': 2,
+      'c': 0,
+      'd': false,
+      'e': null
+    }, {
+      'a': 3,
+      'b': 4,
+      'e': undefined
+    }];
+    let result6 = util.getItemsFromArrayByKeys(arr2, ['a', 'c', 'd']);
+    assert.deepEqual(result6, [{
+      'a': 1
+    }, {
+      'a': 3
+    }]);
+
+    let result7 = util.getItemsFromArrayByKeys(arr2, ['a', 'c', 'd', 'e'], true);
+    assert.deepEqual(result7, [{
+      'a': 1,
+      'c': 0,
+      'd': false,
+      'e': null
+    }, {
+      'a': 3
+    }], '测试可以为空的情况');
+  });
 });
