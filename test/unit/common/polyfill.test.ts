@@ -7,6 +7,10 @@ describe('polyfill 验证', function () {
   String.prototype.trim = null;
   String.prototype.includes = null;
   Array.prototype.includes = null;
+  if (typeof window !== 'undefined') {
+    window.requestAnimationFrame = null;
+    window.cancelAnimationFrame = null;
+  }
   require('../../../src/common/polyfill');
 
   it('Object.values 验证', function () {
@@ -77,5 +81,46 @@ describe('polyfill 验证', function () {
     num3 += 1;
     assert.equal(num3.toFixed(1), '1e+21', '超过最大值，不会有变化');
     assert.equal(num3.toFixed(2), '1e+21', '超过最大值，不会有变化');
+  });
+
+  it('Date.prototype.format 验证', function () {
+    let now: any = new Date('2016-06-01 10:09:00');
+    let str: string = now.format('yyyy-MM-dd HH:mm:ss');
+    assert.equal(str, '2016-06-01 10:09:00');
+
+    let str2: string = now.format('yyyyMMdd HHmmss');
+    assert.equal(str2, '20160601 100900');
+  });
+
+  it('window.requestAnimationFrame 验证', function (done) {
+    assert.isFunction(window.requestAnimationFrame, '事实上polyfill比不上原生的');
+
+    let num = 0;
+    for (let i = 0; i < 100; i++) {
+      window.requestAnimationFrame(function () {
+        num++;
+      });
+    }
+    assert.equal(num, 0);
+    setTimeout(function () {
+      assert.isTrue(num > 0);
+      done();
+    }, 100);
+  });
+
+  it('window.cancelAnimationFrame 验证', function (done) {
+    assert.isFunction(window.cancelAnimationFrame, '事实上polyfill比不上原生的');
+
+    let num = 0;
+    let id = window.requestAnimationFrame(function () {
+      num++;
+    });
+
+    assert.equal(num, 0);
+    window.cancelAnimationFrame(id);
+    setTimeout(function () {
+      assert.equal(num, 0);
+      done();
+    }, 100);
   });
 });

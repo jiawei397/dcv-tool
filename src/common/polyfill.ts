@@ -189,21 +189,6 @@ if (!(Date.prototype as any).format) {
   };
 }
 
-if (!Object.values) {
-  Object.values = function (obj) {
-    if (obj !== Object(obj)) {
-      throw new TypeError('Object.values called on a non-object');
-    }
-    let val = [], key;
-    for (key in obj) {
-      if (Object.prototype.hasOwnProperty.call(obj, key)) {
-        val.push(obj[key]);
-      }
-    }
-    return val;
-  };
-}
-
 // jw 2017.11.06 兼容window.requestAnimationFrame
 (function () {
   if (typeof window === 'undefined') {
