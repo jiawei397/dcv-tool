@@ -11,6 +11,7 @@
     "target": "es5",
     "lib": ["es2015", "es2017", "dom"],
     "jsx": "react",
+    "types": ["node", "jest"],
     "experimentalDecorators": true,
     "allowJs": false
   },
