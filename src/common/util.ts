@@ -1,7 +1,6 @@
 import uinv from './uinv';
 import {throttle, debounce} from './throttle';
 import createUUID from './uuid';
-import any = jasmine.any;
 
 const util: any = {};
 
