@@ -1,11 +1,3 @@
-// if (typeof window === 'undefined') {
-//   if (typeof process === 'object' && typeof require === 'function' && typeof global === 'object') {
-//     window = global;
-//   } else {
-//     window = this;
-//   }
-// }
-
 if (!Object.values) {
   Object.values = function (obj) {
     if (obj !== Object(obj)) {
@@ -205,9 +197,9 @@ if (!Object.values) {
 }
 
 // jw 2017.11.06 兼容window.requestAnimationFrame
-(function () {
-  if (typeof window === 'undefined') {
-    window = this;
+(function (window: any) {
+  if (!window) {
+    return;
   }
   let lastTime = 0;
   let vendors = ['webkit', 'moz'];
@@ -234,6 +226,6 @@ if (!Object.values) {
       clearTimeout(id);
     };
   }
-})();
+})(typeof window !== 'undefined' ? window : (typeof global !== 'undefined' ? global : null));
 
 export default Object;
