@@ -51,5 +51,13 @@
     "node": ">= 4.0.0",
     "npm": ">= 3.0.0"
   },
-  "license": "ISC"
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/JiQingYun/dcv-tools.git"
+  },
+  "license": "MIT",
+  "keywords": [
+    "tools",
+    "jw"
+  ]
 }
