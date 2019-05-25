@@ -91,11 +91,6 @@
   resolved "https://npm.uinnova.cn/@babel%2fparser/-/parser-7.4.4.tgz#5977129431b8fe33471730d255ce8654ae1250b6"
   integrity sha1-WXcSlDG4/jNHFzDSVc6GVK4SULY=
 
-"@babel/parser@^7.4.5":
-  version "7.4.5"
-  resolved "https://registry.npm.taobao.org/@babel/parser/download/@babel/parser-7.4.5.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40babel%2Fparser%2Fdownload%2F%40babel%2Fparser-7.4.5.tgz#04af8d5d5a2b044a2a1bffacc1e5e6673544e872"
-  integrity sha1-BK+NXVorBEoqG/+sweXmZzVE6HI=
-
 "@babel/plugin-syntax-object-rest-spread@^7.0.0":
   version "7.2.0"
   resolved "https://npm.uinnova.cn/@babel%2fplugin-syntax-object-rest-spread/-/plugin-syntax-object-rest-spread-7.2.0.tgz#3b7a3e733510c57e820b9142a6579ac8b0dfad2e"
