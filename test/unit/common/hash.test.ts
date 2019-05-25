@@ -1,4 +1,4 @@
-import { assert, expect} from 'chai';
+import {assert, expect} from 'chai';
 import hash from '../../../src/common/hash';
 import uinv from '../../../src/common/uinv';
 
@@ -22,9 +22,9 @@ describe('hash', () => {
     assert.equal(hash.hasKey(null, 'life'), false);
   });
   it('hash.renameKey(opObject, oldKey, newKey)，验证：重新命名对象元素', function () {
-    let jsonObj = {name: 'god', sex: 'men'};
+    let jsonObj: any = {name: 'god', sex: 'men'};
     hash.renameKey(jsonObj, 'name', 'heart');
-    assert.include(jsonObj, {'heart': 'god'});
+    assert.equal(jsonObj.heart, 'god');
   });
   it('hash.getFirstKey(opObject), 验证：获取第一个元素的名称', function () {
     let jsonObj = {name: 'god', sex: 'men'};
@@ -104,7 +104,7 @@ describe('hash', () => {
   });
 });
 
-describe('hash.combine 合并对象 A中与B相同名称的元素会被替换成B中的值 返回长大了的A', () =>{
+describe('hash.combine 合并对象 A中与B相同名称的元素会被替换成B中的值 返回长大了的A', () => {
   it('只传递前2个参数', function () {
     let opObjectA = {name: 'god', sex: 'men'};
     let opObjectB = {name: 'tian', factory: 'KONGFU'};

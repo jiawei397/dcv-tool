@@ -6,7 +6,10 @@ module.exports = {
   ],
   globals: {
     'ts-jest': {
-      babelConfig: true
+      babelConfig: true,
+      tsConfig: {
+        module: 'commonjs'
+      }
     }
   },
 
@@ -18,7 +21,6 @@ module.exports = {
   transform: {
     '^.+\\.(t|j)s?$': 'ts-jest'
   },
-
   //覆盖率报告
   coverageReporters: ['text', 'text-summary', 'html']
 };

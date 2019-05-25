@@ -18,12 +18,8 @@ hash.getSize = function (opObject) {
  * @param {Object} opObject
  * @return {Boolean}
  */
-hash.isEmpty = function (opObject) {
-  for (let cur in opObject) {
-    return false;
-  }
-  return true;
-};
+hash.isEmpty = uinv.isEmpty;
+
 /**
  * 查看对象中是否包含指定名称的元素
  * @param {Object} opObject
@@ -45,9 +41,8 @@ hash.hasKey = function (opObject: object, key: string) {
  */
 hash.renameKey = function (opObject, oldKey, newKey) {
   if (opObject[oldKey]) {
-    let tmp = opObject[oldKey];
+    opObject[newKey] = opObject[oldKey];
     delete opObject[oldKey];
-    opObject[newKey] = tmp;
   }
 };
 /**

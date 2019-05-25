@@ -1,6 +1,16 @@
-import hash from './hash';
-
 const uinv: any = {};
+
+/**
+ * 查看对象是否包含元素
+ * @param {Object} opObject
+ * @return {Boolean}
+ */
+uinv.isEmpty = function (opObject) {
+  for (let cur in opObject) {
+    return false;
+  }
+  return true;
+};
 
 /**
  * 判断是否函数
@@ -44,7 +54,7 @@ uinv.isNumber = function (obj) {
  * @return {Array}  克隆后的对象
  */
 uinv.cloneObj = function clone(obj, isDeep, endFun) {
-  if (!obj || typeof obj !== 'object' || hash.isEmpty(obj) || (uinv.isFunction(endFun) && endFun(obj))) {
+  if (!obj || typeof obj !== 'object' || uinv.isEmpty(obj) || (uinv.isFunction(endFun) && endFun(obj))) {
     return obj;
   }
   let c = obj instanceof Array ? [] : {};
