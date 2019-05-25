@@ -10,7 +10,7 @@ const input = isCommon ? 'src/common/index.ts' : 'src/browser/index.ts';
 export default {
   input: input,
   output: {
-    file: `release/utils${isCommon ? '-common' : ''}.${isProduction ? 'min.' : ''}js`,
+    file: `lib/utils${isCommon ? '-common' : ''}.${isProduction ? 'min.' : ''}js`,
     format: 'umd',
     name: 'utils'
   },
