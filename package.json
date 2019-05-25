@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server",
     "develop": "webpack --mode development",
-    "merge": "webpack --mode production",
+    "product": "webpack --mode production",
     "lint": "./node_modules/.bin/tslint src/**/*.ts",
     "commitLint": "./node_modules/.bin/commitlint -E HUSKY_GIT_PARAMS",
     "fix": "./node_modules/.bin/tslint --fix src/**/*.ts",
