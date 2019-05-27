@@ -38,7 +38,7 @@ util.urlArg = function (name: string) {
   let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
   let r = location.getSearch().substr(1).match(reg);
   if (r != null) {
-    return unescape(r[2]);
+    return decodeURIComponent(r[2]);
   }
   return null;
 };
