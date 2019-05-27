@@ -153,7 +153,7 @@ util.getFilenameType = function (opFilename: string) {
  * @return {Array} 删除了重复项的数组
  * @example util.unique(result);
  */
-util.unique = function (results: [], keepFirst?: boolean) {
+util.unique = function (results: [any], keepFirst?: boolean) {
   let delList = [];
 
   for (let i = 0; i < results.length; i++) {
@@ -174,7 +174,7 @@ util.unique = function (results: [], keepFirst?: boolean) {
  * @param {Array} opArray  对象数组
  * @return {Array}  返回为空的数组
  */
-util.clearArray = function (opArray: []) {
+util.clearArray = function (opArray: [any]) {
   opArray.splice(0, opArray.length);
   return opArray;
 };
@@ -209,7 +209,7 @@ util.isInArray = function (opValue: any, opArray: [any]) {
  * @param {Array} opArray
  * @return {Array}
  */
-util.clearEmptyItemInArray = function (opArray: []) {
+util.clearEmptyItemInArray = function (opArray: [any]) {
   for (let i = 0; i < opArray.length; i++) {
     if (typeof opArray[i] === 'undefined' || opArray[i] == '') {
       opArray.splice(i, 1);
@@ -253,7 +253,7 @@ util.insertItemToArray = function (opValue: any, opArray: [any], index: number) 
  * @param {Array} opArrayB 数组2
  * @return {String}  数组中相同的元素
  */
-util.getConcomitanceBetweenArrays = function (opArrayA: [], opArrayB: []) {
+util.getConcomitanceBetweenArrays = function (opArrayA: [any], opArrayB: [any]) {
   let result = [];
   for (let i = 0; i < opArrayA.length; i++) {
     let itemA = opArrayA[i];
@@ -272,7 +272,7 @@ util.getConcomitanceBetweenArrays = function (opArrayA: [], opArrayB: []) {
  * @param {Boolean} returnNew  是否返回新数组
  * @return {Array} 新数组
  */
-util.mergeArrays = function (opArrayA: [], opArrayB: [], returnNew?: boolean) {
+util.mergeArrays = function (opArrayA: [any], opArrayB: [any], returnNew?: boolean) {
   if (returnNew) {
     return opArrayA.concat(opArrayB);
   }
@@ -288,7 +288,7 @@ util.mergeArrays = function (opArrayA: [], opArrayB: [], returnNew?: boolean) {
  * @author jw
  * @date 2017-07-19
  */
-util.concatArrays = function (opArrayA: [], opArrayB: []) {
+util.concatArrays = function (opArrayA: [any], opArrayB: [any]) {
   for (let i = 0; i < opArrayB.length; i++) {
     if (opArrayA.indexOf(opArrayB[i]) == -1) {
       opArrayA.push(opArrayB[i]);
@@ -303,7 +303,7 @@ util.concatArrays = function (opArrayA: [], opArrayB: []) {
  * @param {Array} opArrayB  校样数组
  * @return {Boolean} 返回新数组
  */
-util.subtractArrays = function (opArrayA: [], opArrayB: []) {
+util.subtractArrays = function (opArrayA: [any], opArrayB: [any]) {
   let result = [];
   for (let i = 0; i < opArrayA.length; i++) {
     let itemA = opArrayA[i];
@@ -319,7 +319,7 @@ util.subtractArrays = function (opArrayA: [], opArrayB: []) {
  * @param {Array} arr 旧数组
  * @param {Array} newArr 需要被合并的数组
  */
-util.concatArr = function (arr: [], newArr: []) {
+util.concatArr = function (arr: [any], newArr: [any]) {
   [].push.apply(arr, newArr);
   return arr;
 };
@@ -348,7 +348,7 @@ util._ArraySort_Down = function (a, b) {
  * @param {Array} opA 数组
  * @param {Array} opIA 序列数组
  */
-util.delItemsByIndexArray = function (opA: [], opIA: []) {
+util.delItemsByIndexArray = function (opA: [any], opIA: [any]) {
   opIA.sort(util._ArraySort_Down);
   for (let i = 0; i < opIA.length; i++) {
     opA.splice(opIA[i], 1);
@@ -360,7 +360,7 @@ util.delItemsByIndexArray = function (opA: [], opIA: []) {
  * @param {Array} opA  对象数组
  * @param {String} opItem  要删除的元素
  */
-util.delFirstItemFromArray = function (opA: [], opItem: string) {
+util.delFirstItemFromArray = function (opA: [any], opItem: string) {
   let pos = util.findItemInArray(opA, opItem);
   if (pos != -1) {
     opA.splice(pos, 1);
@@ -458,7 +458,7 @@ let CHINESE_CHARS = '123456789ABCDE';
  * @return {Array}  排序后的数组
  * @example util.sortArrayByChar(keys);
  */
-util.sortArrayByChar = function (opA: [], param) {
+util.sortArrayByChar = function (opA: [any], param) {
   return opA.sort(function (c1, c2) {
     let a;
     let b;
@@ -500,7 +500,7 @@ interface ISortArray {
  * @param {Object} param 排序的条件
  * @return {Array}    排序后的数组
  */
-util.sortArrayByNumber = function (opA: [], param: ISortArray) {
+util.sortArrayByNumber = function (opA: [any], param: ISortArray) {
   return opA.sort(function (c1, c2) {
     if (param && param['useAttribute']) {
       c1 = c1[param['useAttribute']];
@@ -755,7 +755,7 @@ util.stringEndWith = function (str: string, endStr: string) {
  * @param {Array} arr 数组
  * @return {Array}
  */
-util.flatten = function flatten(arr: []) {
+util.flatten = function flatten(arr: any) {
   return arr.reduce(function (a, b) {
     return a.concat(Array.isArray(b) ? flatten(b) : b);
   }, []);
