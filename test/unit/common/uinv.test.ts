@@ -1,4 +1,4 @@
-import { assert, expect} from 'chai';
+import {assert, expect} from 'chai';
 import uinv from '../../../src/common/uinv';
 
 describe('cloneObj() 验证', function () {
@@ -49,7 +49,7 @@ describe('继承 extend() 验证', function () {
 
   };
 
-  const SubClass:any = function (b) {
+  const SubClass: any = function (b) {
     SubClass.superclass.constructor.call(this, b);
     this.b = b;
   };
@@ -61,7 +61,7 @@ describe('继承 extend() 验证', function () {
   let subClass = new SubClass('b');
 
   it('判断继承', function () {
-    assert.equal(subClass.a, 'b');//只有SubClass.superclass.constructor.call(this, b);这句，才会成功
+    assert.equal(subClass.a, 'b'); //只有SubClass.superclass.constructor.call(this, b);这句，才会成功
     assert.equal(subClass.b, 'b');
     assert.isFunction(subClass.test, '继承来的属性方法');
     // assert.isFunction(subClass.test2, "实现类的属性方法");//TODO 这个报错
@@ -90,7 +90,7 @@ describe('混合继承 multiExtend() 验证', function () {
 
   };
 
-  let SubClass:any = function (b) {
+  let SubClass: any = function (b) {
     SubClass.superclass.constructor.call(this, b);
     this.b = b;
   };
@@ -103,7 +103,7 @@ describe('混合继承 multiExtend() 验证', function () {
 
   it('判断继承', function () {
     assert.equal(SubClass.superclass, SuperClass1.prototype, '全面继承的是第1个父类');
-    assert.equal(subClass.a, 'b');//只有SubClass.superclass.constructor.call(this, b);这句，才会成功
+    assert.equal(subClass.a, 'b'); // 只有SubClass.superclass.constructor.call(this, b);这句，才会成功
     assert.equal(subClass.b, 'b');
     assert.isFunction(subClass.test, '继承来的属性方法');
     assert.isFunction(subClass.test2, '继承的SuperClass2的属性方法');
@@ -131,7 +131,7 @@ describe('uinv中基本方法校验', function () {
     // expect(uinv.isFunction(function () {})).to.be.true;
     // expect(uinv.isFunction(false)).to.be.false;
 
-    //两种写法，感受下区别
+    // 两种写法，感受下区别
     assert.equal(uinv.isFunction(123), false);
     assert.equal(uinv.isFunction(['a', 'b']), false);
     assert.equal(uinv.isFunction({
@@ -169,8 +169,8 @@ describe('uinv中基本方法校验', function () {
   });
 
   it('isString() 验证', function () {
-    assert.isTrue(uinv.isString("1"));
-    assert.isTrue(uinv.isString("haha"));
+    assert.isTrue(uinv.isString('1'));
+    assert.isTrue(uinv.isString('haha'));
 
     assert.isFalse(uinv.isString(1.24));
     assert.isFalse(uinv.isString(true));

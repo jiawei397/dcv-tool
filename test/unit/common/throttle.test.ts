@@ -71,7 +71,7 @@ describe('参数 验证', function () {
     assert.equal(num, 0, '开始不执行');
     for (let i = 0; i < 100; i++) {
       func2();
-      if(i ==0){
+      if (i == 0) {
         assert.equal(num, 1, '结尾时会执行一次');
       }
     }

@@ -73,4 +73,7 @@ Thumbs.db
 /tsconfig.json
 /.babelrc
 /webpack.config.js
+/ts/
+/.rpt2_cache/
+/types.d.ts
 /commitlint.config.js

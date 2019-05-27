@@ -18,3 +18,5 @@ tmp/
 /release/
 /coverage/
 /ts/
+/.rpt2_cache/
+/lib/
