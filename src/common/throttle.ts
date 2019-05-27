@@ -2,7 +2,7 @@ const getNow = function () {
   return Date.now();
 };
 
-interface IThrottleOpts {
+export interface IThrottleOpts {
   leading: boolean; // 如果想忽略开始边界上的调用则传入 {trailing:false},
   trailing: boolean; // 如果想忽略结束边界上的调用则传入 {leading:false},
 }
