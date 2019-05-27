@@ -1,5 +1,5 @@
 import json from 'rollup-plugin-json';
-import rollupTypescript from 'rollup-plugin-typescript2';
+import rollupTypescript from 'rollup-plugin-typescript';
 import {uglify} from 'rollup-plugin-uglify'; //压缩bundle文件
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -15,7 +15,7 @@ export default {
     name: 'utils'
   },
   plugins: [
-    rollupTypescript(),
+    rollupTypescript({declaration: false}),
     json(),
     (isProduction && uglify())
   ]
