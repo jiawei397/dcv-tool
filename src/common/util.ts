@@ -1,11 +1,13 @@
 import uinv from './uinv';
 import {throttle, debounce} from './throttle';
+import delay from './delay';
 import createUUID from './uuid';
 
 const util: any = {};
 
 util.throttle = throttle;
 util.debounce = debounce;
+util.delay = delay;
 util.cloneObj = uinv.cloneObj;
 util.createUUID = createUUID;
 

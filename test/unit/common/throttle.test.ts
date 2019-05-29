@@ -1,4 +1,4 @@
-import {assert, expect} from 'chai';
+import {assert} from 'chai';
 import {throttle} from '../../../src/common/throttle';
 
 describe('功能 验证', function () {
