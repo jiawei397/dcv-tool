@@ -1,7 +1,15 @@
-import {assert, expect} from 'chai';
+import {assert} from 'chai';
 import uinv from '../../../src/common/uinv';
 
 describe('cloneObj() 验证', function () {
+  let Child = function (age: number) {
+    this.age = age;
+  };
+  let Person = function (name) {
+    this.name = name;
+    this.child = new Child(123);
+  };
+  let person = new Person('abc');
   let obj = {
     'a': 'b',
     'c': ['jfjfjfjs'],
@@ -18,13 +26,17 @@ describe('cloneObj() 验证', function () {
           console.log('i');
         }
       }
-    }
+    },
+    'person': person
   };
   it('深度复制，改变属性为引用类型的值不会影响原对象', function () {
     let newObj = uinv.cloneObj(obj, true);
     assert.notEqual(newObj, obj);
     assert.deepEqual(newObj, obj);
+    assert.notEqual(obj.c, newObj.c, '非引用类型的值不应该相等');
     assert.notEqual(obj.e, newObj.e, '非引用类型的值不应该相等');
+    assert.notEqual(newObj.person, obj.person, '复杂对象也可以复制');
+    assert.equal(newObj.d, obj.d, '没有复制function');
 
     newObj.e.g = 'aa';
     // expect(obj.e.g).to.deep.equal(newObj.e.g);//肯定报错
@@ -34,10 +46,32 @@ describe('cloneObj() 验证', function () {
   it('非深度复制，其非引用类型其实是引用指针', function () {
     let newObj = uinv.cloneObj(obj, false);
     assert.deepEqual(newObj, obj);
+    assert.equal(newObj.c, obj.c, '非引用类型的值其实是引用值');
     assert.equal(newObj.e, obj.e, '非引用类型的值其实是引用值');
 
     newObj.e.g = 'aa';
     assert.equal(obj.e.g, newObj.e.g, '引用类型的值都改变了');
+  });
+
+  it('测试结束函数', function () {
+    let newObj = uinv.cloneObj(obj, true, function (obj2) {
+      if (uinv.isObject(obj2)) {
+        return true;
+      }
+    });
+    assert.equal(newObj, obj, '没有复制');
+
+    let newPerson = uinv.cloneObj(person, true);
+    assert.notEqual(newPerson, person, '复制了对象');
+    assert.deepEqual(newPerson, person);
+
+    let newObj3 = uinv.cloneObj(person, true, function (obj2) {
+      if (obj2 instanceof Child) {
+        return true;
+      }
+    });
+    assert.notEqual(newObj3, person, '终止复制了，没有复制Child');
+    assert.equal(newObj3.child, person.child, 'child共用一个');
   });
 });
 
