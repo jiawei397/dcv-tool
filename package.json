@@ -11,7 +11,7 @@
     "develop": "npm run develop-all && npm run develop-common",
     "build": "npm run build-all && npm run build-common",
     "clear": "rimraf ./release ./dist ./lib ./ts",
-    "compile": "tsc",
+    "compile": "tsc --target es2015",
     "lint": "./node_modules/.bin/tslint src/**/*.ts",
     "commitLint": "./node_modules/.bin/commitlint -E HUSKY_GIT_PARAMS",
     "fix": "./node_modules/.bin/tslint --fix src/**/*.ts test/**/*.ts",
