@@ -11,9 +11,6 @@ describe('util函数 验证', function () {
     'obj': {},
     'fun': function () {
     },
-    'productInfo': {
-      'Tag': 'abc'
-    },
     'date': new Date(),
     'undefined': undefined,
     'null': null,
@@ -37,6 +34,19 @@ describe('util函数 验证', function () {
   it('数组辅助方法 unique() 验证', function () {
     let noRepeatArr = util.unique(obj.array, false);
     assert.lengthOf(noRepeatArr, 5, '不留下第一个相同的元素');
+    assert.equal(noRepeatArr, obj.array, '操作的是原数组');
+
+    let arr = [1, 2, 1];
+    util.unique(arr);
+    assert.deepEqual(arr, [2, 1], '不传第2个参数，会删除第1个重复项');
+
+    arr = [1, 2, 1];
+    util.unique(arr, false);
+    assert.deepEqual(arr, [2, 1], '默认效果与false一样');
+
+    arr = [1, 2, 1];
+    util.unique(arr, true);
+    assert.deepEqual(arr, [1, 2], '第2个参数为true时，会保留第1个重复项');
   });
 
   it('数组辅助方法 clearArray() 验证', function () {
@@ -348,6 +358,26 @@ describe('util函数 验证', function () {
     const base64 = 'data:image/png;base64,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';
     assert.instanceOf(util.dataURLtoBlob(base64), Blob);
   });
+});
+
+describe('路径解析 验证', function () {
+  const obj = {
+    'productInfo': {
+      'Tag': 'abc'
+    }
+  };
+  it('_parsePathForAttribute 验证', function () {
+    let path = 'productInfo/Tag';
+    let result = util._parsePathForAttribute(path);
+    assert.equal(result.length, 2);
+    assert.equal(result[0], 'productInfo');
+    assert.equal(result[1], 'Tag');
+
+    let path2 = {};
+    let result2 = util._parsePathForAttribute(path2);
+    assert.isObject(result2);
+    assert.equal(result2, path2, '不是字符串，就直接返回了');
+  });
 
   it('getAttribute  验证', function () {
     let val = util.getAttribute(obj, 'productInfo/Tag');
@@ -355,6 +385,12 @@ describe('util函数 验证', function () {
 
     let val2 = util.getAttribute(obj, 'productInfo\\Tag');
     assert.equal(val2, 'abc');
+
+    let val3 = util.getAttribute(obj, 'productInfo\\Tag2');
+    assert.isUndefined(val3, '找不到就返回undefined');
+
+    let val4 = util.getAttribute(null, 'productInfo\\Tag2');
+    assert.isUndefined(val4, '找不到就返回undefined');
   });
 
   it('setAttribute  验证', function () {
@@ -363,5 +399,84 @@ describe('util函数 验证', function () {
     let val = util.getAttribute(obj, 'productInfo\\Tag2');
     assert.equal(val, 'abc');
     assert.equal(obj['productInfo']['Tag2'], 'abc');
+  });
+
+  it('delAttribute   验证', function () {
+    let obj2 = {
+      'productInfo': {
+        'Tag': 'abc'
+      }
+    };
+    util.delAttribute(obj2, 'productInfo/Tag');
+
+    let val = util.getAttribute(obj2, 'productInfo/Tag');
+    assert.isUndefined(val, '已经被删除');
+
+    util.delAttribute(obj2, 'productInfo/Tag2');
+    assert.deepEqual(obj2, {'productInfo': {}});
+  });
+
+  it('filenameFromPath 验证', function () {
+    let path = 'a/b/c';
+    let name = util.filenameFromPath(path);
+    assert.equal(name, 'c');
+
+    let path2 = 'a\\b\\c';
+    let name2 = util.filenameFromPath(path2);
+    assert.equal(name2, 'c');
+
+    let path3 = 'abc';
+    let filePath3 = util.filenameFromPath(path3);
+    assert.equal(filePath3, path3, '如果没找到/或\\，返回原值');
+  });
+
+  it('getFilenamePath 验证', function () {
+    let path = 'http://192.168.1.121/a/b/c';
+    let filePath = util.getFilenamePath(path);
+    assert.equal(filePath, 'http://192.168.1.121/a/b/');
+
+    let path2 = 'http://192.168.1.121/a\\b\\c';
+    let filePath2 = util.getFilenamePath(path2);
+    assert.equal(filePath2, 'http://192.168.1.121/a\\b\\');
+
+    let path3 = 'abc';
+    let filePath3 = util.getFilenamePath(path3);
+    assert.equal(filePath3, path3, '如果没找到/或\\，返回原值');
+  });
+
+  it('getFilenameFile  验证', function () {
+    let path = 'http://192.168.1.121/a/b/c.zip';
+    let fileName = util.getFilenameFile(path);
+    assert.equal(fileName, 'c');
+
+    let path2 = 'http://192.168.1.121/a\\b\\c.abc';
+    let fileName2 = util.getFilenameFile(path2);
+    assert.equal(fileName2, 'c');
+
+    let path3 = 'a/b/c';
+    let fileName3 = util.getFilenameFile(path3);
+    assert.equal(fileName3, 'c', '如果没找到小数点，返回/后的值');
+
+    let path4 = 'abc';
+    let fileName4 = util.getFilenameFile(path4);
+    assert.equal(fileName4, path4, '如果没找到小数点，也没有/或\\，则返回原值');
+  });
+
+  it('getFilenameType 验证', function () {
+    let path = 'http://192.168.1.121/a/b/c.zip';
+    let type = util.getFilenameType(path);
+    assert.equal(type, '.zip');
+
+    let path2 = 'http://192.168.1.121/a\\b\\c.abc';
+    let type2 = util.getFilenameType(path2);
+    assert.equal(type2, '.abc');
+
+    let path3 = 'http://192.168.1.121/a/b.file/c.zip';
+    let type3 = util.getFilenameType(path3);
+    assert.equal(type3, '.zip', '以结尾为准');
+
+    let path4 = '/a/b/c';
+    let type4 = util.getFilenameType(path4);
+    assert.equal(type4, '', '如果没找到小数点，返回空字符串');
   });
 });

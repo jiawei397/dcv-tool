@@ -37,7 +37,6 @@ util._parsePathForAttribute = function (name) {
     if (typeof name == 'string') {
       return [name];
     }
-    return name;
   }
   return name;
 };
@@ -151,9 +150,10 @@ util.getFilenameType = function (opFilename: string) {
 /**
  * 在数组中去除重复项
  * @param {Array} results 原始数组
- * @param {Boolean} keepFirst boolean，是否保留第一个重复值
+ * @param {Boolean} keepFirst 是否保留第一个重复值，默认不保留。结果其实差不多，只是重复值顺序不一样
  * @return {Array} 删除了重复项的数组
- * @example util.unique(result);
+ * @example util.unique([1,2,1])  得到结果[2,1]
+ *          util.unique([1,2,1], true)  得到结果[1,2]
  */
 util.unique = function (results: [any], keepFirst?: boolean) {
   let delList = [];
