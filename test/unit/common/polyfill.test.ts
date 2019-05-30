@@ -1,4 +1,5 @@
 import {assert, expect} from 'chai';
+const window =  global as any;
 
 describe('polyfill 验证', function () {
   Object.values = null;
@@ -7,10 +8,6 @@ describe('polyfill 验证', function () {
   String.prototype.trim = null;
   String.prototype.includes = null;
   Array.prototype.includes = null;
-  if (typeof window !== 'undefined') {
-    window.requestAnimationFrame = null;
-    window.cancelAnimationFrame = null;
-  }
   require('../../../src/common/polyfill');
 
   it('Object.values 验证', function () {

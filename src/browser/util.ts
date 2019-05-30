@@ -1,6 +1,4 @@
 /* eslint-disable no-caller */
-import location from './location';
-
 /**
  * 这是一个为所有模块引用前的基类，提供几个基础方法
  * 只能在浏览器使用
@@ -16,8 +14,7 @@ const util: any = {};
  * @date 2018-05-22
  */
 util.isChrome = function () {
-  let userAgent = location.getUserAgent();
-  return /chrome/.test(userAgent.toLowerCase());
+  return /chrome/.test(navigator.userAgent.toLowerCase());
 };
 
 /**
@@ -26,21 +23,8 @@ util.isChrome = function () {
  * @date 2018-05-22
  */
 util.isIE = function () {
-  let userAgent = location.getUserAgent();
+  let userAgent = navigator.userAgent;
   return (/msie/i.test(userAgent.toLowerCase()) || /Trident/i.test(userAgent.toLowerCase())) && !/opera/.test(userAgent.toLowerCase());
-};
-
-/**
- * 取url中某个参数
- * @param {String} name 参数名称
- */
-util.urlArg = function (name: string) {
-  let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
-  let r = location.getSearch().substr(1).match(reg);
-  if (r != null) {
-    return decodeURIComponent(r[2]);
-  }
-  return null;
 };
 
 /**
@@ -49,7 +33,7 @@ util.urlArg = function (name: string) {
  * @date 2017-06-13
  */
 util.getProjectName = function () {
-  let project = location.getPathName();
+  let project = location.pathname;
   if (project.indexOf('/', 1) == -1) {
     return '';
   }
@@ -62,9 +46,9 @@ util.getProjectName = function () {
  * @returns {String}
  */
 util.getIp = function () {
-  let host = location.getHost();
+  let host = location.host;
   if (host !== '') {
-    return location.getProtocol() + '//' + host;
+    return location.protocol + '//' + host;
   }
   return '';
 };
@@ -75,7 +59,7 @@ util.getIp = function () {
  * @date 2016-11-19
  */
 util.is64 = function () {
-  let userAgent = location.getUserAgent();
+  let userAgent = navigator.userAgent;
   return /win64/i.test(userAgent) && /x64/i.test(userAgent);
 };
 
@@ -95,7 +79,7 @@ util.getURLParams = function (paramName: string, win: Window = window) {
  */
 util.getURLParamsMap = function (win: Window = window) {
   let name, value, num;
-  let str = location.getSearch(win).substr(1);
+  let str = win.location.search.substr(1);
   let arr = str.split('&'); // 各个参数放到数组里
   let params = {};
   for (let i = 0; i < arr.length; i++) {
@@ -107,6 +91,19 @@ util.getURLParamsMap = function (win: Window = window) {
     }
   }
   return params;
+};
+
+/**
+ * 取url中某个参数，与getURLParams效果一样
+ * @param {String} name 参数名称
+ */
+util.urlArg = function (name: string) {
+  let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
+  let r = location.search.substr(1).match(reg);
+  if (r != null) {
+    return decodeURIComponent(r[2]);
+  }
+  return null;
 };
 
 /**
@@ -151,10 +148,6 @@ util.removeParamFromUrl = function (url: string, key: string) {
   }
   url = beforeUrl + nextUrl;
   return url;
-};
-
-util.addUrlParam = function (url, key, value) {
-  return url.indexOf('?') != -1 ? url + '&' + key + '=' + value : url + '?' + key + '=' + value;
 };
 
 /**
@@ -244,7 +237,7 @@ util.removeFavicon = function () {
  * @date 2017-10-17
  */
 util.getHashMap = function () {
-  let hash = location.getHash();
+  let hash = location.hash;
   let datas = hash.substr(1);
   let map = {};
   if (!datas) return map;
@@ -272,17 +265,17 @@ util.getHashByKey = function (key: string) {
  */
 util.detectZoom = function () {
   let ratio = 0,
-    screen = location.getScreen(),
-    ua = location.getUserAgent().toLowerCase();
+    ua = navigator.userAgent.toLowerCase();
 
-  if (location.getDevicePixelRatio() !== undefined) {
-    ratio = window.devicePixelRatio;
+  if (typeof devicePixelRatio !== 'undefined') {
+    ratio = devicePixelRatio;
   } else if (~ua.indexOf('msie')) { // IE6-9
-    if (screen.deviceXDPI && screen.logicalXDPI) {
-      ratio = screen.deviceXDPI / screen.logicalXDPI;
+    let sc = screen as any;
+    if (sc.deviceXDPI && sc.logicalXDPI) {
+      ratio = sc.deviceXDPI / sc.logicalXDPI;
     }
-  } else if (location.getWindowWidth()) {
-    ratio = location.getWindowWidth().outerWidth / location.getWindowWidth().innerWidth;
+  } else if (typeof outerWidth !== 'undefined' && typeof innerWidth !== 'undefined') {
+    ratio = outerWidth / innerWidth;
   }
   return ratio;
 };

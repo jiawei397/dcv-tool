@@ -33,4 +33,19 @@ image.getBase64Image = function (img) {
     type: 'image/' + ext
   };
 };
+
+/**
+ * dataURL(base64字符串)转换为Blob对象（二进制大对象）
+ * @param {String} dataUrl base64字符串
+ * @return {Blob}
+ */
+image.dataURLtoBlob = function (dataUrl: string) {
+  let arr = dataUrl.split(',');
+  let map = {
+    type: arr[0],
+    dataURL: arr[1]
+  };
+  return image.convertBase64UrlToBlob(map);
+};
+
 export default image;

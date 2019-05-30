@@ -763,24 +763,4 @@ util.flatten = function flatten(arr: any) {
   }, []);
 };
 
-/**
- * dataURL(base64字符串)转换为Blob对象（二进制大对象）
- * @param {String} dataUrl base64字符串
- * @return {Blob}
- */
-util.dataURLtoBlob = function (dataUrl: string) {
-  let arr = dataUrl.split(',');
-  let mime = arr[0].match(/:(.*?);/)[1]; // 结果：   image/png
-  // console.log("arr[0]====" + JSON.stringify(arr[0]));//   "data:image/png;base64"
-  // console.log("arr[0].match(/:(.*?);/)====" + arr[0].match(/:(.*?);/));// :image/png;,image/png
-  // console.log("arr[0].match(/:(.*?);/)[1]====" + arr[0].match(/:(.*?);/)[1]);//   image/png
-  let bstr = atob(arr[1].replace(/\s/g, ''));
-  let n = bstr.length;
-  let u8arr = new Uint8Array(n);
-  while (n--) {
-    u8arr[n] = bstr.charCodeAt(n);
-  }
-  return new Blob([u8arr], {type: mime}); // 值，类型
-};
-
 export default util;
