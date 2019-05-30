@@ -1,5 +1,6 @@
 import {assert} from 'chai';
 import util from '../../../src/browser/util';
+// import {JSDOM } from 'jsdom';
 
 const window = global as any;
 window.navigator = {};
@@ -29,7 +30,14 @@ Object.defineProperties(window.location, {
   }
 });
 
-let devicePixelRatio, outerWidth;
+let devicePixelRatio, outerWidth, readyState;
+let createEle: any = () => {
+  return {
+    type: '',
+    readyState: readyState,
+    src: ''
+  };
+};
 Object.defineProperties(window, {
   screen: {
     get: () => {
@@ -47,6 +55,27 @@ Object.defineProperties(window, {
   },
   innerWidth: {
     get: () => 20
+  },
+  document: {
+    get: () => {
+      return {
+        body: {
+          appendChild: () => {
+          }
+        },
+        createElement: () => {
+          let ele = createEle();
+          setTimeout(() => {
+            if (ele.onreadystatechange) {
+              ele.onreadystatechange();
+            } else if (ele.onload) {
+              ele.onload();
+            }
+          }, 100);
+          return ele;
+        }
+      };
+    }
   }
 });
 
@@ -149,6 +178,21 @@ describe('页面util 验证', function () {
     assert.equal(util.getIp(), '');
 
     host = originHost;
+  });
+
+  it('loadScript 校验', function (done) {
+    let url = '/base/data/empty.js';
+    util.loadScript(url);
+
+    util.loadScript(url, function () {
+      assert.isOk(url, '没有readyState，这句会被调用');
+    });
+
+    readyState = 'loaded';
+    util.loadScript(url, function () {
+      assert.isOk(url, '这句会被调用');
+      done();
+    });
   });
 
   it('增加一个参数到Url中 addParam2Url() 校验', function () {

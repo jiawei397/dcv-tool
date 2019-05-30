@@ -156,7 +156,7 @@ util.removeParamFromUrl = function (url: string, key: string) {
 util.loadScript = function (url: string, callback: () => void) {
   let script = document.createElement('script');
   script.type = 'text/javascript';
-  if (util.isFunction(callback)) {
+  if (typeof callback === 'function') {
     let s = (script as any);
     if (s.readyState) {
       s.onreadystatechange = function () {
