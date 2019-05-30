@@ -255,7 +255,8 @@ describe('页面util 验证', function () {
     }, 100);
     setTimeout(() => {
       xhrStatus = 304;
-      util.isFileExist(url);
+      let result = util.isFileExist(url);
+      assert.isBoolean(result, '返回结果一定是boolean');
       done();
     }, 200);
   });
