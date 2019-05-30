@@ -30,7 +30,7 @@ Object.defineProperties(window.location, {
   }
 });
 
-let devicePixelRatio, outerWidth, readyState;
+let devicePixelRatio, outerWidth, readyState, attr;
 let createEle: any = () => {
   return {
     type: '',
@@ -38,6 +38,28 @@ let createEle: any = () => {
     src: ''
   };
 };
+
+let xhrReadyState = 0; //控制XMLHttpRequest状态值
+let xhrStatus = 0; //控制XMLHttpRequest状态码
+
+//模拟一个xhr类
+class XMLHttpRequest {
+  public readyState: number = xhrReadyState;
+  public status: number = xhrStatus;
+
+  constructor() {
+
+  }
+
+  public open() {
+
+  }
+
+  public send() {
+
+  }
+}
+
 Object.defineProperties(window, {
   screen: {
     get: () => {
@@ -73,22 +95,26 @@ Object.defineProperties(window, {
             }
           }, 100);
           return ele;
+        },
+        getElementsByTagName: () => {
+          return [{
+            appendChild: () => {
+            },
+            removeChild: () => {
+
+            },
+            getAttribute: () => attr
+          }];
         }
       };
     }
+  },
+  XMLHttpRequest: {
+    get: () => XMLHttpRequest
   }
 });
 
 describe('页面util 验证', function () {
-  //TODO 需要校验
-  it.skip('isFileExist 校验', function () {
-    let url = util.getIp() + '/browser/util.test.ts';
-    assert.isFalse(util.isFileExist(url));
-
-    // let url2 = util.getIp() + '/base/specs/example2.js';
-    // assert.isFalse(util.isFileExist(url2));
-  });
-
   it('判断当前浏览器 校验', function () {
     ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36'; //32位chrome
     assert.isFalse(util.is64());
@@ -191,8 +217,47 @@ describe('页面util 验证', function () {
     readyState = 'loaded';
     util.loadScript(url, function () {
       assert.isOk(url, '这句会被调用');
+    });
+
+    readyState = 'complete';
+    util.loadScript(url, function () {
+      assert.isOk(url, '这句会被调用');
       done();
     });
+  });
+
+  it('requireCss 校验', function () {
+    assert.isFunction(util.requireCss);
+    util.requireCss('style.css');
+    util.requireCss('style.css', 'aa');
+    util.requireCss('style.css', 'aa', 'box');
+  });
+
+  it('setFavicon 校验', function () {
+    assert.isFunction(util.removeFavicon);
+    util.removeFavicon('aa.icon');
+
+    attr = 'icon';
+    util.removeFavicon('aa.icon');
+
+    assert.isFunction(util.setFavicon);
+    util.setFavicon('aa.icon');
+  });
+
+  it('isFileExist  校验', function (done) {
+    assert.isFunction(util.isFileExist);
+    let url = 'https://www.baidu.com';
+    util.isFileExist(url);
+    setTimeout(() => {
+      xhrReadyState = 4;
+      xhrStatus = 205;
+      util.isFileExist(url);
+    }, 100);
+    setTimeout(() => {
+      xhrStatus = 304;
+      util.isFileExist(url);
+      done();
+    }, 200);
   });
 
   it('增加一个参数到Url中 addParam2Url() 校验', function () {
@@ -236,5 +301,8 @@ describe('页面util 验证', function () {
     assert.isDefined(map.token, 'token也取到了');
 
     hash = '';
+    map = util.getHashMap();
+    assert.isObject(map);
+    assert.isEmpty(map);
   });
 });
