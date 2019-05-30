@@ -1,0 +1,44 @@
+stages:
+  - install
+  - eslint
+  - unit
+  - build
+
+cache:
+    policy: pull
+    key: "$CI_COMMIT_REF_NAME"
+    paths:
+        - node_modules
+
+variables:
+  DOCKER_DRIVER: overlay2
+  GIT_STRATEGY: "fetch"
+
+install:
+  stage: install
+  retry: 2
+  cache:
+  #      policy: push
+        key: "$CI_COMMIT_REF_NAME"
+        paths:
+            - node_modules
+  script:
+    - yarn install
+
+eslint:
+  stage: eslint
+  script:
+    - npm run lint
+
+unit:
+  stage: unit
+  script:
+    - npm run unit
+
+build:
+  stage: build
+#  only:
+#      - release
+  script:
+    - npm run release
+
