@@ -37,6 +37,75 @@ if (!String.prototype.hasOwnProperty('replaceAll')) {
   };
 }
 
+/**
+ * 获取路径
+ */
+String.prototype.getPath = function () {
+  let startIndex = this.indexOf('\\') >= 0 ? this.lastIndexOf('\\') : this.lastIndexOf('/');
+  return this.substring(0, startIndex);
+};
+
+/**
+ * 获取扩展名
+ */
+String.prototype.getExtension = function () {
+  let strings = this.split('.');
+  if (strings.length > 1) {
+    return strings.pop();
+  }
+  return '';
+};
+
+/**
+ * 获取文件名
+ */
+String.prototype.getFileName = function () {
+  let withExtension = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+  let startIndex = this.indexOf('\\') >= 0 ? this.lastIndexOf('\\') : this.lastIndexOf('/');
+
+  if (startIndex === -1) {
+    if (withExtension) {
+      return this;
+    } else {
+      return this.split('.')[0];
+    }
+  } else {
+    let filename = this.substring(startIndex);
+
+    if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+      filename = filename.substring(1);
+    }
+
+    if (withExtension) {
+      return filename;
+    } else {
+      return filename.split('.')[0];
+    }
+  }
+};
+
+String.prototype._trimLeft = function (charlist) {
+  if (charlist === undefined) charlist = "\s";
+  return this.replace(new RegExp("^[" + charlist + "]+"), "");
+};
+
+String.prototype._trimRight = function (charlist) {
+  if (charlist === undefined) charlist = "\s";
+  return this.replace(new RegExp("[" + charlist + "]+$"), "");
+};
+
+String.prototype.trimBoth = function (charlist) {
+  return this._trimLeft(charlist)._trimRight(charlist);
+};
+
+/**
+ * 添加路径
+ */
+String.prototype.appendPath = function (path) {
+  let parentPath = this._trimRight('/');
+  return parentPath + '/' + path._trimLeft('/')._trimRight('/');
+};
+
 if (!String.prototype.includes) {
   String.prototype.includes = function (search, start) {
     if (typeof start !== 'number') {
