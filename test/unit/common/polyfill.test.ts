@@ -84,6 +84,12 @@ describe('polyfill 验证', function () {
     for (let i = 2; i < arr3.length; i++) {
       assert.equal(arr3[i], 7);
     }
+
+    const arr4 = Array(7);
+    assert.equal(arr4.length, 7);
+    assert.isUndefined(arr4[0]);
+    arr4.fill(2);
+    assert.equal(arr4[1], 2);
   });
 
   it('Number.prototype.toFixed 验证', function () {
