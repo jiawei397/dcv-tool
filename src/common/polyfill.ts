@@ -29,82 +29,6 @@ if (!String.prototype.trim) {
     return this.replace(/^\s*|\s*$/g, '');
   };
 }
-if (!String.prototype.hasOwnProperty('replaceAll')) {
-  (String.prototype as any).replaceAll = function (s1, s2) {
-    let r = new RegExp(s1.replace(/([\(\)\[\]\{\}\^\$\+\-\*\?\.\"\'\|\/\\])/g,
-      '\\$1'), 'ig');
-    return this.replace(r, s2);
-  };
-}
-
-/**
- * 获取路径
- */
-(String.prototype as any).getPath = function () {
-  let startIndex = this.indexOf('\\') >= 0 ? this.lastIndexOf('\\') : this.lastIndexOf('/');
-  return this.substring(0, startIndex);
-};
-
-/**
- * 获取扩展名
- */
-(String.prototype as any).getExtension = function () {
-  let strings = this.split('.');
-  if (strings.length > 1) {
-    return strings.pop();
-  }
-  return '';
-};
-
-/**
- * 获取文件名
- */
-(String.prototype as any).getFileName = function () {
-  let withExtension = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-  let startIndex = this.indexOf('\\') >= 0 ? this.lastIndexOf('\\') : this.lastIndexOf('/');
-
-  if (startIndex === -1) {
-    if (withExtension) {
-      return this;
-    } else {
-      return this.split('.')[0];
-    }
-  } else {
-    let filename = this.substring(startIndex);
-
-    if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
-      filename = filename.substring(1);
-    }
-
-    if (withExtension) {
-      return filename;
-    } else {
-      return filename.split('.')[0];
-    }
-  }
-};
-
-(String.prototype as any)._trimLeft = function (charlist) {
-  if (charlist === undefined) charlist = '\s';
-  return this.replace(new RegExp('^[' + charlist + ']+'), '');
-};
-
-(String.prototype as any)._trimRight = function (charlist) {
-  if (charlist === undefined) charlist = '\s';
-  return this.replace(new RegExp('[' + charlist + ']+$'), '');
-};
-
-(String.prototype as any).trimBoth = function (charlist) {
-  return this._trimLeft(charlist)._trimRight(charlist);
-};
-
-/**
- * 添加路径
- */
-(String.prototype as any).appendPath = function (path) {
-  let parentPath = this._trimRight('/');
-  return parentPath + '/' + path._trimLeft('/')._trimRight('/');
-};
 
 if (!String.prototype.includes) {
   String.prototype.includes = function (search, start) {
@@ -171,7 +95,7 @@ if (!Array.prototype.includes) {
 
 if (!Array.prototype.fill) {
   Object.defineProperty(Array.prototype, 'fill', {
-    value: function(value) {
+    value: function (value) {
 
       // Steps 1-2.
       if (this == null) {
@@ -222,8 +146,12 @@ if (!Array.from) {
     };
     let toInteger = function (value) {
       let num = Number(value);
-      if (isNaN(num)) { return 0; }
-      if (num === 0 || !isFinite(num)) { return num; }
+      if (isNaN(num)) {
+        return 0;
+      }
+      if (num === 0 || !isFinite(num)) {
+        return num;
+      }
       return (num > 0 ? 1 : -1) * Math.floor(Math.abs(num));
     };
     let maxSafeInteger = Math.pow(2, 53) - 1;
@@ -293,7 +221,7 @@ if (!Array.from) {
 }
 
 if (!Array.of) {
-  Array.of = function() {
+  Array.of = function () {
     return Array.prototype.slice.call(arguments);
   };
 }
@@ -301,7 +229,7 @@ if (!Array.of) {
 // https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
 if (!Array.prototype.findIndex) {
   Object.defineProperty(Array.prototype, 'findIndex', {
-    value: function(predicate) {
+    value: function (predicate) {
       // 1. Let O be ? ToObject(this value).
       if (this == null) {
         throw new TypeError('"this" is null or not defined');
@@ -346,7 +274,7 @@ if (!Array.prototype.findIndex) {
 // https://tc39.github.io/ecma262/#sec-array.prototype.find
 if (!Array.prototype.find) {
   Object.defineProperty(Array.prototype, 'find', {
-    value: function(predicate) {
+    value: function (predicate) {
       // 1. Let O be ? ToObject(this value).
       if (this == null) {
         throw new TypeError('"this" is null or not defined');
@@ -439,36 +367,6 @@ Number.prototype.toFixed = function (n: number) {
   return result;
 };
 
-// 说明：JS时间Date格式化参数
-// 参数：格式化字符串如：'yyyy-MM-dd HH:mm:ss'
-// 结果：如2016-06-01 10:09:00
-if (!(Date.prototype as any).format) {
-  (Date.prototype as any).format = function (fmt) {
-    let o = {
-      'M+': this.getMonth() + 1,
-      'd+': this.getDate(),
-      'H+': this.getHours(),
-      'm+': this.getMinutes(),
-      's+': this.getSeconds(),
-      'q+': Math.floor((this.getMonth() + 3) / 3),
-      'S': this.getMilliseconds()
-    };
-    let year = this.getFullYear();
-    let yearstr = year + '';
-    yearstr = yearstr.length >= 4 ? yearstr : '0000'.substr(0, 4 - yearstr.length) + yearstr;
-
-    if (/(y+)/.test(fmt)) {
-      fmt = fmt.replace(RegExp.$1, (yearstr + '').substr(4 - RegExp.$1.length));
-    }
-    for (let k in o) {
-      if (new RegExp('(' + k + ')').test(fmt)) {
-        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)));
-      }
-    }
-    return fmt;
-  };
-}
-
 // jw 2017.11.06 兼容window.requestAnimationFrame
 (function (window: any) {
   if (!window) {
@@ -500,5 +398,49 @@ if (!(Date.prototype as any).format) {
     };
   }
 })(typeof window !== 'undefined' ? window : (typeof global !== 'undefined' ? global : null));
+
+/*******************************************************************************
+ * 以下非js原生函数
+ ******************************************************************************/
+if (!String.prototype.hasOwnProperty('replaceAll')) {
+  (String.prototype as any).replaceAll = function (s1, s2) {
+    let r = new RegExp(s1.replace(/([\(\)\[\]\{\}\^\$\+\-\*\?\.\"\'\|\/\\])/g,
+      '\\$1'), 'ig');
+    return this.replace(r, s2);
+  };
+}
+if (!String.prototype.hasOwnProperty('has')) {
+  (String.prototype as any).has = String.prototype.includes;
+}
+
+// 说明：JS时间Date格式化参数
+// 参数：格式化字符串如：'yyyy-MM-dd HH:mm:ss'
+// 结果：如2016-06-01 10:09:00
+if (!(Date.prototype as any).format) {
+  (Date.prototype as any).format = function (fmt) {
+    let o = {
+      'M+': this.getMonth() + 1,
+      'd+': this.getDate(),
+      'H+': this.getHours(),
+      'm+': this.getMinutes(),
+      's+': this.getSeconds(),
+      'q+': Math.floor((this.getMonth() + 3) / 3),
+      'S': this.getMilliseconds()
+    };
+    let year = this.getFullYear();
+    let yearstr = year + '';
+    yearstr = yearstr.length >= 4 ? yearstr : '0000'.substr(0, 4 - yearstr.length) + yearstr;
+
+    if (/(y+)/.test(fmt)) {
+      fmt = fmt.replace(RegExp.$1, (yearstr + '').substr(4 - RegExp.$1.length));
+    }
+    for (let k in o) {
+      if (new RegExp('(' + k + ')').test(fmt)) {
+        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)));
+      }
+    }
+    return fmt;
+  };
+}
 
 export default Object;

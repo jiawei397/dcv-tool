@@ -1,5 +1,6 @@
 import {assert, expect} from 'chai';
-const window =  global as any;
+
+const window = global as any;
 
 describe('polyfill 验证', function () {
   Object.values = null;
@@ -8,6 +9,7 @@ describe('polyfill 验证', function () {
   String.prototype.trim = null;
   String.prototype.includes = null;
   Array.prototype.includes = null;
+  Array.prototype.fill = null;
   require('../../../src/common/polyfill');
 
   it('Object.values 验证', function () {
@@ -60,6 +62,28 @@ describe('polyfill 验证', function () {
     assert.isTrue(arr.includes('b'));
     assert.isTrue(arr.includes('c'));
     assert.isFalse(arr.includes('abc'));
+  });
+
+  it('Array.prototype.fill 验证', function () {
+    const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+    arr.fill(7);
+    const result = arr.every((item) => {
+      return item === 7;
+    });
+    assert.isTrue(result, '现在每个元素都是7');
+
+    const arr2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+    arr2.fill(7, 2, 5);
+    assert.equal(arr2[2], 7);
+    assert.equal(arr2[3], 7);
+    assert.equal(arr2[4], 7);
+    assert.notEqual(arr2[5], 7, '边界5没有被替换');
+
+    const arr3 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+    arr3.fill(7, 2);
+    for (let i = 2; i < arr3.length; i++) {
+      assert.equal(arr3[i], 7);
+    }
   });
 
   it('Number.prototype.toFixed 验证', function () {
