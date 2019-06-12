@@ -1,5 +1,6 @@
 import {assert, expect} from 'chai';
-const window =  global as any;
+
+const window = global as any;
 
 describe('polyfill 验证', function () {
   Object.values = null;
@@ -8,6 +9,9 @@ describe('polyfill 验证', function () {
   String.prototype.trim = null;
   String.prototype.includes = null;
   Array.prototype.includes = null;
+  Array.prototype.fill = null;
+  Array.of = null;
+  Array.from = null;
   require('../../../src/common/polyfill');
 
   it('Object.values 验证', function () {
@@ -60,6 +64,46 @@ describe('polyfill 验证', function () {
     assert.isTrue(arr.includes('b'));
     assert.isTrue(arr.includes('c'));
     assert.isFalse(arr.includes('abc'));
+  });
+
+  it('Array.prototype.fill 验证', function () {
+    const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+    arr.fill(7);
+    const result = arr.every((item) => {
+      return item === 7;
+    });
+    assert.isTrue(result, '现在每个元素都是7');
+
+    const arr2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+    arr2.fill(7, 2, 5);
+    assert.equal(arr2[2], 7);
+    assert.equal(arr2[3], 7);
+    assert.equal(arr2[4], 7);
+    assert.notEqual(arr2[5], 7, '边界5没有被替换');
+
+    const arr3 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+    arr3.fill(7, 2);
+    for (let i = 2; i < arr3.length; i++) {
+      assert.equal(arr3[i], 7);
+    }
+
+    const arr4 = Array(7); //这是新建一个空数组，且元素为empty，并非undefined
+    assert.equal(arr4.length, 7);
+    assert.isUndefined(arr4[0], '其实这里校验不出来empty和undefined的区别');
+    arr4.fill(2);
+    assert.equal(arr4[1], 2);
+  });
+
+  it('Array.of 验证', function () {
+    const arr = Array.of(7);
+    assert.equal(arr.length, 1);
+    assert.equal(arr[0], 7);
+  });
+
+  it('Array.from 验证', function () {
+    const arr = Array.from('foo');
+    assert.equal(arr.length, 3);
+    assert.equal(arr[2], 'o');
   });
 
   it('Number.prototype.toFixed 验证', function () {

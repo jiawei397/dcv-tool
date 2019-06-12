@@ -60,6 +60,7 @@ class XMLHttpRequest {
   }
 }
 
+let selector = null;
 Object.defineProperties(window, {
   screen: {
     get: () => {
@@ -84,6 +85,9 @@ Object.defineProperties(window, {
         body: {
           appendChild: () => {
           }
+        },
+        querySelector: () => {
+          return selector;
         },
         createElement: () => {
           let ele = createEle();
@@ -233,7 +237,7 @@ describe('页面util 验证', function () {
     util.requireCss('style.css', 'aa', 'box');
   });
 
-  it('setFavicon 校验', function () {
+  it('removeFavicon和setFavicon 校验', function () {
     assert.isFunction(util.removeFavicon);
     util.removeFavicon('aa.icon');
 
@@ -242,6 +246,9 @@ describe('页面util 验证', function () {
 
     assert.isFunction(util.setFavicon);
     util.setFavicon('aa.icon');
+
+    selector = {};
+    util.setFavicon('bb.icon');
   });
 
   it('isFileExist  校验', function (done) {
