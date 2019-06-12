@@ -209,13 +209,11 @@ util.requireCss = function (cssPath: string, id: string, className: string) {
  * 设置地址栏图标
  */
 util.setFavicon = function (url: string) {
-  this.removeFavicon();
-  let link = document.createElement('link');
+  let link = (document.querySelector('link[rel*="icon"]') || document.createElement('link')) as any;
   link.type = 'image/x-icon';
   link.rel = 'icon';
   link.href = url;
   document.getElementsByTagName('head')[0].appendChild(link);
-  // if (window.console) console.log("Set FavIcon URL to " + getFavicon().href);
 };
 
 /**
