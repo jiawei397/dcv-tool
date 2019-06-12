@@ -10,6 +10,8 @@ describe('polyfill 验证', function () {
   String.prototype.includes = null;
   Array.prototype.includes = null;
   Array.prototype.fill = null;
+  Array.of = null;
+  Array.from = null;
   require('../../../src/common/polyfill');
 
   it('Object.values 验证', function () {
@@ -85,11 +87,23 @@ describe('polyfill 验证', function () {
       assert.equal(arr3[i], 7);
     }
 
-    const arr4 = Array(7);
+    const arr4 = Array(7); //这是新建一个空数组，且元素为empty，并非undefined
     assert.equal(arr4.length, 7);
-    assert.isUndefined(arr4[0]);
+    assert.isUndefined(arr4[0], '其实这里校验不出来empty和undefined的区别');
     arr4.fill(2);
     assert.equal(arr4[1], 2);
+  });
+
+  it('Array.of 验证', function () {
+    const arr = Array.of(7);
+    assert.equal(arr.length, 1);
+    assert.equal(arr[0], 7);
+  });
+
+  it('Array.from 验证', function () {
+    const arr = Array.from('foo');
+    assert.equal(arr.length, 3);
+    assert.equal(arr[2], 'o');
   });
 
   it('Number.prototype.toFixed 验证', function () {
