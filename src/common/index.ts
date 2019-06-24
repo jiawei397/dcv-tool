@@ -9,3 +9,4 @@ uinv.hash = hash;
 uinv.VERSION = version;
 
 export default uinv;
+export {util, hash};
