@@ -3,7 +3,7 @@ import util from './util';
 import image from './image';
 import {hash} from '../common';
 
-hash.combine(uinv.util, util);
+hash.combineNew(util, uinv.util);
 uinv.image = image;
 
 export default uinv;
