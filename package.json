@@ -4,11 +4,11 @@
   "description": "工具类",
   "author": "jw",
   "scripts": {
-    "develop": "npm run develop-all && npm run develop-common",
+    "dev": "npm run develop-all && npm run develop-common",
     "build": "npm run build-all && npm run build-common",
     "clear": "rimraf ./release ./dist ./lib ./ts",
     "compile": "tsc --target es2015",
-    "release": "npm run clear && npm run develop && npm run compile",
+    "release": "npm run clear && npm run dev && npm run compile",
     "lint": "./node_modules/.bin/tslint src/**/*.ts",
     "commitLint": "./node_modules/.bin/commitlint -E HUSKY_GIT_PARAMS",
     "fix": "./node_modules/.bin/tslint --fix src/**/*.ts test/**/*.ts",
