@@ -1,6 +1,6 @@
 stages:
-  - install
-  - eslint
+  - install_deps
+  - lint
   - unit
   - build
 
@@ -15,7 +15,7 @@ variables:
   GIT_STRATEGY: "fetch"
 
 install:
-  stage: install
+  stage: install_deps
   retry: 2
   cache:
   #      policy: push
@@ -25,8 +25,8 @@ install:
   script:
     - yarn install
 
-eslint:
-  stage: eslint
+lint:
+  stage: lint
   script:
     - npm run lint
 
