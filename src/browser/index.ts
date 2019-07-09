@@ -5,6 +5,7 @@ import {hash} from '../common';
 
 hash.combineNew(util, uinv.util);
 uinv.image = image;
+uinv.util = util;
 
 export default uinv;
 export {util, image, hash};
