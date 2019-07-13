@@ -54,7 +54,7 @@ uinv.isNumber = function (obj) {
  * @return {Array}  克隆后的对象
  */
 uinv.cloneObj = function clone(obj, isDeep, endFun) {
-  if (!obj || typeof obj !== 'object' || uinv.isEmpty(obj) || (uinv.isFunction(endFun) && endFun(obj))) {
+  if (!obj || typeof obj !== 'object' || (uinv.isFunction(endFun) && endFun(obj))) {
     return obj;
   }
   let c = obj instanceof Array ? [] : {};

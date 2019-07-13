@@ -27,6 +27,8 @@ describe('cloneObj() 验证', function () {
         }
       }
     },
+    'j': {},
+    'k': [],
     'person': person
   };
   it('深度复制，改变属性为引用类型的值不会影响原对象', function () {
@@ -37,6 +39,8 @@ describe('cloneObj() 验证', function () {
     assert.notEqual(obj.e, newObj.e, '非引用类型的值不应该相等');
     assert.notEqual(newObj.person, obj.person, '复杂对象也可以复制');
     assert.equal(newObj.d, obj.d, '没有复制function');
+    assert.notEqual(newObj.j, obj.j, '空对象不应该相等');
+    assert.notEqual(newObj.k, obj.k, '空数组不应该相等');
 
     newObj.e.g = 'aa';
     // expect(obj.e.g).to.deep.equal(newObj.e.g);//肯定报错
@@ -48,6 +52,8 @@ describe('cloneObj() 验证', function () {
     assert.deepEqual(newObj, obj);
     assert.equal(newObj.c, obj.c, '非引用类型的值其实是引用值');
     assert.equal(newObj.e, obj.e, '非引用类型的值其实是引用值');
+    assert.equal(newObj.j, obj.j, '空对象也是用的引用值');
+    assert.equal(newObj.k, obj.k, '空对象也是用的引用值');
 
     newObj.e.g = 'aa';
     assert.equal(obj.e.g, newObj.e.g, '引用类型的值都改变了');
