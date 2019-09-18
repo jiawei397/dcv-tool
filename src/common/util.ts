@@ -635,6 +635,19 @@ util.toHexString = function (input: string) {
 };
 
 /**
+ * 将rgb(255,33,244)转化为#ff21f4
+ * @param {string} color
+ * @return {string}
+ */
+util.colorRGBtoHex = function (color: string) {
+  let rgb = color.split(',');
+  let r = parseInt(rgb[0].split('(')[1], 0);
+  let g = parseInt(rgb[1], 0);
+  let b = parseInt(rgb[2].split(')')[0], 0);
+  return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+};
+
+/**
  * 过滤特殊字符串并清除空格
  * @param {} characters
  */
