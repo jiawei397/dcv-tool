@@ -172,6 +172,9 @@ describe('uinv中基本方法校验', function () {
     // expect(uinv.isFunction(false)).to.be.false;
 
     // 两种写法，感受下区别
+    assert.isFalse(uinv.isFunction(null));
+    assert.isFalse(uinv.isFunction(undefined));
+    assert.isFalse(uinv.isFunction(''));
     assert.isFalse(uinv.isFunction(123));
     assert.isFalse(uinv.isFunction(['a', 'b']));
     assert.isTrue(uinv.isFunction(function () {

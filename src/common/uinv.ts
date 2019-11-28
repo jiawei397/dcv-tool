@@ -16,7 +16,7 @@ uinv.isEmpty = function (opObject) {
  * 判断是否函数
  */
 uinv.isFunction = function (obj) {
-  return obj && typeof obj === 'function' && typeof obj.nodeType !== 'number';
+  return typeof obj === 'function' && typeof obj.nodeType !== 'number';
 };
 
 /**
