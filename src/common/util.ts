@@ -452,7 +452,7 @@ util.getAttrsFromObjectByKeys = function (obj: object, keys: [any], isFilterNull
 };
 
 //////////////////////////////////////////////////////////////////////////////////
-let CHINESE_CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+let CHINESE_CHARS = '0123456789一二三四五六七八九十ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 /**
  * 根据汉字字符进行排序
  * @param {Array} opA  要排序的数组
