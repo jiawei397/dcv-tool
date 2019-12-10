@@ -151,7 +151,6 @@ describe('util函数 验证', function () {
 
     let arr2 = ['e11', 'eF2', 'eA1', 'ea1', 'a22', 'aB3'];
     let result = util.sortArrayByChar(arr2);
-    console.log(result);
     assert.deepEqual(result, ['a22', 'aB3', 'ea1', 'e11', 'eA1', 'eF2']);
   });
 
