@@ -452,7 +452,7 @@ util.getAttrsFromObjectByKeys = function (obj: object, keys: [any], isFilterNull
 };
 
 //////////////////////////////////////////////////////////////////////////////////
-let CHINESE_CHARS = '123456789ABCDE';
+let CHINESE_CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 /**
  * 根据汉字字符进行排序
  * @param {Array} opA  要排序的数组
@@ -471,21 +471,80 @@ util.sortArrayByChar = function (opA: [any], param) {
       a = ('' + c1).split('');
       b = ('' + c2).split('');
     }
-
     for (let i = 0; i < a.length; i++) {
-      if (b[i] === undefined) return 1;
-      if (a[i] == b[i]) continue;
-
+      if (b[i] === undefined) {
+        return 1;
+      }
+      if (a[i] == b[i]) {
+        continue;
+      }
       let indexa = CHINESE_CHARS.indexOf(a[i]);
       let indexb = CHINESE_CHARS.indexOf(b[i]);
       if (indexa == -1 && indexb == -1) {
-        if (a[i] > b[i]) return 1;
+        if (a[i] > b[i]) {
+          return 1;
+        }
         return -1;
       }
+      if (indexa != -1 && indexb == -1) {
+        return 1;
+      }
+      if (indexa == -1 && indexb != -1) {
+        return -1;
+      }
+      if (indexa != indexb) { //到这个方法里必须要分出胜负了，无需再走外面循环了
+        if (isNaN(a[i]) && isNaN(b[i])) {
+          if (indexa > indexb) {
+            return 1;
+          }
+          if (indexa < indexb) {
+            return -1;
+          }
+        }
+        if (isNaN(a[i]) && !isNaN(b[i])) {
+          if (indexa > indexb) {
+            return 1;
+          }
+          if (indexa < indexb) {
+            return -1;
+          }
+        }
+        if (!isNaN(a[i]) && isNaN(b[i])) {
+          if (indexa > indexb) {
+            return 1;
+          }
+          if (indexa < indexb) {
+            return -1;
+          }
+        }
+        if (!isNaN(a[i]) && !isNaN(b[i])) {
+          let aNumber = a[i];
+          let bNumber = b[i];
+          let j = i + 1;
+          let k = i + 1;
+          for (j; j < a.length; j++) {
+            if (isNaN(a[j])) {
+              break;
+            } else {
+              aNumber += a[j];
+            }
+          }
 
-      if (indexa != -1 && indexb == -1) return 1;
-      if (indexa == -1 && indexb != -1) return -1;
-      if (indexa > indexb) return 1;
+          for (k; k < b.length; k++) {
+            if (isNaN(b[k])) {
+              break;
+            } else {
+              bNumber += b[k];
+            }
+          }
+
+          if (Number(aNumber) <= Number(bNumber)) {
+            return -1;
+          } else {
+            return 1;
+          }
+        }
+      }
     }
     return -1;
   });
