@@ -317,6 +317,20 @@ if (!Array.prototype.find) {
 }
 
 /**
+ * 获取数组最后一个元素
+ */
+Object.defineProperty(Array.prototype, 'last', {
+  value: function () {
+    // 1. Let O be ? ToObject(this value).
+    if (this == null) {
+      throw new TypeError('"this" is null or not defined');
+    }
+
+    return this.slice(-1)[0];
+  }
+});
+
+/**
  * 重写Number的toFixed方法
  */
 Number.prototype.toFixed = function (n: number) {

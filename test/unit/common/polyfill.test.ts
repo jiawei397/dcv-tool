@@ -106,6 +106,15 @@ describe('polyfill 验证', function () {
     assert.equal(arr[2], 'o');
   });
 
+  it('Array.prototype.last 验证', function () {
+    const arr: any = [1, 2, 3, 4];
+    const last = arr[arr.length - 1];
+    assert.equal(last, arr.last());
+
+    const arr2: any = [];
+    assert.isUndefined(arr2.last());
+  });
+
   it('Number.prototype.toFixed 验证', function () {
     let num: number = 1.123;
     assert.equal(num.toFixed(2), '1.12');
