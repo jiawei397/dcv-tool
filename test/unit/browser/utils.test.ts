@@ -1,5 +1,5 @@
 import {assert} from 'chai';
-import uinv from '../../../src/browser/uinv';
+import utils from '../../../src/browser/utils';
 
 const lsMap = {}, ssMap = {};
 let cookieMap = {};
@@ -86,58 +86,58 @@ Object.defineProperty(window.document, 'write', {
 });
 
 describe('页面uinv 验证', function () {
-  it('封装localStorage方法 uinv.data() 校验', function () {
-    assert.isNull(uinv.data());
+  it('封装localStorage方法 utils.data() 校验', function () {
+    assert.isNull(utils.data());
 
-    uinv.data('nico', 'hello');
+    utils.data('nico', 'hello');
     assert.equal(localStorage.getItem('nico'), 'hello', '测试设置');
 
-    uinv.data('abc', {'a': 'b'});
-    let data = uinv.data('abc');
+    utils.data('abc', {'a': 'b'});
+    let data = utils.data('abc');
     assert.isObject(data, '返回的是解析过的json');
     assert.equal(data.a, 'b');
 
-    assert.equal(uinv.data('nico'), 'hello');
-    uinv.data('nico', null);
+    assert.equal(utils.data('nico'), 'hello');
+    utils.data('nico', null);
     assert.equal(localStorage.getItem('nico'), undefined);
   });
 
-  it('封装sessionStorage方法 uinv.sessionStorage() 校验', function () {
-    uinv.sessionStorage('leo', 'good');
+  it('封装sessionStorage方法 utils.sessionStorage() 校验', function () {
+    utils.sessionStorage('leo', 'good');
     assert.equal(window.sessionStorage.getItem('leo'), 'good');
-    assert.equal(uinv.sessionStorage('leo'), 'good');
-    uinv.sessionStorage('leo', null);
+    assert.equal(utils.sessionStorage('leo'), 'good');
+    utils.sessionStorage('leo', null);
     assert.equal(window.sessionStorage.getItem('leo'), undefined);
   });
 
-  it('封装cookie方法 uinv.cookie() 校验', function () {
+  it('封装cookie方法 utils.cookie() 校验', function () {
     document.cookie = '';
-    assert.isNull(uinv.cookie(), '不传递Key值会返回null');
-    uinv.cookie('hello', 'world', '测试设置');
+    assert.isNull(utils.cookie(), '不传递Key值会返回null');
+    utils.cookie('hello', 'world', '测试设置');
     assert.include(document.cookie, 'hello=world');
-    assert.equal(uinv.cookie('hello'), 'world', '测试获取');
-    uinv.cookie('hello', null, '这时没有hello这个cookie了，测试删除');
+    assert.equal(utils.cookie('hello'), 'world', '测试获取');
+    utils.cookie('hello', null, '这时没有hello这个cookie了，测试删除');
     assert.notInclude(document.cookie, 'hello=world');
-    assert.isNull(uinv.cookie(), '不传递参数时，返回Null');
+    assert.isNull(utils.cookie(), '不传递参数时，返回Null');
   });
 
   it('获取所有cookie getAllCookie() 校验', function () {
     document.cookie = '';
-    uinv.cookie('cat', 'tom');
-    uinv.cookie('mouse', 'jerry');
-    let allCookie = uinv.getAllCookie();
+    utils.cookie('cat', 'tom');
+    utils.cookie('mouse', 'jerry');
+    let allCookie = utils.getAllCookie();
     assert.include(allCookie, 'cat=tom');
     assert.include(allCookie, 'mouse=jerry');
   });
 
   it('importJs () 校验', function () {
-    assert.isFunction(uinv.importJs);
-    assert.isUndefined(uinv.importJs('/a/b.js'), '没有返回值');
+    assert.isFunction(utils.importJs);
+    assert.isUndefined(utils.importJs('/a/b.js'), '没有返回值');
   });
 
   it('importCss () 校验', function () {
-    assert.isFunction(uinv.importCss);
-    assert.isUndefined(uinv.importCss('/a/b.css'), '没有返回值');
+    assert.isFunction(utils.importCss);
+    assert.isUndefined(utils.importCss('/a/b.css'), '没有返回值');
   });
 
 });

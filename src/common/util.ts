@@ -1,4 +1,4 @@
-import uinv from './uinv';
+import utils from './utils';
 import {throttle, debounce} from './throttle';
 import delay from './delay';
 import createUUID from './uuid';
@@ -8,7 +8,7 @@ const util: any = {};
 util.throttle = throttle;
 util.debounce = debounce;
 util.delay = delay;
-util.cloneObj = uinv.cloneObj;
+util.cloneObj = utils.cloneObj;
 util.createUUID = createUUID;
 
 /**
@@ -18,7 +18,7 @@ util.ramdom = function (max: number, min: number) {
   if (max < min) {
     [min, max] = [max, min];
   }
-  return Math.round(uinv.random() * (max - min) + min);
+  return Math.round(utils.random() * (max - min) + min);
 };
 
 /**

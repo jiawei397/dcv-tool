@@ -1,6 +1,6 @@
 import {assert, expect} from 'chai';
 import hash from '../../../src/common/hash';
-import uinv from '../../../src/common/uinv';
+import utils from '../../../src/common/utils';
 
 describe('hash', () => {
   // let jsonObj = {"name": "god", "sex": "men", "love": "you", "life": undefined};
@@ -109,7 +109,7 @@ describe('hash.combine 合并对象 A中与B相同名称的元素会被替换成
     let opObjectA = {name: 'god', sex: 'men'};
     let opObjectB = {name: 'tian', factory: 'KONGFU'};
     let result = hash.combine(opObjectA, opObjectB);
-    let cloneB = uinv.cloneObj(opObjectB);
+    let cloneB = utils.cloneObj(opObjectB);
     assert.equal(result, opObjectA, '合并对象 A中与B相同名称的元素会被替换成B中的值 返回长大了的A');
     assert.deepEqual(cloneB, opObjectB, '对象B没有变化');
 
@@ -122,7 +122,7 @@ describe('hash.combine 合并对象 A中与B相同名称的元素会被替换成
   //   let opObjectA = {name: 'god', sex: 'men'};
   //   let opObjectB = {name: 'tian', factory: 'KONGFU', colors:{a:'b'}};
   //   let result = hash.combine(opObjectA, opObjectB, true);
-  //   // let cloneB = uinv.cloneObj(opObjectB);
+  //   // let cloneB = utils.cloneObj(opObjectB);
   //
   //
   //   // assert.notEqual(result, opObjectA, '第4个参数为true时，并没有改变A本身');
@@ -137,7 +137,7 @@ describe('hash.combine 合并对象 A中与B相同名称的元素会被替换成
     let opObjectA = {name: 'god', sex: 'men'};
     let opObjectB = {name: 'tian', factory: 'KONGFU'};
     let result = hash.combine(opObjectA, opObjectB, true, true);
-    let cloneB = uinv.cloneObj(opObjectB);
+    let cloneB = utils.cloneObj(opObjectB);
     assert.notEqual(result, opObjectA, '第4个参数为true时，并没有改变A本身');
     assert.deepEqual(cloneB, opObjectB, '对象B没有变化');
 

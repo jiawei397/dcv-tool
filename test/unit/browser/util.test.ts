@@ -301,7 +301,7 @@ describe('页面util 验证', function () {
     assert.equal(map.cosmos, 'undefined');
     assert.equal(util.getHashByKey('cosmos'), 'undefined');
 
-    hash = '#func=uinv.u3d.funcSet.setSelectionRootObjByBID("172.17.10.143","123##323")&token=53cf50b38d9ad7318ad83e89c37eab6f7e357e45ae74b78a412ac03ef999e858caa5a5e6d7904fa20db13e1d49f3a74da6428d1d24392327a32fa5154e10f45c';
+    hash = '#func=setSelectionRootObjByBID("172.17.10.143","123##323")&token=53cf50b38d9ad7318ad83e89c37eab6f7e357e45ae74b78a412ac03ef999e858caa5a5e6d7904fa20db13e1d49f3a74da6428d1d24392327a32fa5154e10f45c';
     map = util.getHashMap();
     assert.isObject(map);
     assert.isNotEmpty(map, '这时map不是空');

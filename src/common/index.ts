@@ -1,12 +1,12 @@
 import './polyfill';
-import uinv from './uinv';
+import utils from './utils';
 import util from './util';
 import hash from './hash';
 import {version} from '../../package.json';
 
-uinv.util = util;
-uinv.hash = hash;
-uinv.VERSION = version;
+utils.util = util;
+utils.hash = hash;
+utils.VERSION = version;
 
-export default uinv;
+export default utils;
 export {util, hash};

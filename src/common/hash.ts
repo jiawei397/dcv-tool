@@ -1,4 +1,4 @@
-import uinv from './uinv';
+import utils from './utils';
 
 const hash: any = {};
 /**
@@ -18,7 +18,7 @@ hash.getSize = function (opObject) {
  * @param {Object} opObject
  * @return {Boolean}
  */
-hash.isEmpty = uinv.isEmpty;
+hash.isEmpty = utils.isEmpty;
 
 /**
  * 查看对象中是否包含指定名称的元素
@@ -112,7 +112,7 @@ hash.deepEqual = function (obj1, obj2) {
   if (!obj1 || !obj2) {
     return false;
   }
-  return uinv.stringify(obj1) === uinv.stringify(obj2);
+  return utils.stringify(obj1) === utils.stringify(obj2);
 };
 
 /**
@@ -126,7 +126,7 @@ hash.deepEqual = function (obj1, obj2) {
  */
 hash.combine = function fun(opObjectA: object, opObjectB: object, isDeep: boolean = false, isReturnNew: boolean = false, isCloneObjDeep = false) {
   if (isReturnNew) {
-    let result = uinv.cloneObj(opObjectA, isCloneObjDeep);
+    let result = utils.cloneObj(opObjectA, isCloneObjDeep);
     fun(result, opObjectB, isDeep, false);
     return result;
   }
@@ -157,7 +157,7 @@ hash.combine = function fun(opObjectA: object, opObjectB: object, isDeep: boolea
  */
 hash.combineNew = function fun(opObjectA, opObjectB, isDeep, isReturnNew, isCloneObjDeep = false) {
   if (isReturnNew) {
-    let result = uinv.cloneObj(opObjectA, isCloneObjDeep);
+    let result = utils.cloneObj(opObjectA, isCloneObjDeep);
     fun(result, opObjectB, isDeep, false);
     return result;
   }

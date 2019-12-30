@@ -1,4 +1,4 @@
-import uinv from './uinv';
+import utils from './utils';
 
 /**
  * UUID整数节点
@@ -36,7 +36,7 @@ const getBase = function (num: number, base) {
  * @return {Number}
  */
 const getRand = function (max: number) {
-  return Math.floor(uinv.random() * (max + 1));
+  return Math.floor(utils.random() * (max + 1));
 };
 
 /**

@@ -1,11 +1,11 @@
-import uinv from './uinv';
+import utils from './utils';
 import util from './util';
 import image from './image';
 import {hash} from '../common';
 
-hash.combineNew(util, uinv.util);
-uinv.image = image;
-uinv.util = util;
+hash.combineNew(util, utils.util);
+utils.image = image;
+utils.util = util;
 
-export default uinv;
+export default utils;
 export {util, image, hash};

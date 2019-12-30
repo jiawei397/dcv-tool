@@ -1,4 +1,4 @@
-import uinv from '../common/index';
+import utils from '../common/index';
 
 /**
  * 封装的localStorage和sessionStorage方法
@@ -11,26 +11,26 @@ let data = function (storage: Storage, key: string, value: any) {
     return null;
   }
   if (value === undefined) {
-    return uinv.jsonParse(storage.getItem(key));
+    return utils.jsonParse(storage.getItem(key));
   } else if (value == null) {
     storage.removeItem(key);
   } else {
-    storage.setItem(key, uinv.stringify(value));
+    storage.setItem(key, utils.stringify(value));
   }
-  return uinv;
+  return utils;
 };
 
 /**
  * 封装localStorage方法
  */
-uinv.data = function (key: string, value: any) {
+utils.data = function (key: string, value: any) {
   return data(localStorage, key, value);
 };
 
 /**
  * 封装sessionStorage方法
  */
-uinv.sessionStorage = function (key, value) {
+utils.sessionStorage = function (key, value) {
   return data(sessionStorage, key, value);
 };
 
@@ -39,7 +39,7 @@ uinv.sessionStorage = function (key, value) {
  * @author jw
  * @date 2017-09-27
  */
-uinv.getAllCookie = function () {
+utils.getAllCookie = function () {
   return document.cookie;
 };
 
@@ -82,26 +82,26 @@ const setCookie = function (name: string, value: string, days: number = 300) {
 /**
  * 封装cookie方法
  */
-uinv.cookie = function (key: string, value: any, days: number) {
+utils.cookie = function (key: string, value: any, days: number) {
   if (key === undefined) {
     return null;
   }
   if (value === undefined) {
-    return uinv.jsonParse(getCookie(key));
+    return utils.jsonParse(getCookie(key));
   } else if (value == null) {
     delCookie(key);
   } else {
-    setCookie(key, uinv.stringify(value), days);
+    setCookie(key, utils.stringify(value), days);
   }
-  return uinv;
+  return utils;
 };
 
-uinv.importJs = function (path: string) {
+utils.importJs = function (path: string) {
   document.write(`<script type='text/javascript' src='${path}'></script>`);
 };
 
-uinv.importCss = function (path: string) {
+utils.importCss = function (path: string) {
   document.write(`<link rel='STYLESHEET' type='text/css' href='${path}'>`);
 };
 
-export default uinv;
+export default utils;
