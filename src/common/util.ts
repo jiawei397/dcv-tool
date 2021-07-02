@@ -14,7 +14,7 @@ util.createUUID = createUUID;
 /**
  * 获取2个数之间的随机整数
  */
-util.ramdom = function (max: number, min: number) {
+util.random = function (max: number, min: number) {
   if (max < min) {
     [min, max] = [max, min];
   }
